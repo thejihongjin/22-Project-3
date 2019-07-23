@@ -23,9 +23,11 @@
   },
   "homepage": "https://github.com/thejihongjin/22-Project-3#readme",
   "dependencies": {
+    "axios": "^0.19.0",
     "express": "^4.17.1",
     "if-env": "^1.0.4",
-    "mongoose": "^5.6.6"
+    "mongoose": "^5.6.6",
+    "react-router-dom": "^5.0.1"
   },
   "devDependencies": {
     "concurrently": "^4.1.0",
