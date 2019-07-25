@@ -31,7 +31,7 @@ function About() {
                 show={registerShow}
                 onHide={() => setregisterShow(false)}
                 aria-labelledby="example-modal-sizes-title-lg"
-            >
+                >
                 <Modal.Header closeButton>
                     <Modal.Title id="example-modal-sizes-title-lg">
                         Register
@@ -46,7 +46,7 @@ function About() {
                 show={signinShow}
                 onHide={() => setsigninShow(false)}
                 aria-labelledby="example-modal-sizes-title-lg"
-            >
+                >
                 <Modal.Header closeButton>
                     <Modal.Title id="example-modal-sizes-title-lg">
                         Sign In

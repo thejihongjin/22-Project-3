@@ -5,9 +5,6 @@ import { Form, Button} from "react-bootstrap"
 function SignIn(props) {
     return (
         <Container>
-            <Row className="justify-content-center">
-                <h1>Sign In</h1>
-            </Row>
             <Form>
                 <Form.Group controlId="signInUser">
                     <Form.Label>Username: </Form.Label>
