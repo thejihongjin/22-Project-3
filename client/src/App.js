@@ -14,10 +14,11 @@ class App extends Component {
       <Router>
         <React.Suspense fallback={<Loading />}>
           <Switch>
-            <Route exact path="/user" component={User} />
-            <Route exact path="/create" component={CreateEvent} />
+            {" "}
             <Route exact path="/" component={About} />
             <Route exact path="/about" component={About} />
+            <Route exact path="/user" component={User} />
+            <Route exact path="/create" component={CreateEvent} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/signin" component={SignIn} />
             <Route exact path="/review" component={UserReview} />
