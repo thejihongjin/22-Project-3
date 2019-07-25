@@ -1,24 +1,28 @@
-import React from 'react';
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Loading from "./components/Loading";
+const User = React.lazy(() => import("./pages/User"));
+const CreateEvent = React.lazy(() => import("./pages/CreateEvent"));
+const About = React.lazy(() => import("./pages/About"));
+const Register = React.lazy(() => import("./pages/Register"));
+const SignIn = React.lazy(() => import("./pages/SignIn"));
+class App extends Component {
+  render() {
+    return (
+      <Router>
+        <React.Suspense fallback={<Loading />}>
+          <Switch>
+            <Route exact path="/user" component={User} />
+            <Route exact path="/create" component={CreateEvent} />
+            <Route exact path="/about" component={About} />
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/signin" component={SignIn} />
+            <Route render={() => <h1>404 Page not found.</h1>} />
+          </Switch>
+        </React.Suspense>
+      </Router>
+    );
+  }
 }
 
 export default App;
