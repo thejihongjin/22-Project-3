@@ -11,6 +11,11 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
 const useStyles = makeStyles(theme => ({
+  flexBetween: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-between"
+  },
   container: {
     display: "flex",
     flexWrap: "wrap"
@@ -25,7 +30,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function CreateEvent() {
   const classes = useStyles();
-
 
   return (
     <Container>
@@ -110,9 +114,16 @@ export default function CreateEvent() {
                     />
                   </div>{" "}
                 </Row>
-                <Button variant="primary" type="submit">
-                  Submit
-                </Button>
+                <div
+                  style={{ display: "flex", justifyContent: "space-evenly" }}
+                >
+                  <Button variant="primary" type="submit">
+                    Submit
+                  </Button>
+                  <Button variant="primary" href="/user">
+                    Cancel
+                  </Button>
+                </div>
               </Form>
             </Card.Body>
           </Card>
