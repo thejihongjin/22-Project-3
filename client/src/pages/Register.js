@@ -2,12 +2,9 @@ import React from "react"
 import { Container, Row, Col } from "react-bootstrap"
 import { Form, Button } from "react-bootstrap"
 
-function Register() {
+function Register(props) {
     return (
         <Container>
-            <Row className="justify-content-center">
-                <h1>Register</h1>
-            </Row>
             <Form>
                 <Form.Group controlId="newUser">
                     <Form.Label>Username: </Form.Label>
@@ -31,7 +28,7 @@ function Register() {
                             <Button variant="primary" type="submit">
                                 Register
                             </Button>
-                            <Button varient="danger">
+                            <Button onClick={props.onHide} varient="danger">
                                 Cancel
                             </Button>
                         </Row>
