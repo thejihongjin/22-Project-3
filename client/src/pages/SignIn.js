@@ -23,7 +23,7 @@ function SignIn() {
                             <Button variant="primary" type="submit">
                                 Sign In
                             </Button>
-                            <Button varient="danger">
+                            <Button href="/" varient="danger">
                                 Cancel
                             </Button>
                         </Row>
