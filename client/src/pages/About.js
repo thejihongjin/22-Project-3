@@ -2,8 +2,8 @@ import React, { useState}from "react"
 import { Container, Row, Col} from "react-bootstrap"
 import { Jumbotron, Modal} from "react-bootstrap"
 import { Button} from "react-bootstrap"
-const Register = React.lazy(() => import("./pages/Register"));
-const SignIn = React.lazy(() => import("./pages/SignIn"));
+const Register = React.lazy(() => import("./Register"));
+const SignIn = React.lazy(() => import("./SignIn"));
 
 function About() {
     const [registerShow, setregisterShow] = useState(false);
