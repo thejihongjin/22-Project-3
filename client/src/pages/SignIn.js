@@ -2,12 +2,9 @@ import React from "react"
 import { Container, Row, Col } from "react-bootstrap"
 import { Form, Button} from "react-bootstrap"
 
-function SignIn() {
+function SignIn(props) {
     return (
         <Container>
-            <Row className="justify-content-center">
-                <h1>Sign In</h1>
-            </Row>
             <Form>
                 <Form.Group controlId="signInUser">
                     <Form.Label>Username: </Form.Label>
@@ -23,7 +20,7 @@ function SignIn() {
                             <Button variant="primary" type="submit">
                                 Sign In
                             </Button>
-                            <Button varient="danger">
+                            <Button onClick={props.onHide} varient="danger">
                                 Cancel
                             </Button>
                         </Row>
