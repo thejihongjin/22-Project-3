@@ -11,9 +11,11 @@ class App extends Component {
       <Router>
         <React.Suspense fallback={<Loading />}>
           <Switch>
+            {" "}
+            <Route exact path="/" component={About} />
+            <Route exact path="/about" component={About} />
             <Route exact path="/user" component={User} />
             <Route exact path="/create" component={CreateEvent} />
-            <Route exact path="/" component={About} />
             <Route render={() => <h1>404 Page not found.</h1>} />
           </Switch>
         </React.Suspense>
