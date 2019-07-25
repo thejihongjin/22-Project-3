@@ -38,7 +38,7 @@ function About() {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Register/>
+                    <Register onHide={() => setregisterShow(false)}/>
                 </Modal.Body>
             </Modal>
             <Modal
@@ -53,7 +53,7 @@ function About() {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <SignIn/>
+                    <SignIn onHide={() => setsigninShow(false)}/>
                 </Modal.Body>
             </Modal>
         </Container>

@@ -2,7 +2,7 @@ import React from "react"
 import { Container, Row, Col } from "react-bootstrap"
 import { Form, Button } from "react-bootstrap"
 
-function Register() {
+function Register(props) {
     return (
         <Container>
             <Form>
@@ -28,7 +28,7 @@ function Register() {
                             <Button variant="primary" type="submit">
                                 Register
                             </Button>
-                            <Button href="/" varient="danger">
+                            <Button onClick={props.onHide} varient="danger">
                                 Cancel
                             </Button>
                         </Row>

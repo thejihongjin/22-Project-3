@@ -2,7 +2,7 @@ import React from "react"
 import { Container, Row, Col } from "react-bootstrap"
 import { Form, Button} from "react-bootstrap"
 
-function SignIn() {
+function SignIn(props) {
     return (
         <Container>
             <Row className="justify-content-center">
@@ -23,7 +23,7 @@ function SignIn() {
                             <Button variant="primary" type="submit">
                                 Sign In
                             </Button>
-                            <Button href="/" varient="danger">
+                            <Button onClick={props.onHide} varient="danger">
                                 Cancel
                             </Button>
                         </Row>
