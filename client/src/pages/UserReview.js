@@ -5,12 +5,6 @@ import Form from "react-bootstrap/Form";
 
 
 class UserReview extends Component {
-    state = {
-        user: "",
-        attendees: [],
-        reviews: ""
-    }
-
     jumbotronStyle = {
         textAlign: "center",
         margin: "25px"
@@ -35,7 +29,7 @@ class UserReview extends Component {
                         <Card.Title>User1</Card.Title>
                         <Card.Text>Rating bar</Card.Text>
                         <Form>
-                            <Form.Group controlId="formBookSearch">
+                            <Form.Group controlId="formUserReview">
                                 <Form.Label>Comments</Form.Label>
                                 <Form.Control as="textarea" rows="3" name="userIdComment"/>
                             </Form.Group>
@@ -47,7 +41,7 @@ class UserReview extends Component {
                         <Card.Title>User2</Card.Title>
                         <Card.Text>Rating bar</Card.Text>
                         <Form>
-                            <Form.Group controlId="formBookSearch">
+                            <Form.Group controlId="formUserReview">
                                 <Form.Label>Comments</Form.Label>
                                 <Form.Control as="textarea" rows="3" name="userIdComment"/>
                             </Form.Group>
@@ -59,7 +53,7 @@ class UserReview extends Component {
                         <Card.Title>User3</Card.Title>
                         <Card.Text>Rating bar</Card.Text>
                         <Form>
-                            <Form.Group controlId="formBookSearch">
+                            <Form.Group controlId="formUserReview">
                                 <Form.Label>Comments</Form.Label>
                                 <Form.Control as="textarea" rows="3" name="userIdComment"/>
                             </Form.Group>
