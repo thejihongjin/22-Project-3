@@ -28,16 +28,16 @@ const EventSchema = new Schema({
         type:String,
         max: 250
     },
-    creatorID: {
+    creatorId: {
         type: Schema.ObjectId,
         ref: "User",
         require: true
     },
-    attendeID: [{
+    attendId: [{
         type: Schema.ObjectId,
         ref: "User",
     }],
-    pendingID: [{
+    pendingId: [{
         type: Schema.ObjectId,
         ref: "User"
     }]

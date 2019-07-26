@@ -1,8 +1,7 @@
 const express = require('express');
-const path = require("path");
+const routes = require("./controllers/routes");
 const mongoose = require('mongoose');
 const PORT = process.env.PORT || 3001;
-const db = require("./model")
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
@@ -16,11 +15,7 @@ if (process.env.NODE_ENV === "production") {
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/lonelyfriendfinderdb', { useNewUrlParser: true });
 
 //Routes
-
-/// Default route for React
-app.get("*", (req,res) => {
-    res.sendFile(path.join(__dirname,"./client/build/index.html"));
-}) 
+app.use(routes);
 
 
 app.listen(PORT, () => {
