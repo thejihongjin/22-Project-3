@@ -13,7 +13,7 @@ const User = require("../model/User");
 router.post(
   "/",
   [
-    check("name", "Please add name")
+    check("username", "Please add name")
       .not()
       .isEmpty(),
     check("email", "Please include a valid emial").isEmail(),
@@ -27,7 +27,16 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { name, email, password } = req.body;
+    const {
+      username,
+      firstname,
+      lastname,
+      displayname,
+      email,
+      password,
+      avatar,
+      bio
+    } = req.body;
 
     try {
       let user = await User.findOne({ email });
@@ -36,9 +45,14 @@ router.post(
       }
 
       user = new User({
-        name,
+        username,
+        firstname,
+        lastname,
+        displayname,
         email,
-        password
+        password,
+        avatar,
+        bio
       });
 
       const salt = await bcrypt.genSalt(10);

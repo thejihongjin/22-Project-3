@@ -38,7 +38,7 @@ const useStyles = {
 
 export default function CreateEvent() {
   const [selectedDate, setSelectedDate] = React.useState(
-    new Date("2014-08-18T21:11:54")
+    new Date()
   );
 
   function handleDateChange(date) {
