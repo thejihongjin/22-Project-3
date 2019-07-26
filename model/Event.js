@@ -28,12 +28,12 @@ const EventSchema = new Schema({
         type:String,
         max: 250
     },
-    user: {
+    creatorID: {
         type: Schema.ObjectId,
         ref: "User",
         require: true
     },
-    attendingID: [{
+    attendeID: [{
         type: Schema.ObjectId,
         ref: "User",
     }],
