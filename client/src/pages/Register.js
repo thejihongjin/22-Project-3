@@ -11,7 +11,7 @@ function Register(props) {
           <Form.Control type="text" placeholder="Username" />
         </Form.Group>
         <Form.Group controlId="newemail">
-          <Form.Label>Password:</Form.Label>
+          <Form.Label>Email:</Form.Label>
           <Form.Control type="email" placeholder="Email" />
         </Form.Group>
         <Form.Group controlId="newPass">
