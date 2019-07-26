@@ -3,6 +3,8 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import Tabs from "react-bootstrap/Tabs";
+import Tab from "react-bootstrap/Tab";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -51,15 +53,6 @@ const User = () => {
                 Some quick example text to build on the card title and make up
                 the bulk of the card's content.
               </Card.Text>
-              <div style={useStyles.flexBetween}>
-                <Card.Title>Created Events</Card.Title>
-                <Card.Link href="/create">Add New Event</Card.Link>
-              </div>
-              <br />
-              <br />
-              (list)
-              <br />
-              <Card.Title>Joined Events</Card.Title>
             </Card.Body>
           </Card>
         </Col>
@@ -67,17 +60,48 @@ const User = () => {
           {" "}
           <Card style={{ width: "31em", margin: "10px 0" }}>
             <Card.Body>
-              <Card.Title>Events going on in your area today: </Card.Title>
-
-              <Card.Text>
-                <Card.Link href="#">Miley Cyrus Concert</Card.Link>
-                <br />
-                Today from 7:00 AM to 11:00 AM
-              </Card.Text>
-              {/* take to search page */}
-              <Card.Link style={{ float: "right" }} href="#">
-                Search More
-              </Card.Link>
+              <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
+                <Tab eventKey="home" title="Upcoming Events">
+                  <br />
+                  <Card style={{ width: "18rem" }}>
+                    <Card.Body>
+                      <Card.Title>Go To Japan</Card.Title>
+                      <Card.Subtitle className="mb-2 text-muted">
+                        Travel
+                      </Card.Subtitle>
+                      <Card.Text>
+                        Looking for someone to go to Japan with.
+                      </Card.Text>
+                      <Card.Link href="#">View Event</Card.Link>
+                    </Card.Body>
+                  </Card>
+                  <Card style={{ width: "18rem" }}>
+                    <Card.Body>
+                      <Card.Title>Harry Potter Marathon</Card.Title>
+                      <Card.Subtitle className="mb-2 text-muted">
+                        Movie
+                      </Card.Subtitle>
+                      <Card.Text>
+                        Watch all the Harry Potter's with me!
+                      </Card.Text>
+                      <Card.Link href="#">View Event</Card.Link>
+                    </Card.Body>
+                  </Card>
+                </Tab>
+                <Tab eventKey="profile" title="Past Events">
+                  <br />
+                  <Card style={{ width: "18rem" }}>
+                    <Card.Body>
+                      <Card.Title>Jogging Partner</Card.Title>
+                      <Card.Subtitle className="mb-2 text-muted">
+                        Fitness
+                      </Card.Subtitle>
+                      <Card.Text>Come run with me.</Card.Text>
+                      <Card.Link href="#">View Event</Card.Link>
+                    </Card.Body>
+                  </Card>
+                </Tab>
+              </Tabs>
             </Card.Body>
           </Card>
         </Col>
