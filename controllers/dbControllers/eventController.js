@@ -1,9 +1,9 @@
-const db = require("../models")
+const db = require("../../models")
 const Event = db.Event
 const User = db.User
 
 module.exports = {
-    findAll: (req, res) => {
+    searchAll: (req, res) => {
        Event.find(req.querry)
             .populate("users")
             .then(dbModel => res.json(dbModel))

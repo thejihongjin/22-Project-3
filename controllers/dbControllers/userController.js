@@ -1,8 +1,8 @@
-const db = require("../models")
+const db = require("../../models")
 const User = db.User
 
 module.exports = {
-    findAll:(req,res)=>{
+    searchAll:(req,res)=>{
         User.find( req.querry)
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err))
