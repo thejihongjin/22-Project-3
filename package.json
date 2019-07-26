@@ -23,8 +23,12 @@
   },
   "homepage": "https://github.com/thejihongjin/22-Project-3#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "config": "^3.2.2",
     "express": "^4.17.1",
+    "express-validator": "^6.1.1",
     "if-env": "^1.0.4",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.6.6"
   },
   "devDependencies": {
