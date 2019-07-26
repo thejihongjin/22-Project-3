@@ -1,46 +1,50 @@
-const mongoose = require('mongoose');
-const Schema= mongoose.Schema;
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const EventSchema = new Schema({
-    name: {
-        type: String,
-        require: true
-    },
-    location: {
-        type: String
-    },
-    groupSize: {
-        type: Number,
-        require: true 
-    },
-    start: {
-        type: Date,
-        require: true
-    },
-    end: {
-        type: Date,
-        require: true
-    },
-    category: {
-        type: [String],
-    },
-    description: {
-        type:String,
-        max: 250
-    },
-    creatorId: {
-        type: Schema.ObjectId,
-        ref: "User",
-        require: true
-    },
-    attendId: [{
-        type: Schema.ObjectId,
-        ref: "User",
-    }],
-    pendingId: [{
-        type: Schema.ObjectId,
-        ref: "User"
-    }]
-})
+  name: {
+    type: String,
+    require: true
+  },
+  location: {
+    type: String
+  },
+  groupSize: {
+    type: Number,
+    require: true
+  },
+  start: {
+    type: Date,
+    require: true
+  },
+  end: {
+    type: Date,
+    require: true
+  },
+  category: {
+    type: [String]
+  },
+  description: {
+    type: String,
+    max: 250
+  },
+  creatorId: {
+    type: Schema.ObjectId,
+    ref: "user",
+    require: true
+  },
+  attendId: [
+    {
+      type: Schema.ObjectId,
+      ref: "user"
+    }
+  ],
+  pendingId: [
+    {
+      type: Schema.ObjectId,
+      ref: "user"
+    }
+  ]
+});
 
-module.exports = mongoose.model('Event', EventSchema)
+module.exports = mongoose.model("event", EventSchema);

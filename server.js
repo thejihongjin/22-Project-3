@@ -1,6 +1,5 @@
-const express = require('express');
-const routes = require("./controllers/routes");
-const mongoose = require('mongoose');
+const express = require("express");
+const mongoose = require("mongoose");
 const PORT = process.env.PORT || 3001;
 const app = express();
 
@@ -17,8 +16,13 @@ mongoose.connect(
   { useNewUrlParser: true }
 );
 
-//Routes
-app.use(routes);
+// Init Middleware
+app.use(express.json({ extended: false }));
+
+//Define Routes
+app.use("/api/users", require("./routes/users"));
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/events", require("./routes/events"));
 
 /// Default route for React
 app.get("*", (req, res) => {
