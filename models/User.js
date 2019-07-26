@@ -33,7 +33,15 @@ const UserSchema = new Schema ({
     bio: {
         type: String,
         max: 20
-    }
+    },
+    attendId: [{
+        type: Schema.ObjectId,
+        ref: "Event"
+    }],
+    petitionId: [{
+        type: Schema.ObjectId,
+        ref: "Event"
+    }]
 })
 
 module.exports = mongoose.model('User', UserSchema)

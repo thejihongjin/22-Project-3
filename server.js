@@ -1,8 +1,7 @@
-const express = require("express");
-const path = require("path");
-const mongoose = require("mongoose");
+const express = require('express');
+const routes = require("./controllers/routes");
+const mongoose = require('mongoose');
 const PORT = process.env.PORT || 3001;
-const db = require("./model");
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
@@ -18,13 +17,8 @@ mongoose.connect(
   { useNewUrlParser: true }
 );
 
-// Init Middleware
-app.use(express.json({ extended: false }));
-
-//Define Routes
-app.use("/api/users", require("./routes/users"));
-app.use("/api/auth", require("./routes/auth"));
-app.use("/api/events", require("./routes/events"));
+//Routes
+app.use(routes);
 
 /// Default route for React
 app.get("*", (req, res) => {
