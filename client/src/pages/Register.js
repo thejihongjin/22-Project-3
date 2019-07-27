@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Form, Button } from "react-bootstrap";
-import API from "../../../routes/users";
+import API from "../utils/API";
 
 function Register(props) {
   const [newUserName, setNewUserName] = useState("");
@@ -10,10 +10,18 @@ function Register(props) {
   const [passWordVer, setPassWordVer] = useState("");
 
   const handleSubmit = e => {
-    
+    e.preventDefault();
     if (newPassWord !== passWordVer) {
       alert("passwords must match");
     }
+    console.log(API.registerUser({
+      username: newUserName,
+      displayname: newUserName,
+      email: newEmail,
+      password: passWordVer
+    }))//.then((userdata) =>{
+      //console.log(userdata)
+    //})
   };
   return (
     <Container>
