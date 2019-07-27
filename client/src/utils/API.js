@@ -1,12 +1,14 @@
 import axios from "axios";
 
 export default {
-  registerUser: userData => {
-    axios.post("/api/user", userData).then(returnAuth => {
+  registerUser: (userData, cb) => {
+    axios.post("/api/users", userData).then(returnAuth => {
       console.log(returnAuth);
-      return axios.get("/api/token", {
-        headers: { "X-auth-token": returnAuth.token }
-      });
+      axios
+        .get("/api/auth", {
+          headers: { "x-auth-token": returnAuth.data.token }
+        })
+        .then(response => cb(response));
     });
   },
   getUser: loginData => {
