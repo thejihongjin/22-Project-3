@@ -28,23 +28,27 @@ const EventSchema = new Schema({
     type: String,
     max: 250
   },
-  creatorId: {
-    type: Schema.ObjectId,
-    ref: "user",
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "users",
     require: true
   },
-  attendId: [
+  attendID: [
     {
-      type: Schema.ObjectId,
-      ref: "user"
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users"
     }
   ],
-  pendingId: [
+  pendingID: [
     {
-      type: Schema.ObjectId,
-      ref: "user"
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users"
     }
-  ]
+  ],
+  date: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 module.exports = mongoose.model("event", EventSchema);

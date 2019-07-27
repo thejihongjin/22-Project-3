@@ -13,7 +13,8 @@ if (process.env.NODE_ENV === "production") {
 //mongoose connection, need to add database name
 mongoose.connect(
   process.env.MONGODB_URI || "mongodb://localhost/lonelyfriendfinderdb",
-  { useNewUrlParser: true }
+
+  { useCreateIndex: true, useFindAndModify: false, useNewUrlParser: true }
 );
 
 // Init Middleware
