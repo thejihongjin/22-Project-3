@@ -33,8 +33,11 @@ const useStyles = {
   }
 };
 
-const User = () => {
+const User = (props) => {
   const [modalShow, setModalShow] = useState(false);
+  const [user, setUser] = useState(props.user)
+
+
 
   return (
     <Container>
@@ -43,7 +46,7 @@ const User = () => {
           <Card style={{ width: "25em", margin: "10px 0" }}>
             <Card.Body>
               <div style={useStyles.flexBetween}>
-                <Card.Title>Welcome,</Card.Title>{" "}
+                <Card.Title>Welcome, user.displayname</Card.Title>{" "}
                 <Card.Link href="#" onClick={() => setModalShow(true)}>
                   Edit
                 </Card.Link>
@@ -52,6 +55,7 @@ const User = () => {
               <Card.Text>
                 Some quick example text to build on the card title and make up
                 the bulk of the card's content.
+                user.profile
               </Card.Text>
             </Card.Body>
           </Card>
@@ -110,6 +114,7 @@ const User = () => {
     </Container>
   );
 };
+
 const EditProfileModal = props => {
   return (
     <Modal
