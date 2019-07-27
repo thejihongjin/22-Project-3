@@ -44,7 +44,11 @@ const UserSchema = new Schema({
       type: Schema.ObjectId,
       ref: "event"
     }
-  ]
+  ],
+  date: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 module.exports = mongoose.model("user", UserSchema);

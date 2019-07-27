@@ -61,13 +61,14 @@ router.post(
       const event = await newEvent.save();
       res.json(event);
     } catch (error) {
-      console.error(err.message);
+      console.error(error.message);
       res.status(500).send("Server Error");
     }
   }
 );
 
 router.put("/:id", auth, async (req, res) => {
+  console.log(req.user.id);
   const {
     name,
     location,
@@ -97,7 +98,7 @@ router.put("/:id", auth, async (req, res) => {
     if (!event) return res.status(404).json({ msg: "Event not found" });
 
     // Make sure user owns event
-    if (eventFields.user.toString() !== req.user.id) {
+    if (event.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: "Not authorized" });
     }
     event = await Event.findByIdAndUpdate(
@@ -105,8 +106,27 @@ router.put("/:id", auth, async (req, res) => {
       { $set: eventFields },
       { new: true }
     );
+    res.json(event);
   } catch (error) {
-    console.error(err.message);
+    console.error(error.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+router.delete("/:id", auth, async (req, res) => {
+  try {
+    let event = await Event.findById(req.params.id);
+
+    if (!event) return res.status(404).json({ msg: "Event not found" });
+
+    // Make sure user owns event
+    if (event.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: "Not authorized" });
+    }
+    await Event.findByIdAndRemove(req.params.id);
+    res.json({ msg: "Contact removed" });
+  } catch (error) {
+    console.error(error.message);
     res.status(500).send("Server Error");
   }
 });
