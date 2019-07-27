@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import User from "../pages/User";
 import { Container, Row, Col } from "react-bootstrap";
 import { Form, Button } from "react-bootstrap";
 import API from "../utils/API";
@@ -14,14 +15,15 @@ function Register(props) {
     if (newPassWord !== passWordVer) {
       alert("passwords must match");
     }
-    console.log(API.registerUser({
-      username: newUserName,
-      displayname: newUserName,
-      email: newEmail,
-      password: passWordVer
-    }))//.then((userdata) =>{
-      //console.log(userdata)
-    //})
+    API.registerUser(
+      {
+        username: newUserName,
+        displayname: newUserName,
+        email: newEmail,
+        password: passWordVer
+      },
+      result => console.log(result)
+    );
   };
   return (
     <Container>
