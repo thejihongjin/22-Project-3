@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Loading from "./components/Loading";
+import Navigation from "./components/Navigation";
 const About = React.lazy(() => import("./pages/About"));
 const User = React.lazy(() => import("./pages/User"));
 const CreateEvent = React.lazy(() => import("./pages/CreateEvent"));
@@ -11,6 +12,7 @@ class App extends Component {
   render() {
     return (
       <Router>
+        <Navigation />
         <React.Suspense fallback={<Loading />}>
           <Switch>
             {" "}
