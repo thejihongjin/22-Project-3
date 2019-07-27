@@ -1,26 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Form, Button } from "react-bootstrap";
+import API from "../../../routes/users";
 
 function Register(props) {
+  const [newUserName, setNewUserName] = useState("");
+  const [newEmail, setNewEmail] = useState("");
+  const [newPassWord, setNewPassWord] = useState("");
+  const [passWordVer, setPassWordVer] = useState("");
+
+  const handleSubmit = e => {
+    
+    if (newPassWord !== passWordVer) {
+      alert("passwords must match");
+    }
+  };
   return (
     <Container>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Form.Group controlId="newUser">
           <Form.Label>Username: </Form.Label>
-          <Form.Control type="text" placeholder="Username" />
+          <Form.Control
+            value={newUserName}
+            onChange={e => setNewUserName(e.target.value)}
+            type="text"
+            placeholder="Username"
+          />
         </Form.Group>
         <Form.Group controlId="newemail">
           <Form.Label>Email:</Form.Label>
-          <Form.Control type="email" placeholder="Email" />
+          <Form.Control
+            value={newEmail}
+            onChange={e => setNewEmail(e.target.value)}
+            type="email"
+            placeholder="Email"
+          />
         </Form.Group>
         <Form.Group controlId="newPass">
           <Form.Label>Password:</Form.Label>
-          <Form.Control type="password" placeholder="Password" />
+          <Form.Control
+            value={newPassWord}
+            onChange={e => setNewPassWord(e.target.value)}
+            type="password"
+            placeholder="Password"
+          />
         </Form.Group>
         <Form.Group controlId="newPass">
           <Form.Label>Re-type Password:</Form.Label>
           <Form.Control
+            value={passWordVer}
+            onChange={e => setPassWordVer(e.target.value)}
             type="password"
             placeholder="Type in your password again"
           />
@@ -28,7 +57,7 @@ function Register(props) {
         <Row className="justify-content-center">
           <Col md="4">
             <Row className="justify-content-between">
-              <Button variant="primary" href="/user" type="submit">
+              <Button variant="primary" type="submit">
                 Register
               </Button>
               <Button onClick={props.onHide} varient="danger">
