@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
@@ -14,6 +14,10 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+
+import React, { Component } from 'react';
+// import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Map from "../components/Map"
 
 const useStyles = {
   grid: {
@@ -218,7 +222,18 @@ export default function CreateEvent() {
             </Card.Body>
           </Card>
         </Col>
+
+
       </Row>
+        
+        <Row>
+        <Col>
+            <div style={{ margin: '10px' }}>
+            <Map />
+          </div>
+        </Col>
+        </Row>
+        
     </Container>
   );
 }
