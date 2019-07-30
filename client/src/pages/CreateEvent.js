@@ -15,9 +15,9 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
-import React, { Component } from 'react';
+import React, { Component } from "react";
 // import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Map from "../components/Map"
+import Map from "../components/Map";
 
 const useStyles = {
   grid: {
@@ -41,9 +41,7 @@ const useStyles = {
 };
 
 export default function CreateEvent() {
-  const [selectedDate, setSelectedDate] = React.useState(
-    new Date()
-  );
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
 
   function handleDateChange(date) {
     setSelectedDate(date);
@@ -222,18 +220,15 @@ export default function CreateEvent() {
             </Card.Body>
           </Card>
         </Col>
-
-
       </Row>
-        
-        <Row>
+
+      <Row>
         <Col>
-            <div style={{ margin: '10px' }}>
+          <div style={{ margin: "10px" }}>
             <Map />
           </div>
         </Col>
-        </Row>
-        
+      </Row>
     </Container>
   );
 }
