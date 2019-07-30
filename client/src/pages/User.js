@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup"
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Tabs from "react-bootstrap/Tabs";
@@ -35,10 +36,7 @@ const useStyles = {
 
 const User = (props) => {
   const [modalShow, setModalShow] = useState(false);
-  const [user, setUser] = useState(props.user)
-
-
-
+ 
   return (
     <Container>
       <Row>
@@ -129,20 +127,56 @@ const EditProfileModal = props => {
       <Modal.Body>
         <h4>Edit Profile</h4>
         <Form>
-          <Form.Group controlId="formBasicEmail">
+
+          <Form.Row>
+            <Form.Group as={Col} controlId="changeFirstName"> 
+              <Form.Label>First Name</Form.Label>
+              <Form.Control />
+            </Form.Group>
+            <Form.Group as={Col} controlId="changeLastName">
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control />
+            </Form.Group>
+          </Form.Row>
+          
+          <fieldset>
+            <Form.Group as={Row}>
+              <Form.Label as="legend" column sm={2}>
+                Display Name
+              </Form.Label>
+              <Col sm={10}>
+                <Form.Check
+                  type="radio"
+                  label="Username"
+                  value="Username"
+                />
+                <Form.Check
+                  type="radio"
+                  label="First Name, Last initial"
+                  value="realName"
+                />
+                <InputGroup>
+                  <InputGroup.Prepend>
+                    <input type="radio" style={{margin:"0.75rem 0.4rem 0.75rem 0"}}/>
+                  </InputGroup.Prepend>
+                  <Form.Control placeholder="Other"/>
+                </InputGroup>
+              </Col>
+            </Form.Group>
+          </fieldset>
+         
+
+          <Form.Group controlId="changeEmail">
             <Form.Label>Change Email</Form.Label>
             <Form.Control type="email" defaultValue="mrlizard@scales.com" />
-            <Form.Text className="text-muted">
-              We'll never share your email with anyone else...well...maybe we
-              won't.
-            </Form.Text>
           </Form.Group>
 
-          <Form.Group controlId="formBasicPassword">
+          <Form.Group controlId="changePassword">
             <Form.Label>Change Password</Form.Label>
             <Form.Control type="password" placeholder="Password" />
           </Form.Group>
-          <Form.Group controlId="formBasicPassword">
+
+          <Form.Group controlId="verChangePassword">
             <Form.Label>Verify Password</Form.Label>
             <Form.Control type="password" placeholder="Verify Password" />
           </Form.Group>
