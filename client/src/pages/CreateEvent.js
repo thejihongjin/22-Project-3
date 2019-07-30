@@ -18,6 +18,7 @@ import Button from "react-bootstrap/Button";
 import React, { Component } from 'react';
 // import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Map from "../components/Map"
+import GeocodeForm from "../components/GeocodeForm"
 
 const useStyles = {
   grid: {
@@ -226,14 +227,19 @@ export default function CreateEvent() {
 
       </Row>
         
-        <Row>
+        {/* <Row>
         <Col>
             <div style={{ margin: '10px' }}>
             <Map />
-          </div>
+            </div>
         </Col>
         </Row>
-        
+         */}
+        <Row>
+        <Col>
+            <GeocodeForm/>
+        </Col>
+        </Row>
     </Container>
   );
 }

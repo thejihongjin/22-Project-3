@@ -8,11 +8,15 @@ const mapStyles = {
 };
 
 export class MapContainer extends Component {
-    state = {
-        showingInfoWindow: false,  //Hides or the shows the infoWindow
-        activeMarker: {},          //Shows the active marker upon click
-        selectedPlace: {}          //Shows the infoWindow to the selected place upon a marker
+    constructor(props) {
+        super(props)
+        this.state = {
+            showingInfoWindow: false,  //Hides or the shows the infoWindow
+            activeMarker: {},          //Shows the active marker upon click
+            selectedPlace: {}, //Shows the infoWindow to the selected place upon a marker
+        }
     }
+
 
     onMarkerClick = (props, marker, e) =>
         this.setState({
@@ -31,16 +35,20 @@ export class MapContainer extends Component {
     };
 
     render() {
+        console.log(this.props.lat,this.props.lng)
         return (
             <Map
                 google={this.props.google}
                 zoom={12}
                 style={mapStyles}
-                initialCenter={{ lat: 32.715516, lng: -117.147733 }}
+                initialCenter= {{ lat: 32.712043, lng: -117.142254 }}
+                center={{ lat: this.props.lat, lng: this.props.lng }}
+                onClick={this.onMapClicked}
             >
                 <Marker
                     onClick={this.onMarkerClick}
-                    name={'Downtown San Diego'}
+                    position={{ lat: this.props.lat, lng: this.props.lng }}
+                    name={'Current Location'}
                 />
                 <InfoWindow
                     marker={this.state.activeMarker}
@@ -51,11 +59,15 @@ export class MapContainer extends Component {
                         <h4>{this.state.selectedPlace.name}</h4>
                     </div>
                 </InfoWindow>
+
+                
+
             </Map>
         );
     }
 }
 
 export default GoogleApiWrapper({
-    apiKey: process.env.REACT_APP_GOOGLE_API_KEY
+    apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
+
 })(MapContainer);
