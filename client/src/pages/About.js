@@ -17,24 +17,24 @@ const About = props => {
                     <Button variant="primary" onClick={props.handleShowSignin}>Sign In</Button>
                 </Col>
             </Row>
-            <Modal size="lg" show={props.showRegister} onHide={props.handleShowRegister} aria-labelledby="example-modal-sizes-title-lg">
+            <Modal size="lg" show={props.state.showRegister} onHide={props.handleShowRegister} aria-labelledby="example-modal-sizes-title-lg">
                 <Modal.Header closeButton>
                     <Modal.Title id="example-modal-sizes-title-lg">
                         Register
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Register onHide={props.handleShowRegister}/>
+                    <Register onHide={props.handleShowRegister} state={props.state}handleInputChange={props.handleInputChange}  handleSubmit={props.handleSubmit}/>
                 </Modal.Body>
             </Modal>
-            <Modal size="lg" show={props.showSignin} onHide={props.handleShowSignin} aria-labelledby="example-modal-sizes-title-lg">
+            <Modal size="lg" show={props.state.showSignin} onHide={props.handleShowSignin} aria-labelledby="example-modal-sizes-title-lg">
                 <Modal.Header closeButton>
                     <Modal.Title id="example-modal-sizes-title-lg">
                         Sign In
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <SignIn onHide={props.handleShowSignin}/>
+                    <SignIn onHide={props.handleShowSignin} state={props.state} handleInputChange={props.handleInputChange}/>
                 </Modal.Body>
             </Modal>
         </Container>
