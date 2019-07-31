@@ -7,11 +7,16 @@ const User = db.User
             .then(dbModel => res.json(dbModel))	
             .catch(err => res.status(422).json(err))	
     },	
-    searchOne:(req,res)=>{	
+    searchById:(req,res)=>{	
         User.findById(req.params.id)	
             .then(dbModel => res.json(dbModel))	
             .catch(err => res.status(422).json(err))	
-    },	
+    },
+    searchByEmail:(req,res) => {
+        User.findOne({ email:req.body.email, password: req.body.password})
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(422).json(err))
+    },
     create:(req,res)=>{	
         User.create(req.body)	
             .then(dbModel => res.json(dbModel))	

@@ -31,14 +31,14 @@ const About = props => {
                 <Register onHide={() => setShowRegister(false)}/>
                 </Modal.Body>
             </Modal>
-            <Modal size="lg" show={props.showSignin} onHide={props.handleShowSignin} aria-labelledby="example-modal-sizes-title-lg">
+            <Modal size="lg" show={showSignIn} onHide={() => setShowRegister(false)} aria-labelledby="example-modal-sizes-title-lg">
                 <Modal.Header closeButton>
                     <Modal.Title id="example-modal-sizes-title-lg">
                         Sign In
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <SignIn onHide={props.handleShowSignin}/>
+                    <SignIn onHide={() => setShowRegister(false)}/>
                 </Modal.Body>
             </Modal>
         </Container>

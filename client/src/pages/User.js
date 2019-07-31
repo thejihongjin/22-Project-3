@@ -40,6 +40,8 @@ const User = (props) => {
   const [state,dispatch] = useUserContext();
 
   const user = state.user
+
+  console.log(user)
   
   return (
     <Container>

@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import API from "../utils/API";
 import { Container, Row, Col } from "react-bootstrap";
 import { Form, Button } from "react-bootstrap";
+import { useUserContext } from "../utils/userContext";
+import history from '../utils/history';
 
 function SignIn(props) {
   const [email, setEmail] = useState("");
   const [passWord, setPassWord] = useState("");
+  const [state, dispatch] = useUserContext()
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -13,8 +16,10 @@ function SignIn(props) {
       email: email,
       password: passWord
     }).then(userInfo => {
-      console.log(userInfo);
-    });
+      dispatch({ type: "registerNewUser", user: userInfo.data })
+    }).then(
+      history.push('/user')
+    );
   };
 
   return (

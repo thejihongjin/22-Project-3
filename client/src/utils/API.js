@@ -13,7 +13,7 @@ export default {
     return axios.post("/api/user", userData)
   },
   getUser: loginData => {
-    return axios.post("/api/auth", loginData);
+    return axios.post("/api/user/signin", loginData);
   },
   createEvent: eventData => {
     axios.post("/api/event", eventData);
