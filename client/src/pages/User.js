@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup"
@@ -9,6 +9,7 @@ import Tab from "react-bootstrap/Tab";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { useUserContext} from "../utils/userContext"
 
 const useStyles = {
   flexBetween: {
@@ -36,7 +37,12 @@ const useStyles = {
 
 const User = (props) => {
   const [modalShow, setModalShow] = useState(false);
- 
+  const [state,dispatch] = useUserContext();
+
+  const user = state.user
+
+  console.log(user)
+  
   return (
     <Container>
       <Row>
@@ -44,7 +50,7 @@ const User = (props) => {
           <Card style={{ width: "25em", margin: "10px 0" }}>
             <Card.Body>
               <div style={useStyles.flexBetween}>
-                <Card.Title>Welcome, user.displayname</Card.Title>{" "}
+                <Card.Title>Welcome, {user.displayname} </Card.Title>{" "}
                 <Card.Link href="#" onClick={() => setModalShow(true)}>
                   Edit
                 </Card.Link>
