@@ -19,6 +19,7 @@ import React, { Component } from 'react';
 // import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Map from "../components/Map"
 import GeocodeForm from "../components/GeocodeForm"
+import Navigation from "../components/Navigation"
 
 const useStyles = {
   grid: {
@@ -51,6 +52,7 @@ export default function CreateEvent() {
   }
   return (
     <Container>
+      <Navigation/>
       <Row>
         <Col>
           <Card>
