@@ -10,13 +10,13 @@ export default {
         })
         .then(response => cb(response));
     });*/
-    return axios.post("/api/user", userData)
+    return axios.post("/api/user", userData);
   },
   getUser: loginData => {
     return axios.post("/api/user/signin", loginData);
   },
   createEvent: eventData => {
-    axios.post("/api/event", eventData);
+    return axios.post("/api/event", eventData);
   },
   updateEvent: (eventId, eventData) => {
     axios.put(`/api/event/${eventId}`, eventData);

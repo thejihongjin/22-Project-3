@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -9,7 +10,7 @@ import Tab from "react-bootstrap/Tab";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { useUserContext} from "../utils/userContext"
+import { useUserContext } from "../utils/userContext";
 
 const useStyles = {
   flexBetween: {
@@ -39,10 +40,10 @@ const User = props => {
   const [modalShow, setModalShow] = useState(false);
   const [state, dispatch] = useUserContext();
 
-  const user = state.user
+  const user = state.user;
 
-  console.log(user)
-  
+  console.log(user);
+
   return (
     <Container>
       <Row>
@@ -51,16 +52,16 @@ const User = props => {
             <Card.Body>
               <div style={useStyles.flexBetween}>
                 <Card.Title>Welcome, {user.displayname} </Card.Title>{" "}
-                <Card.Link href="#" onClick={() => setModalShow(true)}>
+                <Link href="#" onClick={() => setModalShow(true)}>
                   Edit
-                </Card.Link>
+                </Link>
               </div>
               <Card.Subtitle className="mb-2 text-muted">Lizard</Card.Subtitle>
               <Card.Text>
                 Some quick example text to build on the card title and make up
                 the bulk of the card's content. user.profile
               </Card.Text>
-              <Card.Link href="/create">Create Event</Card.Link>
+              <Link href="/create">Create Event</Link>
             </Card.Body>
           </Card>
         </Col>
@@ -82,7 +83,7 @@ const User = props => {
                         <Card.Text>
                           Looking for someone to go to Japan with.
                         </Card.Text>
-                        <Card.Link href="#">View Event</Card.Link>
+                        <Link href="#">View Event</Link>
                       </Card.Body>
                     </Card>
                   </Row>
@@ -97,7 +98,7 @@ const User = props => {
                         <Card.Text>
                           Watch all the Harry Potter's with me!
                         </Card.Text>
-                        <Card.Link href="#">View Event</Card.Link>
+                        <Link href="#">View Event</Link>
                       </Card.Body>
                     </Card>
                   </Row>
@@ -112,7 +113,7 @@ const User = props => {
                         <Card.Text>
                           Looking for someone to go to Japan with.
                         </Card.Text>
-                        <Card.Link href="#">View Event</Card.Link>
+                        <Link href="#">View Event</Link>
                       </Card.Body>
                     </Card>
                   </Row>
@@ -126,7 +127,7 @@ const User = props => {
                         Fitness
                       </Card.Subtitle>
                       <Card.Text>Come run with me.</Card.Text>
-                      <Card.Link href="#">View Event</Card.Link>
+                      <Link href="#">View Event</Link>
                     </Card.Body>
                   </Card>
                 </Tab>
