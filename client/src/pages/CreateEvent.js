@@ -41,11 +41,24 @@ const useStyles = {
 };
 
 export default function CreateEvent() {
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
+  const [startDate, setStartDate] = React.useState(new Date());
+  const [startTime, setStartTime] = React.useState(new Date());
+  const [endDate, setEndDate] = React.useState(new Date());
+  const [endTime, setEndTime] = React.useState(new Date());
 
-  function handleDateChange(date) {
-    setSelectedDate(date);
+  function handleDateStart(date) {
+    setStartDate(date);
   }
+  function handleTimeStart(date) {
+    setStartTime(date);
+  }
+  function handleEndDate(date) {
+    setEndDate(date);
+  }
+  function handleEndTime(date) {
+    setEndTime(date);
+  }
+
   return (
     <Container>
       <Row>
@@ -111,6 +124,7 @@ export default function CreateEvent() {
                           custom
                           inline
                           label="1"
+                          name="group"
                           type={type}
                           id={`custom-inline-${type}-1`}
                         />
@@ -118,6 +132,7 @@ export default function CreateEvent() {
                           custom
                           inline
                           label="2"
+                          name="group"
                           type={type}
                           id={`custom-inline-${type}-2`}
                         />
@@ -125,6 +140,7 @@ export default function CreateEvent() {
                           custom
                           inline
                           label="3"
+                          name="group"
                           type={type}
                           id={`custom-inline-${type}-3`}
                         />
@@ -132,6 +148,7 @@ export default function CreateEvent() {
                           custom
                           inline
                           label="4"
+                          name="group"
                           type={type}
                           id={`custom-inline-${type}-4`}
                         />
@@ -139,6 +156,7 @@ export default function CreateEvent() {
                           custom
                           inline
                           label="5+"
+                          name="group"
                           type={type}
                           id={`custom-inline-${type}-5`}
                         />
@@ -161,8 +179,8 @@ export default function CreateEvent() {
                             margin="normal"
                             id="startDate"
                             label="Select event start date"
-                            value={selectedDate}
-                            onChange={handleDateChange}
+                            value={startDate}
+                            onChange={handleDateStart}
                             KeyboardButtonProps={{
                               "aria-label": "change date"
                             }}
@@ -171,8 +189,8 @@ export default function CreateEvent() {
                             margin="normal"
                             id="startTime"
                             label="Select a time to meet"
-                            value={selectedDate}
-                            onChange={handleDateChange}
+                            value={startTime}
+                            onChange={handleTimeStart}
                             KeyboardButtonProps={{
                               "aria-label": "change time"
                             }}
@@ -184,8 +202,8 @@ export default function CreateEvent() {
                             margin="normal"
                             id="endDate"
                             label="Day event ends"
-                            value={selectedDate}
-                            onChange={handleDateChange}
+                            value={endDate}
+                            onChange={handleEndDate}
                             KeyboardButtonProps={{
                               "aria-label": "change date"
                             }}
@@ -194,8 +212,8 @@ export default function CreateEvent() {
                             margin="normal"
                             id="endTime"
                             label="Time event ends"
-                            value={selectedDate}
-                            onChange={handleDateChange}
+                            value={endTime}
+                            onChange={handleEndTime}
                             KeyboardButtonProps={{
                               "aria-label": "change time"
                             }}

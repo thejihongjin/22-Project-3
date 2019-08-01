@@ -55,7 +55,7 @@ function Register(props) {
             placeholder="Password"
           />
         </Form.Group>
-        <Form.Group controlId="newPass">
+        <Form.Group controlId="newPassVer">
           <Form.Label>Re-type Password:</Form.Label>
           <Form.Control
             value={passWordVer}
