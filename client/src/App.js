@@ -21,17 +21,6 @@ class App extends Component {
         redirect: false
     }
 
-    //
-
-    setRedirect = () => this.setState({ showRegister: false, redirect: true }, () => this.renderRedirect());
-    renderRedirect = () => {
-        console.log(this.state.redirect);
-        if (this.state.redirect) {
-            return <Redirect to='/user' />
-        }
-    }
-    //
-
     handleShowRegister = () => this.setState({ showRegister: !this.state.showRegister });
 
     handleShowSignin = () => this.setState({ showRegister: !this.state.showRegister });
@@ -58,11 +47,14 @@ class App extends Component {
                 this.setRedirect();
             }
         )
-        // .then(result => {
-        //     console.log(result);
-        //     this.setRedirect();
-        // })
-        // console.log("submit form")
+    }
+
+    setRedirect = () => this.setState({ showRegister: false, redirect: true }, () => this.renderRedirect());
+    renderRedirect = () => {
+        console.log(this.state.redirect);
+        if (this.state.redirect) {
+            window.location = '/user'
+        }
     }
 
     render() {
