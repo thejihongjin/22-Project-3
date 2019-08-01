@@ -52,7 +52,7 @@ const User = props => {
             <Card.Body>
               <div style={useStyles.flexBetween}>
                 <Card.Title>Welcome, {user.displayname} </Card.Title>{" "}
-                <Link href="#" onClick={() => setModalShow(true)}>
+                <Link to="#" onClick={() => setModalShow(true)}>
                   Edit
                 </Link>
               </div>
@@ -61,7 +61,7 @@ const User = props => {
                 Some quick example text to build on the card title and make up
                 the bulk of the card's content. user.profile
               </Card.Text>
-              <Link href="/create">Create Event</Link>
+              <Link to="/create">Create Event</Link>
             </Card.Body>
           </Card>
         </Col>
@@ -83,7 +83,7 @@ const User = props => {
                         <Card.Text>
                           Looking for someone to go to Japan with.
                         </Card.Text>
-                        <Link href="#">View Event</Link>
+                        <Link to="#">View Event</Link>
                       </Card.Body>
                     </Card>
                   </Row>
@@ -98,7 +98,7 @@ const User = props => {
                         <Card.Text>
                           Watch all the Harry Potter's with me!
                         </Card.Text>
-                        <Link href="#">View Event</Link>
+                        <Link to="#">View Event</Link>
                       </Card.Body>
                     </Card>
                   </Row>
@@ -113,7 +113,7 @@ const User = props => {
                         <Card.Text>
                           Looking for someone to go to Japan with.
                         </Card.Text>
-                        <Link href="#">View Event</Link>
+                        <Link to="#">View Event</Link>
                       </Card.Body>
                     </Card>
                   </Row>
@@ -127,7 +127,7 @@ const User = props => {
                         Fitness
                       </Card.Subtitle>
                       <Card.Text>Come run with me.</Card.Text>
-                      <Link href="#">View Event</Link>
+                      <Link to="#">View Event</Link>
                     </Card.Body>
                   </Card>
                 </Tab>

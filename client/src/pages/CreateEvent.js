@@ -17,6 +17,7 @@ import Button from "react-bootstrap/Button";
 import GeocodeForm from "../components/GeocodeForm";
 import API from "../utils/API";
 import history from "../utils/history";
+import { useUserContext } from "../utils/userContext";
 import React, { useState } from "react";
 // import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Map from "../components/Map";
@@ -43,6 +44,7 @@ const useStyles = {
 };
 
 export default function CreateEvent() {
+  const [state, dispatch] = useUserContext();
   // const [todayDate, setDate] = useState(new Date());
   // const [todayTime, setTime] = useState(new Date());
 
@@ -70,13 +72,17 @@ export default function CreateEvent() {
 
   const handleSubmit = e => {
     e.preventDefault();
+    console.log(state.user);
     API.createEvent({
       name: eventName,
       location: eventLocation,
       groupSize: groupSize,
       description: eventDetails,
-      category: category
-    }).then(history.push("/user"));
+      category: category,
+      user: state.user._id
+    })
+      .then(dataform => console.log(dataform))
+      .then(history.push("/user"));
   };
   return (
     <Container>

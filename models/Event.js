@@ -10,15 +10,15 @@ const EventSchema = new Schema({
     type: String
   },
   groupSize: {
-    type: Number,
+    type: Number
     // require: true
   },
   start: {
-    type: Date,
+    type: Date
     //require: true
   },
   end: {
-    type: Date,
+    type: Date
     //require: true
   },
   category: {
@@ -30,16 +30,16 @@ const EventSchema = new Schema({
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "users",
+    //ref: "users",
     require: true
   },
-  attendID: [
+  attendId: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "users"
     }
   ],
-  pendingID: [
+  pendingId: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "users"
