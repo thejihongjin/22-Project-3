@@ -10,7 +10,10 @@ import Tab from "react-bootstrap/Tab";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { useUserContext } from "../utils/userContext";
+import { useUserContext} from "../utils/userContext"
+import Navigation from "../components/Navigation"
+import { Link} from "react-router-dom"
+
 
 const useStyles = {
   flexBetween: {
@@ -46,6 +49,7 @@ const User = props => {
 
   return (
     <Container>
+      <Navigation/>
       <Row>
         <Col>
           <Card style={{ width: "25em", margin: "10px 0" }}>
@@ -58,10 +62,13 @@ const User = props => {
               </div>
               <Card.Subtitle className="mb-2 text-muted">Lizard</Card.Subtitle>
               <Card.Text>
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content. user.profile
+
+                {user.bio === ""
+                 ? "Add some info about yourself"
+                 : user.bio}
               </Card.Text>
-              <Link href="/create">Create Event</Link>
+              <Link to="/create" class="card-link">Create New Event</Link>
+
             </Card.Body>
           </Card>
         </Col>
