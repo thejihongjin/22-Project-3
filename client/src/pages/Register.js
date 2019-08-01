@@ -1,34 +1,34 @@
 import React, {useState}from "react";
+
 // import User from "../pages/User";
 import { Container, Row, Col } from "react-bootstrap";
 import { Form, Button } from "react-bootstrap";
 import API from "../utils/API";
-import { useUserContext} from "../utils/userContext"
-import history from '../utils/history';
+import { useUserContext } from "../utils/userContext";
+import history from "../utils/history";
 
 function Register(props) {
   const [newUserName, setNewUserName] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [newPassWord, setNewPassWord] = useState("");
   const [passWordVer, setPassWordVer] = useState("");
-  const [state, dispatch] = useUserContext()
+  const [state, dispatch] = useUserContext();
 
   const handleSubmit = async e => {
     e.preventDefault();
     if (newPassWord !== passWordVer) {
       alert("passwords must match");
     } else {
-      API.registerUser(
-        {
-          username: newUserName,
-          displayname: newUserName,
-          email: newEmail,
-          password: passWordVer
-        }).then(
-          returnUser => { dispatch({ type:"registerNewUser", user:returnUser.data}) }
-        ).then(
-          history.push('/user')
-        )
+      API.registerUser({
+        username: newUserName,
+        displayname: newUserName,
+        email: newEmail,
+        password: passWordVer
+      })
+        .then(returnUser => {
+          dispatch({ type: "registerNewUser", user: returnUser.data });
+        })
+        .then(history.push("/user"));
     }
 
     /*API.registerUser(
@@ -40,7 +40,7 @@ function Register(props) {
       },
       result => console.log(result)
     );*/
-  }
+  };
   return (
     <Container>
       <Form onSubmit={handleSubmit}>
@@ -71,7 +71,7 @@ function Register(props) {
             placeholder="Password"
           />
         </Form.Group>
-        <Form.Group controlId="newPass">
+        <Form.Group controlId="newPassVer">
           <Form.Label>Re-type Password:</Form.Label>
           <Form.Control
             value={passWordVer}

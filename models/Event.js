@@ -11,15 +11,15 @@ const EventSchema = new Schema({
   },
   groupSize: {
     type: Number,
-    require: true
+    // require: true
   },
   start: {
     type: Date,
-    require: true
+    //require: true
   },
   end: {
     type: Date,
-    require: true
+    //require: true
   },
   category: {
     type: [String]

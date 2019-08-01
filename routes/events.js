@@ -20,7 +20,6 @@ router.get("/", auth, async (req, res) => {
 router.post(
   "/",
   [
-    auth,
     [
       check("name", "Name is required")
         .not()
@@ -124,7 +123,7 @@ router.delete("/:id", auth, async (req, res) => {
       return res.status(401).json({ msg: "Not authorized" });
     }
     await Event.findByIdAndRemove(req.params.id);
-    res.json({ msg: "Contact removed" });
+    res.json({ msg: "Event removed" });
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server Error");
