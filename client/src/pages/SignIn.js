@@ -5,7 +5,7 @@ import { Form, Button } from "react-bootstrap";
 import { useUserContext } from "../utils/userContext";
 import history from '../utils/history';
 
-function SignIn(props) {
+const SignIn = props => {
   const [email, setEmail] = useState("");
   const [passWord, setPassWord] = useState("");
   const [state, dispatch] = useUserContext()

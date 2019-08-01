@@ -11,14 +11,14 @@ const CreateEvent = React.lazy(() => import("./pages/CreateEvent"));
 const UserReview = React.lazy(() => import("./pages/UserReview"));
 const SearchEvent = React.lazy(() => import("./pages/SearchEvent"));
 
-
 function App() {
-        return (
-            <Router history={history}>
+    return(
+        <Router history={history}>
                 <Navigation />
                 <UserProvider>
                 <React.Suspense fallback={<Loading />}>
                     <Switch>
+
                         <Route exact path="/" component={About}/>
                         <Route exact path="/user" component={User} />
                         <Route exact path="/create" component={CreateEvent} />
