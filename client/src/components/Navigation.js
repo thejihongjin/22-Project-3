@@ -13,15 +13,9 @@ function Navigation() {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Item>
-                        <Link to="/user">{state.user.displayname}</Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                        <Link to="/search">Find an Event</Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                        <Link to="/about">Log Out</Link>
-                    </Nav.Item>
+                        <Link to="/user" className="nav-link">{state.user.displayname}</Link>
+                        <Link to="/search" className="nav-link">Find an Event</Link>
+                        <Link to="/about" className="nav-link">Log Out</Link>
                 </Nav>
             </Navbar.Collapse>
         </Navbar >
