@@ -15,13 +15,16 @@ export default {
   getUser: loginData => {
     return axios.post("/api/user/signin", loginData);
   },
+  updateUser: (userId, userData) => {
+    return axios.put(`/api/user/${userId}`, userData);
+  },
   createEvent: eventData => {
     return axios.post("/api/event", eventData);
   },
   updateEvent: (eventId, eventData) => {
-    axios.put(`/api/event/${eventId}`, eventData);
+    return axios.put(`/api/event/${eventId}`, eventData);
   },
   getAllEventForOne: userId => {
-    axios.get(`/api/event/`);
+    return axios.get(`/api/event/`);
   }
 };

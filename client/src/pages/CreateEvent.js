@@ -20,7 +20,10 @@ import history from "../utils/history";
 import { useUserContext } from "../utils/userContext";
 import React, { useState } from "react";
 // import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Map from "../components/Map";
+
+import Map from "../components/Map"
+import Navigation from "../components/Navigation"
+
 
 const useStyles = {
   grid: {
@@ -86,6 +89,7 @@ export default function CreateEvent() {
   };
   return (
     <Container>
+      <Navigation/>
       <Row>
         <Col>
           <Card>
