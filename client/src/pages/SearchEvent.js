@@ -4,6 +4,8 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
+import Navigation from "../components/Navigation"
+
 function SearchEvent() {
   const cardStyle = {
     margin: "15px"
@@ -13,6 +15,7 @@ function SearchEvent() {
     <div style={{ margin: "0 auto" }}>
       {/* navbar - HOME/OTHER NAV LINKS */}
       {/* search bar - event name, category, time frame, distance (google api) */}
+      <Navigation/>
       <Card style={{ margin: "25px" }}>
         <Card.Body>
           <Card.Title>Event Search</Card.Title>

@@ -14,11 +14,15 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-
-import React, { Component } from 'react';
+import GeocodeForm from "../components/GeocodeForm";
+import API from "../utils/API";
+import history from "../utils/history";
+import React, { useState } from "react";
 // import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 import Map from "../components/Map"
-import GeocodeForm from "../components/GeocodeForm"
+import Navigation from "../components/Navigation"
+
 
 const useStyles = {
   grid: {
@@ -42,20 +46,49 @@ const useStyles = {
 };
 
 export default function CreateEvent() {
-  const [selectedDate, setSelectedDate] = React.useState(
-    new Date()
-  );
+  // const [todayDate, setDate] = useState(new Date());
+  // const [todayTime, setTime] = useState(new Date());
 
-  function handleDateChange(date) {
-    setSelectedDate(date);
-  }
+  // function handleDate(date) {
+  //   setDate(date);
+  // }
+  // function handleTime(date) {
+  //   setTime(date);
+  // }
+
+  const [event, setEvent] = useState({
+    eventName: "",
+    eventLocation: "",
+    category: "",
+    groupSize: "",
+    eventDetails: ""
+  });
+
+  const { eventName, eventLocation, category, groupSize, eventDetails } = event;
+
+  const handleChange = e => {
+    console.log(e.target.value);
+    setEvent({ ...event, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    API.createEvent({
+      name: eventName,
+      location: eventLocation,
+      groupSize: groupSize,
+      description: eventDetails,
+      category: category
+    }).then(history.push("/user"));
+  };
   return (
     <Container>
+      <Navigation/>
       <Row>
         <Col>
           <Card>
             <Card.Body>
-              <Form>
+              <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="exampleForm.ControlInput1">
                   <InputGroup className="mb-3">
                     <InputGroup.Prepend>
@@ -64,6 +97,10 @@ export default function CreateEvent() {
                       </InputGroup.Text>
                     </InputGroup.Prepend>
                     <FormControl
+                      value={eventName}
+                      type="text"
+                      name="eventName"
+                      onChange={handleChange}
                       aria-label="Default"
                       aria-describedby="inputGroup-sizing-default"
                     />
@@ -77,6 +114,10 @@ export default function CreateEvent() {
                       </InputGroup.Text>
                     </InputGroup.Prepend>
                     <FormControl
+                      value={eventLocation}
+                      type="text"
+                      name="eventLocation"
+                      onChange={handleChange}
                       aria-label="Default"
                       aria-describedby="inputGroup-sizing-default"
                     />
@@ -87,7 +128,12 @@ export default function CreateEvent() {
                   <Col>
                     <Form.Group controlId="exampleForm.ControlSelect1">
                       <Form.Label>Categories</Form.Label>
-                      <Form.Control as="select">
+                      <Form.Control
+                        value={category}
+                        name="category"
+                        onChange={handleChange}
+                        as="select"
+                      >
                         <option>Movie</option>
                         <option>Concert</option>
                         <option>Food/Drink</option>
@@ -113,35 +159,50 @@ export default function CreateEvent() {
                         <Form.Check
                           custom
                           inline
+                          onChange={handleChange}
                           label="1"
+                          value="1"
+                          name="groupSize"
                           type={type}
                           id={`custom-inline-${type}-1`}
                         />
                         <Form.Check
                           custom
                           inline
+                          onChange={handleChange}
                           label="2"
+                          value="2"
+                          name="groupSize"
                           type={type}
                           id={`custom-inline-${type}-2`}
                         />
                         <Form.Check
                           custom
                           inline
+                          onChange={handleChange}
                           label="3"
+                          value="3"
+                          name="groupSize"
                           type={type}
                           id={`custom-inline-${type}-3`}
                         />
                         <Form.Check
                           custom
                           inline
+                          onChange={handleChange}
                           label="4"
+                          value="4"
+                          name="groupSize"
                           type={type}
                           id={`custom-inline-${type}-4`}
                         />
                         <Form.Check
                           custom
                           inline
+                          onChange={handleChange}
                           label="5+"
+                          name="groupSize"
+                          value="5+"
                           type={type}
                           id={`custom-inline-${type}-5`}
                         />
@@ -153,10 +214,17 @@ export default function CreateEvent() {
                   <Col>
                     <Form.Group controlId="exampleForm.ControlTextarea1">
                       <Form.Label>Event Details:</Form.Label>
-                      <Form.Control as="textarea" rows="3" />
+                      <Form.Control
+                        value={eventDetails}
+                        type="text"
+                        name="eventDetails"
+                        onChange={handleChange}
+                        as="textarea"
+                        rows="3"
+                      />
                     </Form.Group>
                   </Col>
-                  <Col>
+                  {/* <Col>
                     <div>
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <Grid container justify="space-around">
@@ -164,8 +232,8 @@ export default function CreateEvent() {
                             margin="normal"
                             id="startDate"
                             label="Select event start date"
-                            value={selectedDate}
-                            onChange={handleDateChange}
+                            value={startDate}
+                            onChange={onChange}
                             KeyboardButtonProps={{
                               "aria-label": "change date"
                             }}
@@ -174,8 +242,8 @@ export default function CreateEvent() {
                             margin="normal"
                             id="startTime"
                             label="Select a time to meet"
-                            value={selectedDate}
-                            onChange={handleDateChange}
+                            value={startTime}
+                            onChange={onChange}
                             KeyboardButtonProps={{
                               "aria-label": "change time"
                             }}
@@ -187,8 +255,8 @@ export default function CreateEvent() {
                             margin="normal"
                             id="endDate"
                             label="Day event ends"
-                            value={selectedDate}
-                            onChange={handleDateChange}
+                            value={endDate}
+                            onChange={onchange}
                             KeyboardButtonProps={{
                               "aria-label": "change date"
                             }}
@@ -197,8 +265,8 @@ export default function CreateEvent() {
                             margin="normal"
                             id="endTime"
                             label="Time event ends"
-                            value={selectedDate}
-                            onChange={handleDateChange}
+                            value={endTime}
+                            onChange={onChange}
                             KeyboardButtonProps={{
                               "aria-label": "change time"
                             }}
@@ -206,7 +274,7 @@ export default function CreateEvent() {
                         </Grid>
                       </MuiPickersUtilsProvider>
                     </div>
-                  </Col>
+                  </Col> */}
                 </Row>
                 <br />
                 <div
@@ -223,23 +291,21 @@ export default function CreateEvent() {
             </Card.Body>
           </Card>
         </Col>
-
-
       </Row>
-        
-        {/* <Row>
+
+      {/* <Row>
         <Col>
-            <div style={{ margin: '10px' }}>
+          <div style={{ margin: "10px" }}>
             <Map />
             </div>
         </Col>
         </Row>
          */}
-        <Row>
+      <Row>
         <Col>
-            <GeocodeForm/>
+          <GeocodeForm />
         </Col>
-        </Row>
+      </Row>
     </Container>
   );
 }

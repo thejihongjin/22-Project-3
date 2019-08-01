@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup"
+import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Tabs from "react-bootstrap/Tabs";
@@ -12,6 +13,7 @@ import Col from "react-bootstrap/Col";
 import { useUserContext } from "../utils/userContext"
 import API from "../utils/API";
 import history from '../utils/history';
+import Navigation from "../components/Navigation"
 
 
 const useStyles = {
@@ -75,23 +77,26 @@ const User = (props) => {
 
     return (
         <Container>
+        <Navigation/>
             <Row>
                 <Col>
                     <Card style={{ width: "25em", margin: "10px 0" }}>
-                        <Card.Body>
-                            <div style={useStyles.flexBetween}>
-                                <Card.Title>Welcome, {user.displayname} </Card.Title>{" "}
-                                <Card.Link href="#" onClick={() => setModalShow(true)}>
-                                    Edit
-                </Card.Link>
-                            </div>
-                            <Card.Subtitle className="mb-2 text-muted">Lizard</Card.Subtitle>
-                            <Card.Text>
-                                Some quick example text to build on the card title and make up
-                                the bulk of the card's content.
-                                user.profile
+            <Card.Body>
+              <div style={useStyles.flexBetween}>
+                <Card.Title>Welcome, {user.displayname} </Card.Title>{" "}
+                <Link href="#" onClick={() => setModalShow(true)}>
+                  Edit
+                </Link>
+              </div>
+              <Card.Subtitle className="mb-2 text-muted">Lizard</Card.Subtitle>
+              <Card.Text>
+                {user.bio === ""
+                 ? "Add some info about yourself"
+                 : user.bio}
               </Card.Text>
-                        </Card.Body>
+              <Link to="/create" class="card-link">Create New Event</Link>
+
+            </Card.Body>
                     </Card>
                 </Col>
                 <Col>
@@ -188,7 +193,6 @@ const User = (props) => {
                             <Form.Control type="email" defaultValue={user.email} 
                                     onChange={e => setEmail(e.target.value)}/>
                         </Form.Group>
-
                         <Form.Group controlId="changePassword">
                             <Form.Label>Change Password</Form.Label>
                             <Form.Control type="password" placeholder="Password" 

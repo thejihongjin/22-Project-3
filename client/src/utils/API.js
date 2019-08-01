@@ -10,7 +10,7 @@ export default {
         })
         .then(response => cb(response));
     });*/
-    return axios.post("/api/user", userData)
+    return axios.post("/api/user", userData);
   },
   getUser: loginData => {
     return axios.post("/api/user/signin", loginData);
