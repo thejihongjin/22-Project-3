@@ -1,45 +1,53 @@
-import React, { useState } from "react";
-// import User from "../pages/User";
+import React, { useState, useEffect, useContext } from "react";
+import AuthContext from "../context/auth/authContext";
 import { Container, Row, Col } from "react-bootstrap";
 import { Form, Button } from "react-bootstrap";
-import API from "../utils/API";
-import { useUserContext } from "../utils/userContext";
 import history from "../utils/history";
 
-function Register(props) {
-  const [newUserName, setNewUserName] = useState("");
-  const [newEmail, setNewEmail] = useState("");
-  const [newPassWord, setNewPassWord] = useState("");
-  const [passWordVer, setPassWordVer] = useState("");
-  const [state, dispatch] = useUserContext();
+const Register = props => {
+  const authContext = useContext(AuthContext);
+  const { register, error, clearErrors, isAuthenticated } = authContext;
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-    if (newPassWord !== passWordVer) {
-      alert("passwords must match");
-    } else {
-      API.registerUser({
-        username: newUserName,
-        displayname: newUserName,
-        email: newEmail,
-        password: passWordVer
-      })
-        .then(returnUser => {
-          dispatch({ type: "registerNewUser", user: returnUser.data });
-        })
-        .then(history.push("/user"));
+  const [user, setUser] = useState({
+    newUserName: "",
+    newEmail: "",
+    newPassWord: "",
+    passWordVer: ""
+  });
+  const { newUserName, newEmail, newPassWord, passWordVer } = user;
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      // redirect to userpage
+      history.push("/user");
     }
 
-    /*API.registerUser(
-      {
+    if (error === "User already exists") {
+      alert("User already exists");
+      clearErrors();
+    }
+    // eslint-disable-next-line
+  }, [error, isAuthenticated]);
+
+  const handleChange = e =>
+    setUser({ ...user, [e.target.name]: e.target.value });
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (newUserName === "" || newEmail === "" || newPassWord === "") {
+      alert("Please enter all fields");
+    } else if (newPassWord !== passWordVer) {
+      alert("Passwords do not match");
+    } else {
+      register({
         username: newUserName,
         displayname: newUserName,
         email: newEmail,
         password: passWordVer
-      },
-      result => console.log(result)
-    );*/
+      });
+    }
   };
+
   return (
     <Container>
       <Form onSubmit={handleSubmit}>
@@ -47,7 +55,8 @@ function Register(props) {
           <Form.Label>Username: </Form.Label>
           <Form.Control
             value={newUserName}
-            onChange={e => setNewUserName(e.target.value)}
+            name="newUserName"
+            onChange={handleChange}
             type="text"
             placeholder="Username"
           />
@@ -56,7 +65,8 @@ function Register(props) {
           <Form.Label>Email:</Form.Label>
           <Form.Control
             value={newEmail}
-            onChange={e => setNewEmail(e.target.value)}
+            name="newEmail"
+            onChange={handleChange}
             type="email"
             placeholder="Email"
           />
@@ -65,7 +75,8 @@ function Register(props) {
           <Form.Label>Password:</Form.Label>
           <Form.Control
             value={newPassWord}
-            onChange={e => setNewPassWord(e.target.value)}
+            name="newPassWord"
+            onChange={handleChange}
             type="password"
             placeholder="Password"
           />
@@ -74,7 +85,8 @@ function Register(props) {
           <Form.Label>Re-type Password:</Form.Label>
           <Form.Control
             value={passWordVer}
-            onChange={e => setPassWordVer(e.target.value)}
+            name="passWordVer"
+            onChange={handleChange}
             type="password"
             placeholder="Type in your password again"
           />
@@ -94,6 +106,6 @@ function Register(props) {
       </Form>
     </Container>
   );
-}
+};
 
 export default Register;
