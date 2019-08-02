@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import Card from "react-bootstrap/Card";
 import Grid from "@material-ui/core/Grid";
+import history from "../utils/history";
 import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
@@ -100,13 +101,7 @@ export default function CreateEvent() {
       addEvent(event);
     }
     clearCurrent();
-    setEvent({
-      eventName: "",
-      eventLocation: "",
-      category: "Movie",
-      groupSize: "",
-      eventDetails: ""
-    });
+    history.push("/user");
   };
 
   // const clearAll = () => {
