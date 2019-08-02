@@ -1,29 +1,28 @@
-// import React from "react";
+import React, { useState, useContext, useEffect } from "react";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import Card from "react-bootstrap/Card";
-import Grid from "@material-ui/core/Grid";
-import DateFnsUtils from "@date-io/date-fns";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker
-} from "@material-ui/pickers";
+// import Grid from "@material-ui/core/Grid";
+// import DateFnsUtils from "@date-io/date-fns";
+// import {
+//   MuiPickersUtilsProvider,
+//   KeyboardTimePicker,
+//   KeyboardDatePicker
+// } from "@material-ui/pickers";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import GeocodeForm from "../components/GeocodeForm";
-import API from "../utils/API";
-import history from "../utils/history";
-import { useUserContext } from "../utils/userContext";
-import React, { useState } from "react";
+// import GeocodeForm from "../components/GeocodeForm";
+// import history from "../utils/history";
+// import Map from "../components/Map";
+import AuthContext from "../context/auth/authContext";
+
 // import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import Map from "../components/Map"
-import Navigation from "../components/Navigation"
-
+import Navigation from "../components/Navigation";
+import EventContext from "../context/event/eventContext";
 
 const useStyles = {
   grid: {
@@ -47,7 +46,10 @@ const useStyles = {
 };
 
 export default function CreateEvent() {
-  const [state, dispatch] = useUserContext();
+  const eventContext = useContext(EventContext);
+  const authContext = useContext(AuthContext);
+  const { addEvent, updateEvent, clearCurrent, current } = eventContext;
+  const { user } = authContext;
   // const [todayDate, setDate] = useState(new Date());
   // const [todayTime, setTime] = useState(new Date());
 
@@ -58,38 +60,54 @@ export default function CreateEvent() {
   //   setTime(date);
   // }
 
+  // useEffect(() => {
+  //   if (current !== null) {
+  //     setEvent(current);
+  //   } else {
+  //     setEvent({
+  //       eventName: "",
+  //       eventLocation: "",
+  //       category: "",
+  //       groupSize: "",
+  //       eventDetails: ""
+  //     });
+  //   }
+  // }, [eventContext, current]);
+
   const [event, setEvent] = useState({
-    eventName: "",
-    eventLocation: "",
-    category: "",
+    name: "",
+    location: "",
+    category: "Movie",
     groupSize: "",
-    eventDetails: ""
+    description: ""
   });
 
-  const { eventName, eventLocation, category, groupSize, eventDetails } = event;
+  const { name, location, category, groupSize, description } = event;
 
   const handleChange = e => {
-    console.log(e.target.value);
     setEvent({ ...event, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(state.user);
-    API.createEvent({
-      name: eventName,
-      location: eventLocation,
-      groupSize: groupSize,
-      description: eventDetails,
-      category: category,
-      user: state.user._id
-    })
-      .then(dataform => console.log(dataform))
-      .then(history.push("/user"));
+
+    addEvent(event);
+    setEvent({
+      name: "",
+      location: "",
+      category: "Movie",
+      groupSize: "",
+      description: ""
+    });
   };
+
+  const clearAll = () => {
+    clearCurrent();
+  };
+
   return (
     <Container>
-      <Navigation/>
+      <Navigation />
       <Row>
         <Col>
           <Card>
@@ -103,9 +121,9 @@ export default function CreateEvent() {
                       </InputGroup.Text>
                     </InputGroup.Prepend>
                     <FormControl
-                      value={eventName}
+                      value={name}
                       type="text"
-                      name="eventName"
+                      name="name"
                       onChange={handleChange}
                       aria-label="Default"
                       aria-describedby="inputGroup-sizing-default"
@@ -120,9 +138,9 @@ export default function CreateEvent() {
                       </InputGroup.Text>
                     </InputGroup.Prepend>
                     <FormControl
-                      value={eventLocation}
+                      value={location}
                       type="text"
-                      name="eventLocation"
+                      name="location"
                       onChange={handleChange}
                       aria-label="Default"
                       aria-describedby="inputGroup-sizing-default"
@@ -156,64 +174,68 @@ export default function CreateEvent() {
                   </Col>
                   <Col>
                     <Form.Label>Group Size:</Form.Label>
-                    {["radio"].map(type => (
-                      <div
-                        key={`custom-inline-${type}`}
-                        style={useStyles.flexBetween}
-                        className="mb-3"
-                      >
-                        <Form.Check
-                          custom
-                          inline
-                          onChange={handleChange}
-                          label="1"
-                          value="1"
-                          name="groupSize"
-                          type={type}
-                          id={`custom-inline-${type}-1`}
-                        />
-                        <Form.Check
-                          custom
-                          inline
-                          onChange={handleChange}
-                          label="2"
-                          value="2"
-                          name="groupSize"
-                          type={type}
-                          id={`custom-inline-${type}-2`}
-                        />
-                        <Form.Check
-                          custom
-                          inline
-                          onChange={handleChange}
-                          label="3"
-                          value="3"
-                          name="groupSize"
-                          type={type}
-                          id={`custom-inline-${type}-3`}
-                        />
-                        <Form.Check
-                          custom
-                          inline
-                          onChange={handleChange}
-                          label="4"
-                          value="4"
-                          name="groupSize"
-                          type={type}
-                          id={`custom-inline-${type}-4`}
-                        />
-                        <Form.Check
-                          custom
-                          inline
-                          onChange={handleChange}
-                          label="5+"
-                          name="groupSize"
-                          value="5+"
-                          type={type}
-                          id={`custom-inline-${type}-5`}
-                        />
-                      </div>
-                    ))}
+
+                    <div
+                      key={`custom-inline-radio`}
+                      style={useStyles.flexBetween}
+                      className="mb-3"
+                    >
+                      <Form.Check
+                        custom
+                        inline
+                        checked={groupSize === "1"}
+                        onChange={handleChange}
+                        label="1"
+                        value="1"
+                        name="groupSize"
+                        type="radio"
+                        id={`custom-inline-radio-1`}
+                      />
+                      <Form.Check
+                        custom
+                        inline
+                        checked={groupSize === "2"}
+                        onChange={handleChange}
+                        label="2"
+                        value="2"
+                        name="groupSize"
+                        type="radio"
+                        id={`custom-inline-radio-2`}
+                      />
+                      <Form.Check
+                        custom
+                        inline
+                        checked={groupSize === "3"}
+                        onChange={handleChange}
+                        label="3"
+                        value="3"
+                        name="groupSize"
+                        type="radio"
+                        id={`custom-inline-radio-3`}
+                      />
+                      <Form.Check
+                        custom
+                        inline
+                        onChange={handleChange}
+                        label="4"
+                        value="4"
+                        checked={groupSize === "4"}
+                        name="groupSize"
+                        type="radio"
+                        id={`custom-inline-radio-4`}
+                      />
+                      <Form.Check
+                        custom
+                        inline
+                        checked={groupSize === "5+"}
+                        onChange={handleChange}
+                        label="5+"
+                        name="groupSize"
+                        value="5+"
+                        type="radio"
+                        id={`custom-inline-radio-5`}
+                      />
+                    </div>
                   </Col>
                 </Row>
                 <Row>
@@ -221,9 +243,9 @@ export default function CreateEvent() {
                     <Form.Group controlId="exampleForm.ControlTextarea1">
                       <Form.Label>Event Details:</Form.Label>
                       <Form.Control
-                        value={eventDetails}
+                        value={description}
                         type="text"
-                        name="eventDetails"
+                        name="description"
                         onChange={handleChange}
                         as="textarea"
                         rows="3"
@@ -306,12 +328,12 @@ export default function CreateEvent() {
             </div>
         </Col>
         </Row>
-         */}
+        
       <Row>
         <Col>
           <GeocodeForm />
         </Col>
-      </Row>
+      </Row> */}
     </Container>
   );
 }

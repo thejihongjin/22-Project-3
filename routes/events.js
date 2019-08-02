@@ -20,6 +20,7 @@ router.get("/", auth, async (req, res) => {
 router.post(
   "/",
   [
+    auth,
     [
       check("name", "Name is required")
         .not()
@@ -27,6 +28,7 @@ router.post(
     ]
   ],
   async (req, res) => {
+    console.log(req.body);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -40,8 +42,8 @@ router.post(
       end,
       category,
       description,
-      attendingID,
-      pendingID
+      attendingId,
+      pendingId
     } = req.body;
 
     try {
@@ -53,8 +55,8 @@ router.post(
         end,
         category,
         description,
-        attendingID,
-        pendingID,
+        attendingId,
+        pendingId,
         user: req.user.id
       });
       const event = await newEvent.save();
@@ -76,8 +78,8 @@ router.put("/:id", auth, async (req, res) => {
     end,
     category,
     description,
-    attendingID,
-    pendingID
+    attendingId,
+    pendingId
   } = req.body;
 
   const eventFields = {};
@@ -88,8 +90,8 @@ router.put("/:id", auth, async (req, res) => {
   if (end) eventFields.end = end;
   if (category) eventFields.category = category;
   if (description) eventFields.description = description;
-  if (attendingID) eventFields.attendingID = attendingID;
-  if (pendingID) eventFields.pendingID = pendingID;
+  if (attendingID) eventFields.attendingId = attendingId;
+  if (pendingID) eventFields.pendingId = pendingId;
 
   try {
     let event = await Event.findById(req.params.id);

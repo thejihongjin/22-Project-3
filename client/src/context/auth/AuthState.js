@@ -11,7 +11,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  UPDATE_USER
 } from "../types";
 
 const AuthState = props => {
@@ -92,6 +93,26 @@ const AuthState = props => {
       });
     }
   };
+
+  // Update User
+  // const updateUser = async user => {
+  //   const config = {
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     }
+  //   };
+
+  //   try {
+  //     const res = await axios.put(`/api/users/${user._id}`, user, config);
+
+  //     dispatch({
+  //       type: UPDATE_USER,
+  //       payload: res.data
+  //     });
+  //   } catch (err) {
+  //     dispatch({ type: AUTH_ERROR });
+  //   }
+  // };
 
   // Logout
   const logout = () => dispatch({ type: LOGOUT });

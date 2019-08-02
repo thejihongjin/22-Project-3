@@ -2,8 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import history from "../utils/history";
 import AuthContext from "../context/auth/authContext";
 import { Container, Row, Col, Jumbotron, Modal, Button } from "react-bootstrap";
-const Register = React.lazy(() => import("./Register"));
-const SignIn = React.lazy(() => import("./SignIn"));
+import Register from "./Register"
+import SignIn from "./SignIn"
 
 const About = props => {
   const [showRegister, setShowRegister] = useState(false);

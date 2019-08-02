@@ -12,10 +12,10 @@ const Navigation = () => {
   const onLogout = () => {
     logout();
   };
-  console.log(user);
+  //console.log(user);
 
   const authLinks = (
-    <Fragment>
+    <div>
       <li>
         <Link to="/search" className="nav-link">
           Find an Event
@@ -26,22 +26,22 @@ const Navigation = () => {
           Logout
         </a>
       </li>
-    </Fragment>
+    </div>
   );
 
   const guestLinks = (
-    <Fragment>
+    <div>
       <li>
-        <Link to="/register" className="nav-link">
+        <Link to="/" className="nav-link">
           Register
         </Link>
       </li>
       <li>
-        <Link to="/login" className="nav-link">
+        <Link to="/" className="nav-link">
           Login
         </Link>
       </li>
-    </Fragment>
+    </div>
   );
 
   return (
@@ -54,7 +54,7 @@ const Navigation = () => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <div>{isAuthenticated ? authLinks : guestLinks}</div>
+         {isAuthenticated ? authLinks : guestLinks}
         </Nav>
       </Navbar.Collapse>
     </Navbar>

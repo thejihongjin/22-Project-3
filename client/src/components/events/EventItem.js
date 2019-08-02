@@ -1,0 +1,51 @@
+import React, { useState, useContext } from "react";
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import Alert from "react-bootstrap/Alert";
+import EventContext from "../../context/event/eventContext";
+
+const EventItem = ({ event }) => {
+  const eventContext = useContext(EventContext);
+  const { deleteEvent } = eventContext;
+  const { _id, name, location, category, description } = event;
+  const [showAlert, setShowAlert] = useState(false);
+
+  const handleDelete = () => {
+    setShowAlert(false);
+    deleteEvent(_id);
+  };
+  if (showAlert) {
+    return (
+      <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
+        <Alert.Heading>
+          Are you sure you want to delete this event?
+        </Alert.Heading>
+        <Button className="btn-danger" onClick={handleDelete}>
+          Yes
+        </Button>
+      </Alert>
+    );
+  }
+
+  return (
+    <div>
+      <Card style={{ width: "25rem" }}>
+        {" "}
+        <Card.Body>
+          <Card.Title>{name}</Card.Title>
+          <Card.Subtitle className="mb-2 text-muted">{category}</Card.Subtitle>
+          <Card.Subtitle className="mb-2 text-muted">
+            Location: {location}
+          </Card.Subtitle>
+          <Card.Text>{description}</Card.Text>
+          <Card.Link href="#">Edit</Card.Link>
+          <Button style={{float: 'right'}} className="btn-danger" size="sm" onClick={() => setShowAlert(true)}>
+            Delete
+          </Button>
+        </Card.Body>
+      </Card>
+    </div>
+  );
+};
+
+export default EventItem;
