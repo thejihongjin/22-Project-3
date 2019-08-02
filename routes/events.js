@@ -90,8 +90,8 @@ router.put("/:id", auth, async (req, res) => {
   if (end) eventFields.end = end;
   if (category) eventFields.category = category;
   if (description) eventFields.description = description;
-  if (attendingID) eventFields.attendingId = attendingId;
-  if (pendingID) eventFields.pendingId = pendingId;
+  if (attendingId) eventFields.attendingId = attendingId;
+  if (pendingId) eventFields.pendingId = pendingId;
 
   try {
     let event = await Event.findById(req.params.id);

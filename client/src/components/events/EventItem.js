@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
@@ -6,13 +7,14 @@ import EventContext from "../../context/event/eventContext";
 
 const EventItem = ({ event }) => {
   const eventContext = useContext(EventContext);
-  const { deleteEvent } = eventContext;
+  const { deleteEvent, setCurrent, clearCurrent } = eventContext;
   const { _id, name, location, category, description } = event;
   const [showAlert, setShowAlert] = useState(false);
 
   const handleDelete = () => {
     setShowAlert(false);
     deleteEvent(_id);
+    clearCurrent();
   };
   if (showAlert) {
     return (
@@ -38,8 +40,20 @@ const EventItem = ({ event }) => {
             Location: {location}
           </Card.Subtitle>
           <Card.Text>{description}</Card.Text>
-          <Card.Link href="#">Edit</Card.Link>
-          <Button style={{float: 'right'}} className="btn-danger" size="sm" onClick={() => setShowAlert(true)}>
+          <Link
+            onClick={() => setCurrent(event)}
+            to="/create"
+            className="card-link"
+          >
+            Edit
+          </Link>
+
+          <Button
+            style={{ float: "right" }}
+            className="btn-danger"
+            size="sm"
+            onClick={() => setShowAlert(true)}
+          >
             Delete
           </Button>
         </Card.Body>
