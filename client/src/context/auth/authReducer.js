@@ -2,6 +2,7 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   USER_LOADED,
+  UPDATE_USER,
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -25,6 +26,14 @@ export default (state, action) => {
         ...state,
         ...action.payload,
         isAuthenticated: true,
+        loading: false
+      };
+      case UPDATE_USER:
+      return {
+        ...state,
+        user: state.user.map(user =>
+          user._id === action.payload._id ? action.payload : user
+        ),
         loading: false
       };
     case REGISTER_FAIL:

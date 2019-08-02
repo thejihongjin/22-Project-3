@@ -1,10 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
+import EventList from "../components/events/EventList";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
-
 import AuthContext from "../context/auth/authContext";
-import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Tabs from "react-bootstrap/Tabs";
@@ -12,9 +11,7 @@ import Tab from "react-bootstrap/Tab";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { useUserContext } from "../utils/userContext";
 import API from "../utils/API";
-import history from "../utils/history";
 import Navigation from "../components/Navigation";
 
 const useStyles = {
@@ -49,9 +46,8 @@ const User = props => {
   const [email, setEmail] = useState("");
   const [passWord, setPassWord] = useState("");
   const [passWordVer, setPassWordVer] = useState("");
-  const [state, dispatch] = useUserContext();
   const authContext = useContext(AuthContext);
-  const { user } = authContext;
+  const { user, updateUser } = authContext;
 
   useEffect(() => {
     authContext.loadUser();
@@ -102,49 +98,14 @@ const User = props => {
         </Col>
         <Col>
           {" "}
-          <Card style={{ width: "31em", margin: "10px 0" }}>
+          <Card style={{ margin: "10px 0" }}>
             <Card.Body>
               <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
                 <Tab eventKey="home" title="Upcoming Events">
                   <br />
-                  <Card style={{ width: "18rem" }}>
-                    <Card.Body>
-                      <Card.Title>Go To Japan</Card.Title>
-                      <Card.Subtitle className="mb-2 text-muted">
-                        Travel
-                      </Card.Subtitle>
-                      <Card.Text>
-                        Looking for someone to go to Japan with.
-                      </Card.Text>
-                      <Card.Link href="#">View Event</Card.Link>
-                    </Card.Body>
-                  </Card>
-                  <Card style={{ width: "18rem" }}>
-                    <Card.Body>
-                      <Card.Title>Harry Potter Marathon</Card.Title>
-                      <Card.Subtitle className="mb-2 text-muted">
-                        Movie
-                      </Card.Subtitle>
-                      <Card.Text>
-                        Watch all the Harry Potter's with me!
-                      </Card.Text>
-                      <Card.Link href="#">View Event</Card.Link>
-                    </Card.Body>
-                  </Card>
+                  <EventList />
                 </Tab>
-                <Tab eventKey="profile" title="Past Events">
-                  <br />
-                  <Card style={{ width: "18rem" }}>
-                    <Card.Body>
-                      <Card.Title>Jogging Partner</Card.Title>
-                      <Card.Subtitle className="mb-2 text-muted">
-                        Fitness
-                      </Card.Subtitle>
-                      <Card.Text>Come run with me.</Card.Text>
-                      <Card.Link href="#">View Event</Card.Link>
-                    </Card.Body>
-                  </Card>
-                </Tab>
+                <Tab eventKey="profile" title="Past Events" />
               </Tabs>
             </Card.Body>
           </Card>

@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import AuthContext from "../context/auth/authContext";
-import API from "../utils/API";
 import { Container, Row, Col } from "react-bootstrap";
 import { Form, Button } from "react-bootstrap";
-import { useUserContext } from "../utils/userContext";
 import history from "../utils/history";
 
 const SignIn = props => {
