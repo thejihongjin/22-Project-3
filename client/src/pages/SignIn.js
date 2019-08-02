@@ -1,25 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import AuthContext from "../context/auth/authContext";
 import API from "../utils/API";
 import { Container, Row, Col } from "react-bootstrap";
 import { Form, Button } from "react-bootstrap";
 import { useUserContext } from "../utils/userContext";
-import history from '../utils/history';
+import history from "../utils/history";
 
 const SignIn = props => {
+  const authContext = useContext(AuthContext);
+  const { login, error, clearErrors, isAuthenticated } = authContext;
   const [email, setEmail] = useState("");
   const [passWord, setPassWord] = useState("");
-  const [state, dispatch] = useUserContext()
+  
+
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      // redirect to userpage
+      history.push("/user");
+    }
+
+    if (error === "Invalid Credentials") {
+      alert("Email or Password is incorrect");
+      clearErrors();
+    }
+    // eslint-disable-next-line
+  }, [error, isAuthenticated]);
 
   const handleSubmit = e => {
     e.preventDefault();
-    API.getUser({
-      email: email,
-      password: passWord
-    }).then(userInfo => {
-      dispatch({ type: "registerNewUser", user: userInfo.data })
-    }).then(
-      history.push('/user')
-    );
+    if (email === "" || passWord === "") {
+      alert("Please input both email and password.");
+    } else {
+      login({
+        email: email,
+        password: passWord
+      });
+    }
   };
 
   return (
@@ -58,6 +75,6 @@ const SignIn = props => {
       </Form>
     </Container>
   );
-}
+};
 
 export default SignIn;
