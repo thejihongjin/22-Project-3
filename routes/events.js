@@ -53,7 +53,8 @@ router.post(
       category,
       description,
       attendingId,
-      pendingId
+      pendingId,
+      addressInfo
     } = req.body;
 
     try {
@@ -67,6 +68,7 @@ router.post(
         description,
         attendingId,
         pendingId,
+        addressInfo,
         user: req.user.id
       });
       const event = await newEvent.save();
@@ -94,7 +96,8 @@ router.put("/:id", auth, async (req, res) => {
     category,
     description,
     attendingId,
-    pendingId
+    pendingId,
+    addressInfo
   } = req.body;
 
   const eventFields = {};
@@ -107,6 +110,7 @@ router.put("/:id", auth, async (req, res) => {
   if (description) eventFields.description = description;
   if (attendingId) eventFields.attendingId = attendingId;
   if (pendingId) eventFields.pendingId = pendingId;
+  if (addressInfo) eventFields.addressInfo = addressInfo;
 
   try {
     let event = await Event.findById(req.params.id);

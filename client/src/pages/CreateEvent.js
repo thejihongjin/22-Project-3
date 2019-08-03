@@ -16,15 +16,14 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-// import GeocodeForm from "../components/GeocodeForm";
-// import history from "../utils/history";
-// import Map from "../components/Map";
 import AuthContext from "../context/auth/authContext";
-
 // import { BrowserRouter as Router, Route } from 'react-router-dom';
-
-import Navigation from "../components/Navigation";
+import MapCont from "../components/Map"
+import Navigation from "../components/Navigation"
 import EventContext from "../context/event/eventContext";
+import Geocode from "react-geocode";
+
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY)
 
 const useStyles = {
   grid: {
@@ -61,8 +60,9 @@ export default function CreateEvent() {
     category: "Movie",
     groupSize: "",
     description: "",
+    addressInfo: "",
     start: null,
-    end: null
+    end: null,
   });
 
   const handleStartTime = (time)=>{
@@ -84,30 +84,23 @@ export default function CreateEvent() {
     setEvent(saveState)
     //setEvent({...event, [start]: date})
   }
-  
-
-
-
   useEffect(() => {
     if (current) {
       setEvent(current);
       setStartTime(current.start)
       setEndTime(current.end)
     } else {
-      setEvent({
-        eventName: "",
-        eventLocation: "",
-        category: "Movie",
-        groupSize: "",
-        eventDetails: ""
-      });
+      // setEvent({
+      //   category: "Movie",
+      //   groupSize: "",
+      //   addressInfo: ""
+      // });
+      console.log("No event yet")
     }
     
   }, [eventContext, current]);
 
- 
-
-  const { name, location, category, groupSize, description } = event;
+  const { name, location, category, groupSize, description, addressInfo } = event;
 
   const handleChange = e => {
     setEvent({ ...event, [e.target.name]: e.target.value });
@@ -115,20 +108,48 @@ export default function CreateEvent() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    if (current) {
-      updateEvent(event);
-    } else {
-      addEvent(event);
-    }
-    clearCurrent();
-    history.push("/user");
-    //console.log(e)
+    let userInput = event.location
+    let address;
+    console.log(userInput)
+
+    Geocode.fromAddress(userInput).then(
+    response => {
+        // const { lat, lng } = response.results[0].geometry.location;
+        // console.log(lat, lng);
+        // setLocation({...locationInput, mapLat: lat})
+        // setLocation({...locationInput, mapLng: lng})
+        address = response.results[0].formatted_address;
+        console.log(response.results)
+      },
+      error => {
+        console.error(error);
+      }
+      ).finally(() => {
+        const postEvent = { ...event }
+        postEvent.addressInfo = address;
+        setEvent(postEvent)
+        if (current) {
+          updateEvent(event);
+        } else {
+          addEvent(postEvent); 
+        }
+        clearCurrent();
+        history.push("/user");
+        //console.log(e)
+      })
+
   };
 
   // const clearAll = () => {
   //   clearCurrent();
   // };
   
+  const eventCategories = ["Movie","Concert","Food/Drink","Bar/Club","Gaming","Coding","Party","Conversation","Other"];
+
+  const [locationInput, setLocation] = useState({
+    mapLat: 32.712043,
+    mapLng: -117.142254
+} )
 
   return (
     <Container>
@@ -159,6 +180,7 @@ export default function CreateEvent() {
                     />
                   </InputGroup>
                 </Form.Group>
+
                 <Form.Group controlId="exampleForm.ControlInput1">
                   <InputGroup className="mb-3">
                     <InputGroup.Prepend>
@@ -176,6 +198,7 @@ export default function CreateEvent() {
                     />
                   </InputGroup>
                 </Form.Group>
+                
                 <Row>
                   {" "}
                   <Col>
@@ -187,7 +210,8 @@ export default function CreateEvent() {
                         onChange={handleChange}
                         as="select"
                       >
-                        <option>Movie</option>
+                      {eventCategories.map((category, i) => <option key={i}>{category}</option>)}
+                        {/* <option>Movie</option>
                         <option>Concert</option>
                         <option>Food/Drink</option>
                         <option>Bar/Club</option>
@@ -197,7 +221,7 @@ export default function CreateEvent() {
                         <option>Conversation</option>
                         <option>Travel</option>
                         <option>Fitness</option>
-                        <option>Other</option>
+                        <option>Other</option> */}
                       </Form.Control>
                     </Form.Group>
                   </Col>
@@ -351,20 +375,15 @@ export default function CreateEvent() {
           </Card>
         </Col>
       </Row>
-
-      {/* <Row>
+{/* 
+      <Row>
         <Col>
           <div style={{ margin: "10px" }}>
             <Map />
             </div>
         </Col>
-        </Row>
+        </Row> */}
         
-      <Row>
-        <Col>
-          <GeocodeForm />
-        </Col>
-      </Row> */}
     </Container>
   );
 }

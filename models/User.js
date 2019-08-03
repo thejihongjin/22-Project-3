@@ -27,7 +27,7 @@ const UserSchema = new Schema({
     require: true,
     min: 6
   },
-  avatar: {
+  image: {
     type: String
   },
   bio: {

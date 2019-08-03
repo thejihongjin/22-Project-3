@@ -29,11 +29,10 @@ export default (state, action) => {
         loading: false
       };
       case UPDATE_USER:
+      console.log(action.payload);
       return {
         ...state,
-        user: state.user.map(user =>
-          user._id === action.payload._id ? action.payload : user
-        ),
+        user: action.payload,
         loading: false
       };
     case REGISTER_FAIL:

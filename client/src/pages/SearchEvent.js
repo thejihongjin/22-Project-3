@@ -41,6 +41,7 @@ function SearchEvent() {
       clearFilter();
     }
   };
+  const eventCategories = ["Movie","Concert","Food/Drink","Bar/Club","Gaming","Coding","Party","Conversation","Other"];
 
   return (
     <div style={{ margin: "0 auto" }}>
@@ -58,15 +59,7 @@ function SearchEvent() {
             <Form.Group controlId="exampleForm.ControlSelect2">
               <Form.Label>Category</Form.Label>
               <Form.Control as="select" multiple>
-                <option>Movie</option>
-                <option>Concert</option>
-                <option>Food/Drink</option>
-                <option>Bar/Club</option>
-                <option>Gaming</option>
-                <option>Coding</option>
-                <option>Party</option>
-                <option>Conversation</option>
-                <option>Other</option>
+                {eventCategories.map((category, i) => <option key={i}>{category}</option>)}
               </Form.Control>
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlTextarea1">
@@ -95,6 +88,7 @@ function SearchEvent() {
 
       {/* <Card style={cardStyle}>
         <Card.Body>
+          <Card.Title>Search Results</Card.Title>
           <Card style={cardStyle}>
             <Card.Body>
               <div className="float-right">

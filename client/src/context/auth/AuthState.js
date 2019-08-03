@@ -94,25 +94,26 @@ const AuthState = props => {
     }
   };
 
-  // Update User
-  // const updateUser = async user => {
-  //   const config = {
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //     }
-  //   };
+  //Update User
+  const updateUser = async user => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
 
-  //   try {
-  //     const res = await axios.put(`/api/users/${user._id}`, user, config);
-
-  //     dispatch({
-  //       type: UPDATE_USER,
-  //       payload: res.data
-  //     });
-  //   } catch (err) {
-  //     dispatch({ type: AUTH_ERROR });
-  //   }
-  // };
+    try {
+      console.log(user)
+      const res = await axios.put(`/api/users/${user._id}`, user, config);
+      console.log(res.data)
+      dispatch({
+        type: UPDATE_USER,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({ type: AUTH_ERROR });
+    }
+  };
 
   // Logout
   const logout = () => dispatch({ type: LOGOUT });
@@ -132,7 +133,8 @@ const AuthState = props => {
         loadUser,
         login,
         logout,
-        clearErrors
+        clearErrors,
+        updateUser
       }}
     >
       {props.children}
