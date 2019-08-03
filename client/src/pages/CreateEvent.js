@@ -16,15 +16,14 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-// import GeocodeForm from "../components/GeocodeForm";
-// import history from "../utils/history";
-// import Map from "../components/Map";
 import AuthContext from "../context/auth/authContext";
-
 // import { BrowserRouter as Router, Route } from 'react-router-dom';
-
-import Navigation from "../components/Navigation";
+import MapCont from "../components/Map"
+import Navigation from "../components/Navigation"
 import EventContext from "../context/event/eventContext";
+import Geocode from "react-geocode";
+
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY)
 
 const useStyles = {
   grid: {
@@ -61,6 +60,7 @@ export default function CreateEvent() {
     category: "Movie",
     groupSize: "",
     description: "",
+    addressInfo: "",
     start: null,
     end: null
   });
@@ -84,9 +84,6 @@ export default function CreateEvent() {
     setEvent(saveState)
     //setEvent({...event, [start]: date})
   }
-  
-
-
 
   useEffect(() => {
     if (current) {
@@ -105,16 +102,53 @@ export default function CreateEvent() {
     
   }, [eventContext, current]);
 
- 
-
-  const { name, location, category, groupSize, description } = event;
+  const { name, location, category, groupSize, description, addressInfo } = event;
 
   const handleChange = e => {
     setEvent({ ...event, [e.target.name]: e.target.value });
+    // let address = event.location
+    // console.log(address)
+
+    // Geocode.fromAddress(address).then(
+    // response => {
+    //     const { lat, lng } = response.results[0].geometry.location;
+    //     console.log(lat, lng);
+    //     setLocation({...locationInput, mapLat: lat})
+    //     setLocation({...locationInput, mapLng: lng})
+    //     setEvent({...event, location: response.results[0].formatted_address})
+    //     console.log(response.results[0])
+    //     console.log(response.results[0].formatted_address)
+    //     },
+    //     error => {
+    //     console.error(error);
+    //     }
+    // );
   };
 
   const handleSubmit = e => {
     e.preventDefault();
+    // setEvent({ ...event, [e.target.name]: e.target.value });
+    let address = event.location
+    console.log(address)
+
+    Geocode.fromAddress(address).then(
+    response => {
+        const { lat, lng } = response.results[0].geometry.location;
+        console.log(lat, lng);
+        setLocation({...locationInput, mapLat: lat})
+        setLocation({...locationInput, mapLng: lng})
+        let googleAdd = response.results[0].formatted_address
+        // setEvent({...event, addressInfo: response.results[0].formatted_address})
+        console.log(response.results[0])
+        console.log(response.results[0].formatted_address)
+        console.log("an address", googleAdd)
+        },
+        error => {
+        console.error(error);
+        }
+    );
+    setEvent({...event, [e.target.addressInfo]: "test"})
+
     if (current) {
       updateEvent(event);
     } else {
@@ -129,6 +163,33 @@ export default function CreateEvent() {
   //   clearCurrent();
   // };
   
+
+  const [locationInput, setLocation] = useState({
+    mapLat: 32.712043,
+    mapLng: -117.142254
+} )
+
+//   const handleFormSubmit = (event) => {
+//     event.preventDefault();
+//     let address = locationInput.addressRes
+//     console.log(address)
+
+//     Geocode.fromAddress(address).then(
+//     response => {
+//         const { lat, lng } = response.results[0].geometry.location;
+//         console.log(lat, lng);
+//         setLocation({...locationInput, mapLat: lat})
+//         setLocation({...locationInput, mapLng: lng})
+//         setEvent({...event, [location]: response.results[0].formatted_address})
+//         console.log(response.results[0])
+//         console.log(response.results[0].formatted_address)
+//         },
+//         error => {
+//         console.error(error);
+//         }
+//     );
+// }
+
 
   return (
     <Container>
@@ -159,6 +220,7 @@ export default function CreateEvent() {
                     />
                   </InputGroup>
                 </Form.Group>
+
                 <Form.Group controlId="exampleForm.ControlInput1">
                   <InputGroup className="mb-3">
                     <InputGroup.Prepend>
@@ -176,6 +238,7 @@ export default function CreateEvent() {
                     />
                   </InputGroup>
                 </Form.Group>
+                
                 <Row>
                   {" "}
                   <Col>
@@ -351,20 +414,15 @@ export default function CreateEvent() {
           </Card>
         </Col>
       </Row>
-
-      {/* <Row>
+{/* 
+      <Row>
         <Col>
           <div style={{ margin: "10px" }}>
             <Map />
             </div>
         </Col>
-        </Row>
+        </Row> */}
         
-      <Row>
-        <Col>
-          <GeocodeForm />
-        </Col>
-      </Row> */}
     </Container>
   );
 }
