@@ -49,6 +49,13 @@ const EventItem = ({ event }) => {
           >
             Edit
           </Link>
+          <Link
+            onClick={() => setCurrent(event)}
+            to="/view"
+            className="card-link"
+          >
+            View
+          </Link>
 
           {user ? (<Button
             style={{ float: "right" }}

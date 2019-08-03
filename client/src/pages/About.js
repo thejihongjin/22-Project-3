@@ -1,14 +1,26 @@
+
 import React, { useState, useEffect, useContext } from "react";
-import User from "./User";
 import history from "../utils/history";
 import AuthContext from "../context/auth/authContext";
 import { Container, Row, Col, Jumbotron, Modal, Button } from "react-bootstrap";
-import Register from "./Register";
-import SignIn from "./SignIn";
+import Register from "./Register"
+import SignIn from "./SignIn"
 
-const Login = props => {
+const About = props => {
   const [showRegister, setShowRegister] = useState(false);
   const [showSignIn, setShowSignIn] = useState(false);
+  const authContext = useContext(AuthContext);
+  const { isAuthenticated } = authContext;
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      // redirect to userpage
+      history.push("/user");
+    }
+
+    // eslint-disable-next-line
+  }, [isAuthenticated]);
+
   return (
     <Container>
       <Jumbotron fluid>
@@ -52,22 +64,6 @@ const Login = props => {
       </Modal>
     </Container>
   );
-};
-
-const About = () => {
-  const authContext = useContext(AuthContext);
-  const { isAuthenticated } = authContext;
-
-  // useEffect(() => {
-  //   if (isAuthenticated) {
-  //     // redirect to userpage
-  //     history.push("/user");
-  //   }
-
-  //   // eslint-disable-next-line
-  // }, [isAuthenticated]);
-
-  return <div>{isAuthenticated ? <User /> : <Login />}</div>;
 };
 
 export default About;

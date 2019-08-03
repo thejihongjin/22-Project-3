@@ -8,7 +8,7 @@ const EventList = () => {
   const authContext = useContext(AuthContext);
   //const { user } = authContext;
 
-  const { events, getEvents} = eventContext;
+  const { events, getEvents } = eventContext;
   console.log(events);
 
   useEffect(() => {
@@ -28,15 +28,16 @@ const EventList = () => {
   return (
     <Fragment>
       <h6>Your Created Events:</h6>
-      {events.filter(event => event.user).map(event => (
-        <EventItem key={event.id} event={event} />
-      ))}
+      {events
+        .filter(event => event.user)
+        .map(event => (
+          <EventItem key={event._id} event={event} />
+        ))}
       {/* <p>Your Joined Events</p>
       {events.filter(attend => attend.attendId === user._id).map(event => (
         <EventItem key={event.id} event={event} />
       ))} */}
     </Fragment>
-    
   );
 };
 

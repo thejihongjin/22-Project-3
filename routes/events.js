@@ -9,7 +9,7 @@ const Event = require("../models/Event");
 
 router.get("/", auth, async (req, res) => {
   try {
-    const events = await Event.find({ user: req.user.id }).sort({ date: -1 });
+    const events = await Event.find({ attendId: req.user.id }).sort({ date: -1 });
     res.json(events);
   } catch (err) {
     console.error(err.message);
@@ -70,7 +70,12 @@ router.post(
         user: req.user.id
       });
       const event = await newEvent.save();
-      res.json(event);
+      const response = await User.findByIdAndUpdate(req.user.id, {
+        $push: { attendId: event._id }
+      });
+      if (response.isModified) {
+        res.json(event);
+      }
     } catch (error) {
       console.error(error.message);
       res.status(500).send("Server Error");
