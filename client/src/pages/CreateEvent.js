@@ -84,7 +84,6 @@ export default function CreateEvent() {
     setEvent(saveState)
     //setEvent({...event, [start]: date})
   }
-
   useEffect(() => {
     if (current) {
       setEvent(current);

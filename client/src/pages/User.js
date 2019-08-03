@@ -52,20 +52,22 @@ const User = props => {
   useEffect(() => {
     authContext.loadUser();
     //eslint-disable-next-line
-  }, []);
+    console.log(user)
+  }, [user]);
 
-  const handleProfileSubmit = async e => {
+  const handleProfileSubmit = e => {
     e.preventDefault();
     if (passWord !== passWordVer) {
       alert("passwords must match");
     } else {
-      API.updateUser(user._id, {
+      updateUser({
+        ...user,
         firstname: firstName,
         lastname: lastName,
         displayname: displayName,
-        email: email,
-        password: passWordVer
-      });
+        email: email
+      })
+      setModalShow(false)
     }
   };
 
@@ -78,7 +80,7 @@ const User = props => {
             <Card.Body>
               <div style={useStyles.flexBetween}>
                 <Card.Title>Welcome, </Card.Title>{" "}
-                <Link to="#" onClick={() => setModalShow(true)}>
+                <Link onClick={() => setModalShow(true)}>
                   Edit
                 </Link>
               </div>
@@ -132,7 +134,7 @@ const User = props => {
                 <Form.Control
                   type="text"
                   onChange={e => setFirstName(e.target.value)}
-                  defaultValue={user && user.firstname}
+                  defaultValue={user && user.firstName}
                 />
               </Form.Group>
               <Form.Group as={Col} controlId="changeLastName">
@@ -140,7 +142,7 @@ const User = props => {
                 <Form.Control
                   type="text"
                   onChange={e => setLastName(e.target.value)}
-                  defaultValue={user && user.lastname}
+                  defaultValue={user && user.lastName}
                 />
               </Form.Group>
             </Form.Row>
@@ -150,7 +152,7 @@ const User = props => {
               <Form.Control
                 type="text"
                 onChange={e => setDisplayName(e.target.value)}
-                placeholder={user && user.displayname}
+                placeholder={user && user.displayName}
               />
               {/* add subtitle */}
             </Form.Group>
