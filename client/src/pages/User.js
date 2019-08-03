@@ -51,19 +51,15 @@ const User = props => {
 
   useEffect(() => {
     authContext.loadUser();
-    setFirstName(user ? user.firstname : "");
-    setLastName(user ? user.lastname: "");
-    setDisplayName(user ? user.displayname: "");
-    setEmail(user ? user.email: "");
     //eslint-disable-next-line
-  }, [authContext, user]);
+    console.log(user)
+  }, [user]);
 
   const handleProfileSubmit = e => {
     e.preventDefault();
     if (passWord !== passWordVer) {
       alert("passwords must match");
     } else {
-      console.log(updateUser)
       updateUser({
         ...user,
         firstname: firstName,
@@ -138,7 +134,7 @@ const User = props => {
                 <Form.Control
                   type="text"
                   onChange={e => setFirstName(e.target.value)}
-                  defaultValue={firstName}
+                  defaultValue={user && user.firstName}
                 />
               </Form.Group>
               <Form.Group as={Col} controlId="changeLastName">
@@ -146,7 +142,7 @@ const User = props => {
                 <Form.Control
                   type="text"
                   onChange={e => setLastName(e.target.value)}
-                  defaultValue={lastName}
+                  defaultValue={user && user.lastName}
                 />
               </Form.Group>
             </Form.Row>
@@ -156,7 +152,7 @@ const User = props => {
               <Form.Control
                 type="text"
                 onChange={e => setDisplayName(e.target.value)}
-                placeholder={displayName}
+                placeholder={user && user.displayName}
               />
               {/* add subtitle */}
             </Form.Group>
@@ -165,7 +161,7 @@ const User = props => {
               <Form.Label>Change Email</Form.Label>
               <Form.Control
                 type="email"
-                defaultValue={email}
+                defaultValue={user && user.email}
                 onChange={e => setEmail(e.target.value)}
               />
             </Form.Group>

@@ -105,7 +105,7 @@ const AuthState = props => {
     try {
       console.log(user)
       const res = await axios.put(`/api/users/${user._id}`, user, config);
-      console.log(res)
+      console.log(res.data)
       dispatch({
         type: UPDATE_USER,
         payload: res.data

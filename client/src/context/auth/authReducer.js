@@ -29,6 +29,7 @@ export default (state, action) => {
         loading: false
       };
       case UPDATE_USER:
+      console.log(action.payload);
       return {
         ...state,
         user: action.payload,

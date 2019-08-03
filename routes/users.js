@@ -23,8 +23,8 @@ router.put(
     const updateUserId = req.params.id;
     const newUserInfo = req.body;
 
-    const salt = await bcrypt.genSalt(10);
-    newUserInfo.password = await bcrypt.hash(newUserInfo.password, salt);
+    //const salt = await bcrypt.genSalt(10);
+    //newUserInfo.password = await bcrypt.hash(newUserInfo.password, salt);
 
     try {
       let result = await User.findByIdAndUpdate(updateUserId,newUserInfo);
