@@ -2,8 +2,8 @@ import {
   GET_EVENTS,
   ADD_EVENT,
   DELETE_EVENT,
-  //   SET_CURRENT,
-  //   CLEAR_CURRENT,
+  SET_CURRENT,
+  CLEAR_CURRENT,
   UPDATE_EVENT,
   FILTER_EVENTS,
   CLEAR_EVENTS,
@@ -47,16 +47,16 @@ export default (state, action) => {
         error: null,
         current: null
       };
-    //   case SET_CURRENT:
-    //     return {
-    //       ...state,
-    //       current: action.payload
-    //     };
-    //   case CLEAR_CURRENT:
-    //     return {
-    //       ...state,
-    //       current: null
-    //     };
+    case SET_CURRENT:
+      return {
+        ...state,
+        current: action.payload
+      };
+    case CLEAR_CURRENT:
+      return {
+        ...state,
+        current: null
+      };
     case FILTER_EVENTS:
       return {
         ...state,

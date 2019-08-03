@@ -100,7 +100,7 @@ const User = props => {
           {" "}
           <Card style={{ margin: "10px 0" }}>
             <Card.Body>
-              <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
+              <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
                 <Tab eventKey="home" title="Upcoming Events">
                   <br />
                   <EventList />

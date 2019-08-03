@@ -10,7 +10,7 @@ const EventSchema = new Schema({
     type: String
   },
   groupSize: {
-    type: Number
+    type: String
     // require: true
   },
   start: {
