@@ -52,21 +52,47 @@ export default function CreateEvent() {
   const authContext = useContext(AuthContext);
   const { addEvent, updateEvent, clearCurrent, current } = eventContext;
   const { user } = authContext;
-  const [date, setDate] = useState(new Date());
-  const [time, setTime] = useState(new Date());
+  //const [date, setDate] = useState(new Date());
+  const [startTime, setStartTime] = useState(new Date());
+  const [endTime, setEndTime] = useState(new Date());
+  const [event, setEvent] = useState({
+    name: "",
+    location: "",
+    category: "Movie",
+    groupSize: "",
+    description: "",
+    start: null,
+    end: null
+  });
 
-  function handleDate(date) {
-    setDate(date);
+  const handleStartTime = (time)=>{
+    setStartTime(time);
+    console.log(time)
+
+    const saveState = event;
+    saveState.start = time
+    setEvent(saveState)
     //setEvent({...event, [start]: date})
   }
-  function handleTime(time) {
-    setTime(time);
-    //setEvent({...event, [start]: time})
+
+  const handleEndTime = (time)=>{
+    setEndTime(time);
+    console.log(time)
+
+    const saveState = event;
+    saveState.end = time
+    setEvent(saveState)
+    //setEvent({...event, [start]: date})
   }
+  
+
+
 
   useEffect(() => {
     if (current) {
       setEvent(current);
+      setStartTime(current.start)
+      setEndTime(current.end)
     } else {
       setEvent({
         eventName: "",
@@ -76,16 +102,10 @@ export default function CreateEvent() {
         eventDetails: ""
       });
     }
+    
   }, [eventContext, current]);
 
-  const [event, setEvent] = useState({
-    name: "",
-    location: "",
-    category: "Movie",
-    groupSize: "",
-    description: "",
-    start: ""
-  });
+ 
 
   const { name, location, category, groupSize, description } = event;
 
@@ -102,11 +122,13 @@ export default function CreateEvent() {
     }
     clearCurrent();
     history.push("/user");
+    //console.log(e)
   };
 
   // const clearAll = () => {
   //   clearCurrent();
   // };
+  
 
   return (
     <Container>
@@ -266,10 +288,10 @@ export default function CreateEvent() {
                           <KeyboardDatePicker
                             margin="normal"
                             id="startDate"
-                            name="startDate"
+                            name="date"
                             label="Select event start date"
-                            value={date}
-                            onChange={handleDate}
+                            value={startTime}
+                            onChange={handleStartTime}
                             KeyboardButtonProps={{
                               "aria-label": "change date"
                             }}
@@ -277,23 +299,23 @@ export default function CreateEvent() {
                           <KeyboardTimePicker
                             margin="normal"
                             id="startTime"
-                            name="startTime"
+                            name="time"
                             label="Select a time to meet"
-                            value={time}
-                            onChange={handleTime}
+                            value={startTime} 
+                            onChange={handleStartTime}
                             KeyboardButtonProps={{
                               "aria-label": "change time"
                             }}
                           />
                         </Grid>
 
-                        {/* <Grid container justify="space-around">
+                        {<Grid container justify="space-around">
                           <KeyboardDatePicker
                             margin="normal"
                             id="endDate"
                             label="Day event ends"
-                            value={endDate}
-                            onChange={onchange}
+                            value={endTime}
+                            onChange={handleEndTime}
                             KeyboardButtonProps={{
                               "aria-label": "change date"
                             }}
@@ -303,12 +325,12 @@ export default function CreateEvent() {
                             id="endTime"
                             label="Time event ends"
                             value={endTime}
-                            onChange={onChange}
+                            onChange={handleEndTime}
                             KeyboardButtonProps={{
                               "aria-label": "change time"
                             }}
                           />
-                        </Grid> */}
+                        </Grid>}
                       </MuiPickersUtilsProvider>
                     </div>
                   </Col>
