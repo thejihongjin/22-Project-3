@@ -6,7 +6,7 @@ const userContext = createContext();
 const reducer = (state, action) => {
     switch (action.type) {
         case "registerNewUser":
-           return {user: action.user}
+            return {user: action.user}
             
         case "signInUser":
             return { user: state.user };

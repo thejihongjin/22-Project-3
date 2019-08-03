@@ -9,7 +9,6 @@ const EventList = () => {
   //const { user } = authContext;
 
   const { events, filtered, getEvents, loading, user} = eventContext;
-  console.log(events);
 
   useEffect(() => {
     getEvents();

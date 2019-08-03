@@ -8,7 +8,7 @@ import EventContext from "../../context/event/eventContext";
 const EventItem = ({ event }) => {
   const eventContext = useContext(EventContext);
   const { deleteEvent, setCurrent, clearCurrent } = eventContext;
-  const { _id, name, location, category, description } = event;
+  const { _id, name, location, category, description, addressInfo } = event;
   const [showAlert, setShowAlert] = useState(false);
 
   const handleDelete = () => {
@@ -38,6 +38,9 @@ const EventItem = ({ event }) => {
           <Card.Subtitle className="mb-2 text-muted">{category}</Card.Subtitle>
           <Card.Subtitle className="mb-2 text-muted">
             Location: {location}
+          </Card.Subtitle>
+          <Card.Subtitle className="mb-2 text-muted">
+            Address: {addressInfo}
           </Card.Subtitle>
           <Card.Text>{description}</Card.Text>
           <Link
