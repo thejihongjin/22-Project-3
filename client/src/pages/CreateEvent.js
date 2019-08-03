@@ -55,8 +55,9 @@ export default function CreateEvent() {
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState(new Date());
 
-  function handleDate(date) {
-    setDate(date);
+  function handleDate(startDate) {
+    let startDateTime = setDate(date);
+    
     //setEvent({...event, [start]: date})
   }
   function handleTime(time) {

@@ -48,6 +48,7 @@ const User = props => {
   const [passWordVer, setPassWordVer] = useState("");
   const authContext = useContext(AuthContext);
   const { user, updateUser } = authContext;
+  
 
   useEffect(() => {
     authContext.loadUser();
@@ -59,7 +60,7 @@ const User = props => {
     if (passWord !== passWordVer) {
       alert("passwords must match");
     } else {
-      API.updateUser(user._id, {
+      updateUser(user._id, {
         firstname: firstName,
         lastname: lastName,
         displayname: displayName,

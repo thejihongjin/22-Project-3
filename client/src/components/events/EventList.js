@@ -8,7 +8,7 @@ const EventList = () => {
   const authContext = useContext(AuthContext);
   //const { user } = authContext;
 
-  const { events, filtered, getEvents, loading, user} = eventContext;
+  const { events, getEvents} = eventContext;
   console.log(events);
 
   useEffect(() => {

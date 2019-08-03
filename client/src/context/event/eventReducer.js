@@ -62,7 +62,7 @@ export default (state, action) => {
         ...state,
         filtered: state.events.filter(event => {
           const regex = new RegExp(`${action.payload}`, "gi");
-          return event.name.match(regex) || event.email.match(regex);
+          return event.name.match(regex);
         })
       };
     case CLEAR_FILTER:
