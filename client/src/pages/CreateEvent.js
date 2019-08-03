@@ -62,7 +62,7 @@ export default function CreateEvent() {
     description: "",
     addressInfo: "",
     start: null,
-    end: null
+    end: null,
   });
 
   const handleStartTime = (time)=>{
@@ -91,13 +91,12 @@ export default function CreateEvent() {
       setStartTime(current.start)
       setEndTime(current.end)
     } else {
-      setEvent({
-        eventName: "",
-        eventLocation: "",
-        category: "Movie",
-        groupSize: "",
-        eventDetails: ""
-      });
+      // setEvent({
+      //   category: "Movie",
+      //   groupSize: "",
+      //   addressInfo: ""
+      // });
+      console.log("No event yet")
     }
     
   }, [eventContext, current]);
@@ -106,57 +105,40 @@ export default function CreateEvent() {
 
   const handleChange = e => {
     setEvent({ ...event, [e.target.name]: e.target.value });
-    // let address = event.location
-    // console.log(address)
-
-    // Geocode.fromAddress(address).then(
-    // response => {
-    //     const { lat, lng } = response.results[0].geometry.location;
-    //     console.log(lat, lng);
-    //     setLocation({...locationInput, mapLat: lat})
-    //     setLocation({...locationInput, mapLng: lng})
-    //     setEvent({...event, location: response.results[0].formatted_address})
-    //     console.log(response.results[0])
-    //     console.log(response.results[0].formatted_address)
-    //     },
-    //     error => {
-    //     console.error(error);
-    //     }
-    // );
   };
 
   const handleSubmit = e => {
     e.preventDefault();
-    // setEvent({ ...event, [e.target.name]: e.target.value });
-    let address = event.location
-    console.log(address)
+    let userInput = event.location
+    let address;
+    console.log(userInput)
 
-    Geocode.fromAddress(address).then(
+    Geocode.fromAddress(userInput).then(
     response => {
-        const { lat, lng } = response.results[0].geometry.location;
-        console.log(lat, lng);
-        setLocation({...locationInput, mapLat: lat})
-        setLocation({...locationInput, mapLng: lng})
-        let googleAdd = response.results[0].formatted_address
-        // setEvent({...event, addressInfo: response.results[0].formatted_address})
-        console.log(response.results[0])
-        console.log(response.results[0].formatted_address)
-        console.log("an address", googleAdd)
-        },
-        error => {
+        // const { lat, lng } = response.results[0].geometry.location;
+        // console.log(lat, lng);
+        // setLocation({...locationInput, mapLat: lat})
+        // setLocation({...locationInput, mapLng: lng})
+        address = response.results[0].formatted_address;
+        console.log(response.results)
+      },
+      error => {
         console.error(error);
+      }
+      ).finally(() => {
+        const postEvent = { ...event }
+        postEvent.addressInfo = address;
+        setEvent(postEvent)
+        if (current) {
+          updateEvent(event);
+        } else {
+          addEvent(postEvent); 
         }
-    );
-    setEvent({...event, [e.target.addressInfo]: "test"})
+        clearCurrent();
+        history.push("/user");
+        //console.log(e)
+      })
 
-    if (current) {
-      updateEvent(event);
-    } else {
-      addEvent(event);
-    }
-    clearCurrent();
-    history.push("/user");
-    //console.log(e)
   };
 
   // const clearAll = () => {
@@ -168,28 +150,6 @@ export default function CreateEvent() {
     mapLat: 32.712043,
     mapLng: -117.142254
 } )
-
-//   const handleFormSubmit = (event) => {
-//     event.preventDefault();
-//     let address = locationInput.addressRes
-//     console.log(address)
-
-//     Geocode.fromAddress(address).then(
-//     response => {
-//         const { lat, lng } = response.results[0].geometry.location;
-//         console.log(lat, lng);
-//         setLocation({...locationInput, mapLat: lat})
-//         setLocation({...locationInput, mapLng: lng})
-//         setEvent({...event, [location]: response.results[0].formatted_address})
-//         console.log(response.results[0])
-//         console.log(response.results[0].formatted_address)
-//         },
-//         error => {
-//         console.error(error);
-//         }
-//     );
-// }
-
 
   return (
     <Container>
