@@ -8,7 +8,7 @@ import EventContext from "../../context/event/eventContext";
 const EventItem = ({ event }) => {
   const eventContext = useContext(EventContext);
   const { deleteEvent, setCurrent, clearCurrent } = eventContext;
-  const { _id, name, location, category, description, addressInfo } = event;
+  const { _id, name, location, category, description, addressInfo, start, end } = event;
   const [showAlert, setShowAlert] = useState(false);
 
   const handleDelete = () => {
@@ -29,6 +29,18 @@ const EventItem = ({ event }) => {
     );
   }
 
+  let date = new Date (start)
+  date.toDateString()
+  date.toTimeString()
+  console.log(date.toTimeString())
+  console.log(date.toDateString())
+  console.log(date.toLocaleString())
+  // console.log(date.toString('YYYY-MM-dd'))
+
+  let dateEnd = new Date (end)
+  dateEnd.toDateString()
+  dateEnd.toTimeString()
+
   return (
     <div>
       <Card style={{ width: "25rem" }}>
@@ -36,11 +48,17 @@ const EventItem = ({ event }) => {
         <Card.Body>
           <Card.Title>{name}</Card.Title>
           <Card.Subtitle className="mb-2 text-muted">{category}</Card.Subtitle>
-          <Card.Subtitle className="mb-2 text-muted">
+          <Card.Subtitle style={{ textTransform: "capitalize" }} className="mb-2 text-muted">
             Location: {location}
           </Card.Subtitle>
           <Card.Subtitle className="mb-2 text-muted">
             Address: {addressInfo}
+          </Card.Subtitle>
+          <Card.Subtitle className="mb-2 text-muted">
+            Start Time: {date.toLocaleString()}
+          </Card.Subtitle>
+          <Card.Subtitle className="mb-2 text-muted">
+            End Time: {dateEnd.toLocaleString()}
           </Card.Subtitle>
           <Card.Text>{description}</Card.Text>
           <Link

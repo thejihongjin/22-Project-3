@@ -22,6 +22,7 @@ import MapCont from "../components/Map"
 import Navigation from "../components/Navigation"
 import EventContext from "../context/event/eventContext";
 import Geocode from "react-geocode";
+import axios from 'axios';
 
 Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY)
 
@@ -110,6 +111,7 @@ export default function CreateEvent() {
     e.preventDefault();
     let userInput = event.location
     let address;
+    let placeId;
     console.log(userInput)
 
     Geocode.fromAddress(userInput).then(
@@ -119,12 +121,18 @@ export default function CreateEvent() {
         // setLocation({...locationInput, mapLat: lat})
         // setLocation({...locationInput, mapLng: lng})
         address = response.results[0].formatted_address;
-        console.log(response.results)
+        console.log(response.results[0])
+        placeId = response.results[0].place_id
       },
       error => {
         console.error(error);
-      }
-      ).finally(() => {
+      })
+      // .then(() => {
+      //   axios.get(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&fields=name&key=${process.env.REACT_APP_GOOGLE_API_KEY}`).then(res => {
+      //     console.log('places api response: ', res)
+      //   })
+      // })
+      .finally(() => {
         const postEvent = { ...event }
         postEvent.addressInfo = address;
         setEvent(postEvent)
