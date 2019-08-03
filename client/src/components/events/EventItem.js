@@ -29,17 +29,14 @@ const EventItem = ({ event }) => {
     );
   }
 
+  let startDate;
   let date = new Date (start)
-  date.toDateString()
-  date.toTimeString()
-  console.log(date.toTimeString())
-  console.log(date.toDateString())
-  console.log(date.toLocaleString())
+  startDate = date.toLocaleString()
   // console.log(date.toString('YYYY-MM-dd'))
 
+  let endDate;
   let dateEnd = new Date (end)
-  dateEnd.toDateString()
-  dateEnd.toTimeString()
+  endDate = dateEnd.toLocaleString()
 
   return (
     <div>
@@ -55,10 +52,10 @@ const EventItem = ({ event }) => {
             Address: {addressInfo}
           </Card.Subtitle>
           <Card.Subtitle className="mb-2 text-muted">
-            Start Time: {date.toLocaleString()}
+            Start Time: {startDate}
           </Card.Subtitle>
           <Card.Subtitle className="mb-2 text-muted">
-            End Time: {dateEnd.toLocaleString()}
+            End Time: {endDate}
           </Card.Subtitle>
           <Card.Text>{description}</Card.Text>
           <Link

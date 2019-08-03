@@ -54,8 +54,8 @@ const User = props => {
   useEffect(() => {
     authContext.loadUser();
     //eslint-disable-next-line
-    console.log(user)
-  }, [user]);
+    //console.log(user)
+  }, []);
 
   const handleProfileSubmit = e => {
     e.preventDefault();
@@ -85,7 +85,7 @@ const User = props => {
             <Card.Body>
               <div style={useStyles.flexBetween}>
                 <Card.Title>Welcome, {user && user.displayname}</Card.Title>{" "}
-                <Link onClick={() => setModalShow(true)}>
+                <Link to="#" onClick={() => setModalShow(true)}>
                   Edit
                 </Link>
               </div>
