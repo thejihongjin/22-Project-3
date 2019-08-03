@@ -22,7 +22,7 @@ const EventSchema = new Schema({
     //require: true
   },
   category: {
-    type: [String]
+    type: String
   },
   description: {
     type: String,
@@ -48,6 +48,9 @@ const EventSchema = new Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  addressInfo: {
+    type: String
   }
 });
 
