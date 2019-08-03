@@ -43,6 +43,8 @@ const User = props => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [displayName, setDisplayName] = useState("");
+  const [image, setImage] = useState("");
+  const [bio, setBio] = useState("");
   const [email, setEmail] = useState("");
   const [passWord, setPassWord] = useState("");
   const [passWordVer, setPassWordVer] = useState("");
@@ -65,6 +67,8 @@ const User = props => {
         firstname: firstName,
         lastname: lastName,
         displayname: displayName,
+        image: image,
+        bio: bio,
         email: email
       })
       setModalShow(false)
@@ -77,20 +81,26 @@ const User = props => {
       <Row>
         <Col>
           <Card style={{ width: "25em", margin: "10px 0" }}>
+            {user && user.image && <Card.Img variant="top" src={user && user.image} />}
             <Card.Body>
               <div style={useStyles.flexBetween}>
-                <Card.Title>Welcome, </Card.Title>{" "}
+                <Card.Title>Welcome, {user && user.displayname}</Card.Title>{" "}
                 <Link onClick={() => setModalShow(true)}>
                   Edit
                 </Link>
               </div>
               <Card.Subtitle className="mb-2 text-muted">
-                {user && user.displayname}
+                {/* {user && user.displayname} */}
+                User Profile
               </Card.Subtitle>
+              <Card.Text>
+                {user && (user.firstname + " " + user.lastname) === "undefined undefined"
+                  ? "Update your first and last name"
+                  : "Name: " + (user && (user.firstname + " " + user.lastname))}</Card.Text>
               <Card.Text>
                 {user && user.bio === ""
                   ? "Add some info about yourself"
-                  : user && user.bio}
+                  : "Bio: " + (user && user.bio)}
               </Card.Text>
               <Link to="/create" className="card-link">
                 Create New Event
@@ -134,7 +144,7 @@ const User = props => {
                 <Form.Control
                   type="text"
                   onChange={e => setFirstName(e.target.value)}
-                  defaultValue={user && user.firstName}
+                  defaultValue={user && user.firstname}
                 />
               </Form.Group>
               <Form.Group as={Col} controlId="changeLastName">
@@ -142,7 +152,7 @@ const User = props => {
                 <Form.Control
                   type="text"
                   onChange={e => setLastName(e.target.value)}
-                  defaultValue={user && user.lastName}
+                  defaultValue={user && user.lastname}
                 />
               </Form.Group>
             </Form.Row>
@@ -152,9 +162,28 @@ const User = props => {
               <Form.Control
                 type="text"
                 onChange={e => setDisplayName(e.target.value)}
-                placeholder={user && user.displayName}
+                defaultValue={user && user.displayname}
               />
               {/* add subtitle */}
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Image</Form.Label>
+              <Form.Control
+                type="text"
+                onChange={e => setImage(e.target.value)}
+                // defaultValue={user && user.image}
+                defaultValue="https://via.placeholder.com/300x150"
+              />
+            </Form.Group>
+
+            
+            <Form.Group>
+              <Form.Label>Bio</Form.Label>
+              <Form.Control
+                type="text"
+                onChange={e => setBio(e.target.value)}
+                defaultValue={user && user.bio}
+              />
             </Form.Group>
 
             <Form.Group controlId="changeEmail">

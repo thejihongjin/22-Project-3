@@ -28,7 +28,7 @@ const EventList = () => {
     <Fragment>
       <h6>Your Created Events:</h6>
       {events.filter(event => event.user).map(event => (
-        <EventItem key={event.id} event={event} />
+        <EventItem key={event._id} event={event} />
       ))}
       {/* <p>Your Joined Events</p>
       {events.filter(attend => attend.attendId === user._id).map(event => (

@@ -144,6 +144,7 @@ export default function CreateEvent() {
   //   clearCurrent();
   // };
   
+  const eventCategories = ["Movie","Concert","Food/Drink","Bar/Club","Gaming","Coding","Party","Conversation","Other"];
 
   const [locationInput, setLocation] = useState({
     mapLat: 32.712043,
@@ -209,7 +210,8 @@ export default function CreateEvent() {
                         onChange={handleChange}
                         as="select"
                       >
-                        <option>Movie</option>
+                      {eventCategories.map((category, i) => <option key={i}>{category}</option>)}
+                        {/* <option>Movie</option>
                         <option>Concert</option>
                         <option>Food/Drink</option>
                         <option>Bar/Club</option>
@@ -219,7 +221,7 @@ export default function CreateEvent() {
                         <option>Conversation</option>
                         <option>Travel</option>
                         <option>Fitness</option>
-                        <option>Other</option>
+                        <option>Other</option> */}
                       </Form.Control>
                     </Form.Group>
                   </Col>
