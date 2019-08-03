@@ -16,7 +16,7 @@ export default {
     return axios.post("/api/user/signin", loginData);
   },
   updateUser: (userId, userData) => {
-    return axios.put(`/api/user/${userId}`, userData);
+    return axios.put(`/api/users/${userId}`, userData);
   },
   createEvent: eventData => {
     return axios.post("/api/event", eventData);
