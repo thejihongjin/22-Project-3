@@ -7,8 +7,38 @@ const { check, validationResult } = require("express-validator");
 
 const User = require("../models/User");
 
-// @route   POSt api/users
-// @desc    Register a user
+
+//@route put api/users/id
+//@desc update a user
+//@access private
+
+router.put(
+  "/:id",
+  [
+    //check
+  ],
+  async (req,res) => {
+
+    console.log(req)
+    const updateUserId = req.params.id;
+    const newUserInfo = req.body;
+
+    const salt = await bcrypt.genSalt(10);
+    newUserInfo.password = await bcrypt.hash(newUserInfo.password, salt);
+
+    try {
+      let result = await User.findByIdAndUpdate(updateUserId,newUserInfo);
+      res.json(result);
+    } catch(err) {
+      console.error(err.message);
+      res.status(500).send("Server error");
+    }
+
+  }
+)
+
+//@route   POSt api/users
+//@desc    Register a user
 //@access   Public
 router.post(
   "/",

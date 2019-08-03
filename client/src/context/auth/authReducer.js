@@ -31,9 +31,7 @@ export default (state, action) => {
       case UPDATE_USER:
       return {
         ...state,
-        user: state.user.map(user =>
-          user._id === action.payload._id ? action.payload : user
-        ),
+        user: action.payload,
         loading: false
       };
     case REGISTER_FAIL:

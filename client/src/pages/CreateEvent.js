@@ -84,7 +84,11 @@ export default function CreateEvent() {
     setEvent(saveState)
     //setEvent({...event, [start]: date})
   }
+<<<<<<< Updated upstream
 
+=======
+  
+>>>>>>> Stashed changes
   useEffect(() => {
     if (current) {
       setEvent(current);

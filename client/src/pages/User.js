@@ -51,21 +51,27 @@ const User = props => {
 
   useEffect(() => {
     authContext.loadUser();
+    setFirstName(user ? user.firstname : "");
+    setLastName(user ? user.lastname: "");
+    setDisplayName(user ? user.displayname: "");
+    setEmail(user ? user.email: "");
     //eslint-disable-next-line
-  }, []);
+  }, [authContext, user]);
 
-  const handleProfileSubmit = async e => {
+  const handleProfileSubmit = e => {
     e.preventDefault();
     if (passWord !== passWordVer) {
       alert("passwords must match");
     } else {
-      API.updateUser(user._id, {
+      console.log(updateUser)
+      updateUser({
+        ...user,
         firstname: firstName,
         lastname: lastName,
         displayname: displayName,
-        email: email,
-        password: passWordVer
-      });
+        email: email
+      })
+      setModalShow(false)
     }
   };
 
@@ -78,7 +84,7 @@ const User = props => {
             <Card.Body>
               <div style={useStyles.flexBetween}>
                 <Card.Title>Welcome, </Card.Title>{" "}
-                <Link to="#" onClick={() => setModalShow(true)}>
+                <Link onClick={() => setModalShow(true)}>
                   Edit
                 </Link>
               </div>
@@ -132,7 +138,7 @@ const User = props => {
                 <Form.Control
                   type="text"
                   onChange={e => setFirstName(e.target.value)}
-                  defaultValue={user && user.firstname}
+                  defaultValue={firstName}
                 />
               </Form.Group>
               <Form.Group as={Col} controlId="changeLastName">
@@ -140,7 +146,7 @@ const User = props => {
                 <Form.Control
                   type="text"
                   onChange={e => setLastName(e.target.value)}
-                  defaultValue={user && user.lastname}
+                  defaultValue={lastName}
                 />
               </Form.Group>
             </Form.Row>
@@ -150,7 +156,7 @@ const User = props => {
               <Form.Control
                 type="text"
                 onChange={e => setDisplayName(e.target.value)}
-                placeholder={user && user.displayname}
+                placeholder={displayName}
               />
               {/* add subtitle */}
             </Form.Group>
@@ -159,7 +165,7 @@ const User = props => {
               <Form.Label>Change Email</Form.Label>
               <Form.Control
                 type="email"
-                defaultValue={user && user.email}
+                defaultValue={email}
                 onChange={e => setEmail(e.target.value)}
               />
             </Form.Group>
