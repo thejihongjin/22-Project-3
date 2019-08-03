@@ -1,15 +1,17 @@
 import React, { useState, useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import Card from "react-bootstrap/Card";
-// import Grid from "@material-ui/core/Grid";
-// import DateFnsUtils from "@date-io/date-fns";
-// import {
-//   MuiPickersUtilsProvider,
-//   KeyboardTimePicker,
-//   KeyboardDatePicker
-// } from "@material-ui/pickers";
+import Grid from "@material-ui/core/Grid";
+import history from "../utils/history";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker
+} from "@material-ui/pickers";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -50,37 +52,60 @@ export default function CreateEvent() {
   const authContext = useContext(AuthContext);
   const { addEvent, updateEvent, clearCurrent, current } = eventContext;
   const { user } = authContext;
-  // const [todayDate, setDate] = useState(new Date());
-  // const [todayTime, setTime] = useState(new Date());
-
-  // function handleDate(date) {
-  //   setDate(date);
-  // }
-  // function handleTime(date) {
-  //   setTime(date);
-  // }
-
-  // useEffect(() => {
-  //   if (current !== null) {
-  //     setEvent(current);
-  //   } else {
-  //     setEvent({
-  //       eventName: "",
-  //       eventLocation: "",
-  //       category: "",
-  //       groupSize: "",
-  //       eventDetails: ""
-  //     });
-  //   }
-  // }, [eventContext, current]);
-
+  //const [date, setDate] = useState(new Date());
+  const [startTime, setStartTime] = useState(new Date());
+  const [endTime, setEndTime] = useState(new Date());
   const [event, setEvent] = useState({
     name: "",
     location: "",
     category: "Movie",
     groupSize: "",
-    description: ""
+    description: "",
+    start: null,
+    end: null
   });
+
+  const handleStartTime = (time)=>{
+    setStartTime(time);
+    console.log(time)
+
+    const saveState = event;
+    saveState.start = time
+    setEvent(saveState)
+    //setEvent({...event, [start]: date})
+  }
+
+  const handleEndTime = (time)=>{
+    setEndTime(time);
+    console.log(time)
+
+    const saveState = event;
+    saveState.end = time
+    setEvent(saveState)
+    //setEvent({...event, [start]: date})
+  }
+  
+
+
+
+  useEffect(() => {
+    if (current) {
+      setEvent(current);
+      setStartTime(current.start)
+      setEndTime(current.end)
+    } else {
+      setEvent({
+        eventName: "",
+        eventLocation: "",
+        category: "Movie",
+        groupSize: "",
+        eventDetails: ""
+      });
+    }
+    
+  }, [eventContext, current]);
+
+ 
 
   const { name, location, category, groupSize, description } = event;
 
@@ -90,29 +115,32 @@ export default function CreateEvent() {
 
   const handleSubmit = e => {
     e.preventDefault();
-
-    addEvent(event);
-    setEvent({
-      name: "",
-      location: "",
-      category: "Movie",
-      groupSize: "",
-      description: ""
-    });
-  };
-
-  const clearAll = () => {
+    if (current) {
+      updateEvent(event);
+    } else {
+      addEvent(event);
+    }
     clearCurrent();
+    history.push("/user");
+    //console.log(e)
   };
 
+  // const clearAll = () => {
+  //   clearCurrent();
+  // };
+  
   const eventCategories = ["Movie","Concert","Food/Drink","Bar/Club","Gaming","Coding","Party","Conversation","Other"];
 
   return (
     <Container>
       <Navigation />
+      <br />
       <Row>
         <Col>
           <Card>
+            <Card.Title style={{ textAlign: "center" }}>
+              {current ? "Edit Event" : "Create Event"}
+            </Card.Title>
             <Card.Body>
               <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="exampleForm.ControlInput1">
@@ -255,16 +283,17 @@ export default function CreateEvent() {
                       />
                     </Form.Group>
                   </Col>
-                  {/* <Col>
+                  <Col>
                     <div>
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <Grid container justify="space-around">
                           <KeyboardDatePicker
                             margin="normal"
                             id="startDate"
+                            name="date"
                             label="Select event start date"
-                            value={startDate}
-                            onChange={onChange}
+                            value={startTime}
+                            onChange={handleStartTime}
                             KeyboardButtonProps={{
                               "aria-label": "change date"
                             }}
@@ -272,22 +301,23 @@ export default function CreateEvent() {
                           <KeyboardTimePicker
                             margin="normal"
                             id="startTime"
+                            name="time"
                             label="Select a time to meet"
-                            value={startTime}
-                            onChange={onChange}
+                            value={startTime} 
+                            onChange={handleStartTime}
                             KeyboardButtonProps={{
                               "aria-label": "change time"
                             }}
                           />
                         </Grid>
 
-                        <Grid container justify="space-around">
+                        {<Grid container justify="space-around">
                           <KeyboardDatePicker
                             margin="normal"
                             id="endDate"
                             label="Day event ends"
-                            value={endDate}
-                            onChange={onchange}
+                            value={endTime}
+                            onChange={handleEndTime}
                             KeyboardButtonProps={{
                               "aria-label": "change date"
                             }}
@@ -297,26 +327,26 @@ export default function CreateEvent() {
                             id="endTime"
                             label="Time event ends"
                             value={endTime}
-                            onChange={onChange}
+                            onChange={handleEndTime}
                             KeyboardButtonProps={{
                               "aria-label": "change time"
                             }}
                           />
-                        </Grid>
+                        </Grid>}
                       </MuiPickersUtilsProvider>
                     </div>
-                  </Col> */}
+                  </Col>
                 </Row>
                 <br />
                 <div
                   style={{ display: "flex", justifyContent: "space-between" }}
                 >
-                  <Button variant="primary" type="submit">
-                    Submit
+                  <Button variant="outline-primary" type="submit">
+                    {current ? "Update Event" : "Submit"}
                   </Button>
-                  <Button variant="danger" href="/user">
-                    Cancel
-                  </Button>
+                  <Link to="/user">
+                    <Button variant="outline-info">Back To Profile</Button>
+                  </Link>
                 </div>
               </Form>
             </Card.Body>
