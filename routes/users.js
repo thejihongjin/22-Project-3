@@ -19,18 +19,22 @@ router.put(
   ],
   async (req,res) => {
 
-    console.log(req)
+
     const updateUserId = req.params.id;
     const newUserInfo = req.body;
-
-    //const salt = await bcrypt.genSalt(10);
-    //newUserInfo.password = await bcrypt.hash(newUserInfo.password, salt);
-
+    
     try {
-      let result = await User.findByIdAndUpdate(updateUserId,newUserInfo);
-      res.json(result);
+      let user = await User.findById(updateUserId);
+     
+      if (newUserInfo.password) {
+        const salt = await bcrypt.genSalt(10);
+        newUserInfo.password = await bcrypt.hash(newUserInfo.password, salt);
+      }
+      await user.update(newUserInfo)
+      res.json(user)
+
     } catch(err) {
-      console.error(err.message);
+      console.error(err);
       res.status(500).send("Server error");
     }
 

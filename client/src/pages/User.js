@@ -40,6 +40,7 @@ const useStyles = {
 
 const User = props => {
   const [modalShow, setModalShow] = useState(false);
+  const [passwordModalShow, setPasswordModalShow] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [displayName, setDisplayName] = useState("");
@@ -59,22 +60,14 @@ const User = props => {
       setImage(user.avatar);
       setEmail(user.email);
       setBio(user.bio)
+      console.log(user)
     }
   },[user]);
 
 
   const handleProfileSubmit = e => {
     e.preventDefault();
-    if (passWord !== passWordVer) {
-      alert("passwords must match");
-    } else {
-      console.log("firstName",firstName);
-      console.log("lastName", lastName);
-      console.log("displayname", displayName);
-      console.log("image", displayName);
-      console.log("bio", bio);
-      console.log("email", email);
-      updateUser({
+    updateUser({
         ...user,
         firstname: firstName,
         lastname: lastName,
@@ -82,10 +75,24 @@ const User = props => {
         image: image,
         bio: bio,
         email: email
-      });
-      setModalShow(false);
-    }
+    });
+    setModalShow(false);
   };
+
+  const handlePasswordSubmit = e => {
+    e.preventDefault();
+    if (passWord !== passWordVer) {
+      alert("passwords must match");
+    } else if(passWordVer === "") {
+      alert("Passwords cannot be blank")
+    } else {
+      updateUser({
+        ...user,
+        password: passWordVer
+      })
+    }
+    setPasswordModalShow(false)
+  }
 
   return (
     <Container>
@@ -101,6 +108,9 @@ const User = props => {
                 <Card.Title>Welcome, {user && user.displayname}</Card.Title>{" "}
                 <Link to="#" onClick={() => setModalShow(true)}>
                   Edit
+                </Link>
+                <Link to="#" onClick={() => setPasswordModalShow(true)}>
+                  Change password
                 </Link>
               </div>
               <Card.Subtitle className="mb-2 text-muted">
@@ -208,6 +218,24 @@ const User = props => {
                 onChange={e => setEmail(e.target.value)}
               />
             </Form.Group>
+            <Button type="submit">Submit</Button>
+            <Button onClick={()=>setModalShow(false)}>Cancel</Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
+      <Modal
+        show={passwordModalShow}
+        onHide={() => setPasswordModalShow(false)}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">Change Password</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+         <h4>Change Password</h4>
+         <Form onSubmit={handlePasswordSubmit}>
             <Form.Group controlId="changePassword">
               <Form.Label>Change Password</Form.Label>
               <Form.Control
@@ -225,9 +253,11 @@ const User = props => {
                 onChange={e => setPassWordVer(e.target.value)}
               />
             </Form.Group>
-
-            <Button type="submit">Submit</Button>
-          </Form>
+            <Row>
+              <Button type="submit">Submit</Button>
+              <Button onClick={()=>setPasswordModalShow(false)}>Cancel</Button>
+            </Row>
+         </Form>
         </Modal.Body>
       </Modal>
     </Container>
