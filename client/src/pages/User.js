@@ -52,6 +52,12 @@ const User = props => {
   const authContext = useContext(AuthContext);
   const { user, updateUser } = authContext;
 
+  useEffect(()=> {
+    if(!user) {
+      authContext.loadUser();
+    }
+  })
+
   useEffect(() => {
     if(user) {
       setFirstName(user.firstname);
