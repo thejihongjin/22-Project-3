@@ -52,15 +52,28 @@ const User = props => {
   const { user, updateUser } = authContext;
 
   useEffect(() => {
-    authContext.loadUser();
-    //eslint-disable-next-line
-  }, []);
+    if(user) {
+      setFirstName(user.firstname);
+      setLastName(user.lastname);
+      setDisplayName(user.displayname);
+      setImage(user.avatar);
+      setEmail(user.email);
+      setBio(user.bio)
+    }
+  },[user]);
+
 
   const handleProfileSubmit = e => {
     e.preventDefault();
     if (passWord !== passWordVer) {
       alert("passwords must match");
     } else {
+      console.log("firstName",firstName);
+      console.log("lastName", lastName);
+      console.log("displayname", displayName);
+      console.log("image", displayName);
+      console.log("bio", bio);
+      console.log("email", email);
       updateUser({
         ...user,
         firstname: firstName,
@@ -145,8 +158,7 @@ const User = props => {
               <Form.Group as={Col} controlId="changeFirstName">
                 <Form.Label>First Name</Form.Label>
                 <Form.Control
-                  type="text"
-                  onChange={e => setFirstName(e.target.value)}
+                  onChange={e => {setFirstName(e.target.value);console.log(firstName)}}
                   defaultValue={user && user.firstname}
                 />
               </Form.Group>
