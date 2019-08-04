@@ -12,7 +12,7 @@ import User from "./pages/User";
 import CreateEvent from "./pages/CreateEvent";
 import UserReview from "./pages/UserReview";
 import SearchEvent from "./pages/SearchEvent";
-import ViewEvent from "./pages/ViewEvent";
+import ViewEvent from "./components/events/ViewEvent";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);

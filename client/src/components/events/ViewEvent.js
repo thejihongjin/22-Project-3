@@ -3,13 +3,15 @@ import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
-import EventContext from "../context/event/eventContext";
-import AuthContext from "../context/auth/authContext";
-import history from "../utils/history";
+import EventContext from "../../context/event/eventContext";
+import AuthContext from "../../context/auth/authContext";
+import history from "../../utils/history";
 
 const ViewEvent = () => {
   const eventContext = useContext(EventContext);
   const { clearCurrent, current } = eventContext;
+  const authContext = useContext(AuthContext);
+  const { user } = authContext;
 
   useEffect(() => {
     setEvent(current);
@@ -21,6 +23,7 @@ const ViewEvent = () => {
     category: "Movie",
     groupSize: "",
     description: "",
+    attendingId: [],
     start: null,
     end: null
   });
@@ -35,7 +38,14 @@ const ViewEvent = () => {
     end
   } = event;
 
+  const handleJoin = (joinId) => {
 
+  }
+
+  const goBack = () => {
+    clearCurrent();
+    history.push("/user");
+  };
 
   return (
     <div>
@@ -58,23 +68,17 @@ const ViewEvent = () => {
             Delete
           </Button> */}
           <Button
+            type="submit"
             style={{ float: "right" }}
-            className="btn-info"
+            className="btn-success"
             size="sm"
-            //onClick={() => handleJoin(user._id) }
+            onClick={() => handleJoin(user._id)}
           >
-            Join
+            + Join
           </Button>
-          <Link to="/user">
-            <Button
-              style={{ float: "left" }}
-              className="btn-info"
-              size="sm"
-              onClick={clearCurrent()}
-            >
-              Go Back
-            </Button>
-          </Link>
+          <Button size="sm" onClick={goBack}>
+            Back To Profile
+          </Button>
         </Card.Body>
       </Card>
     </div>

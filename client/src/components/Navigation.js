@@ -3,6 +3,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import { Link } from "react-router-dom";
 import AuthContext from "../context/auth/authContext";
+import history from "../utils/history"
 
 
 const Navigation = () => {
@@ -12,6 +13,7 @@ const Navigation = () => {
 
   const onLogout = () => {
     logout();
+    history.push("/")
   };
   //console.log(user);
 

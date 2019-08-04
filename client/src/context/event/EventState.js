@@ -1,8 +1,10 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useContext } from "react";
 import axios from "axios";
 import EventContext from "./eventContext";
 import eventReducer from "./eventReducer";
+import AuthContext from "../auth/authContext";
 import {
+  GET_USER_EVENTS,
   GET_EVENTS,
   ADD_EVENT,
   DELETE_EVENT,
@@ -22,7 +24,9 @@ const EventState = props => {
     error: null,
     current: null
   };
-
+  const authContext = useContext(AuthContext);
+  const { user } = authContext;
+  //console.log(user);
   const [state, dispatch] = useReducer(eventReducer, initialState);
 
   //Get Events
@@ -42,6 +46,24 @@ const EventState = props => {
     }
   };
 
+  //Get User Events
+  const getUserEvents = async () => {
+    
+    try {
+      const res = await axios.get("/api/events/user");
+
+      dispatch({
+        type: GET_USER_EVENTS,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: EVENT_ERROR,
+        payload: err.response.msg
+      });
+    }
+  };
+
   // Add Event
   const addEvent = async event => {
     const config = {
@@ -51,7 +73,7 @@ const EventState = props => {
     };
 
     try {
-      console.log(event)
+      console.log(event);
       const res = await axios.post("/api/events", event, config);
 
       dispatch({
@@ -59,7 +81,7 @@ const EventState = props => {
         payload: res.data
       });
     } catch (err) {
-      console.log(err)
+      console.log(err);
       dispatch({
         type: EVENT_ERROR,
         payload: err
@@ -139,6 +161,7 @@ const EventState = props => {
         current: state.current,
         filtered: state.filtered,
         error: state.error,
+        getUserEvents,
         addEvent,
         deleteEvent,
         setCurrent,

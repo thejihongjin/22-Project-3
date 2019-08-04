@@ -7,7 +7,7 @@ import Button from "react-bootstrap/Button";
 
 import Navigation from "../components/Navigation";
 
-function SearchEvent() {
+const SearchEvent = () => {
   const cardStyle = {
     margin: "15px"
   };
@@ -20,27 +20,24 @@ function SearchEvent() {
     filtered,
     events
   } = eventContext;
+  console.log(events)
 
-  const text = useRef("");
+  //const text = useRef("");
 
   useEffect(() => {
     getEvents();
     // eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    if (filtered === null) {
-      text.current.value = "";
-    }
-  });
 
-  const handleChange = e => {
-    if (text.current.value !== "") {
-      filterEvents(e.target.value);
-    } else {
-      clearFilter();
-    }
-  };
+
+  // const handleChange = e => {
+  //   if (text.current.value !== "") {
+  //     filterEvents(e.target.value);
+  //   } else {
+  //     clearFilter();
+  //   }
+  // };
   const eventCategories = ["Movie","Concert","Food/Drink","Bar/Club","Gaming","Coding","Party","Conversation","Other"];
 
   return (
@@ -54,7 +51,7 @@ function SearchEvent() {
           <Form>
             <Form.Group controlId="exampleForm.ControlInput1">
               <Form.Label>Name</Form.Label>
-              <Form.Control ref={text} type="text" onChange={handleChange} />
+              <Form.Control  type="text"  />
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlSelect2">
               <Form.Label>Category</Form.Label>
@@ -72,16 +69,14 @@ function SearchEvent() {
         </Card.Body>
       </Card>
       <div>
-        <Fragment>
           {events.map(event => (
-            <EventItem key={event.id} event={event} />
+            <EventItem key={event._id} event={event} />
           ))}
           {/* <p>Your Joined Events</p>
       {events.filter(attend => attend.attendId === user._id).map(event => (
         <EventItem key={event.id} event={event} />
       ))} */}
-        </Fragment>
-      </div>
+       </div>
       {/* map over events meeting parameters in cards - look into pagination */}
 
       {/* div holding searched events? */}
