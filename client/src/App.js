@@ -27,8 +27,8 @@ function App() {
             <React.Suspense fallback={<Loading />}>
               <Switch>
                 <Route exact path="/" component={About} />
-                <PrivateRoute exact path="/user" component={User} />
                 <PrivateRoute exact path="/create" component={CreateEvent} />
+                <PrivateRoute exact path="/user" component={User} />
                 <PrivateRoute exact path="/review" component={UserReview} />
                 <PrivateRoute exact path="/view" component={ViewEvent} />
                 <Route exact path="/search" component={SearchEvent} />

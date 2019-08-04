@@ -10,7 +10,7 @@ const EventItem = ({ event }) => {
   const eventContext = useContext(EventContext);
   const authContext = useContext(AuthContext);
   const { user } = authContext;
-  const { deleteEvent, setCurrent, clearCurrent, updateEvent } = eventContext;
+  const { deleteEvent, setCurrent, clearCurrent} = eventContext;
   const {
     _id,
     name,
@@ -88,7 +88,7 @@ const EventItem = ({ event }) => {
             View
           </Link>
 
-          {user ? (
+         
             <Button
               style={{ float: "right" }}
               className="btn-danger"
@@ -97,16 +97,7 @@ const EventItem = ({ event }) => {
             >
               Delete
             </Button>
-          ) : (
-            <Button
-              style={{ float: "right" }}
-              className="btn-info"
-              size="sm"
-              onClick={() => setShowAlert(true)}
-            >
-              Join
-            </Button>
-          )}
+          
         </Card.Body>
       </Card>
     </div>

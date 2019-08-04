@@ -12,30 +12,7 @@ const User = require("../models/User");
 //@desc update a user
 //@access private
 
-router.put(
-  "/:id",
-  [
-    //check
-  ],
-  async (req,res) => {
 
-    console.log(req)
-    const updateUserId = req.params.id;
-    const newUserInfo = req.body;
-
-    //const salt = await bcrypt.genSalt(10);
-    //newUserInfo.password = await bcrypt.hash(newUserInfo.password, salt);
-
-    try {
-      let result = await User.findByIdAndUpdate(updateUserId,newUserInfo);
-      res.json(result);
-    } catch(err) {
-      console.error(err.message);
-      res.status(500).send("Server error");
-    }
-
-  }
-)
 
 //@route   POSt api/users
 //@desc    Register a user
@@ -110,9 +87,7 @@ router.put("/:id", async (req, res) => {
     lastname,
     displayname,
     email,
-    bio,
-    attendingId,
-    petitionId
+    bio
   } = req.body;
 
   const userFields = {};
@@ -122,8 +97,6 @@ router.put("/:id", async (req, res) => {
   if (displayname) userFields.displayname = displayname;
   if (email) userFields.email = email;
   if (bio) userFields.bio = bio;
-  if (attendingId) userFields.attendingId = attendingId;
-  if (petitionId) userFields.petitionId = petitionId;
 
   try {
     let user = await User.findById(req.params.id);

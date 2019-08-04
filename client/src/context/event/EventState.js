@@ -7,6 +7,8 @@ import {
   GET_USER_EVENTS,
   GET_EVENTS,
   ADD_EVENT,
+  JOIN_EVENT,
+  UNJOIN_EVENT,
   DELETE_EVENT,
   SET_CURRENT,
   CLEAR_CURRENT,
@@ -48,7 +50,6 @@ const EventState = props => {
 
   //Get User Events
   const getUserEvents = async () => {
-    
     try {
       const res = await axios.get("/api/events/user");
 
@@ -85,6 +86,60 @@ const EventState = props => {
       dispatch({
         type: EVENT_ERROR,
         payload: err
+      });
+    }
+  };
+
+  //Join Event
+  const joinEvent = async event => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    try {
+      const res = await axios.put(
+        `/api/events/join/${event._id}`,
+        event,
+        config
+      );
+
+      dispatch({
+        type: JOIN_EVENT,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: EVENT_ERROR,
+        payload: err.response.msg
+      });
+    }
+  };
+
+  //Leave Event
+  const unjoinEvent = async event => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    try {
+      const res = await axios.put(
+        `/api/events/leave/${event._id}`,
+        event,
+        config
+      );
+
+      dispatch({
+        type: UNJOIN_EVENT,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: EVENT_ERROR,
+        payload: err.response.msg
       });
     }
   };
@@ -163,6 +218,8 @@ const EventState = props => {
         error: state.error,
         getUserEvents,
         addEvent,
+        joinEvent,
+        unjoinEvent,
         deleteEvent,
         setCurrent,
         clearCurrent,

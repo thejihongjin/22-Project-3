@@ -38,18 +38,22 @@ const useStyles = {
   }
 };
 
-const User = props => {
+const User = () => {
   const [modalShow, setModalShow] = useState(false);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [displayName, setDisplayName] = useState("");
-  const [image, setImage] = useState("");
-  const [bio, setBio] = useState("");
-  const [email, setEmail] = useState("");
-  const [passWord, setPassWord] = useState("");
-  const [passWordVer, setPassWordVer] = useState("");
+
   const authContext = useContext(AuthContext);
   const { user, updateUser } = authContext;
+
+  const { userUpdate, setUser } = useState({
+    firstname: "",
+    lastname: "",
+    displayname: "",
+    bio: "",
+    email: "",
+    image: ""
+  });
+
+  const { firstname, lastname, displayname, bio, email, image } = user;
 
   useEffect(() => {
     authContext.loadUser();
@@ -58,20 +62,18 @@ const User = props => {
 
   const handleProfileSubmit = e => {
     e.preventDefault();
-    if (passWord !== passWordVer) {
-      alert("passwords must match");
-    } else {
-      updateUser({
-        ...user,
-        firstname: firstName,
-        lastname: lastName,
-        displayname: displayName,
-        image: image,
-        bio: bio,
-        email: email
-      });
-      setModalShow(false);
-    }
+    // if (passWord !== passWordVer) {
+    //   alert("passwords must match");
+    // } else {
+    updateUser({
+      userUpdate
+    });
+    setModalShow(false);
+    //}
+  };
+
+  const handleChange = e => {
+    setUser({ ...userUpdate, [e.target.name]: e.target.value });
   };
 
   return (
@@ -146,7 +148,9 @@ const User = props => {
                 <Form.Label>First Name</Form.Label>
                 <Form.Control
                   type="text"
-                  onChange={e => setFirstName(e.target.value)}
+                  onChange={handleChange}
+                  value={firstname}
+                  name="firstname"
                   defaultValue={user && user.firstname}
                 />
               </Form.Group>
@@ -154,7 +158,9 @@ const User = props => {
                 <Form.Label>Last Name</Form.Label>
                 <Form.Control
                   type="text"
-                  onChange={e => setLastName(e.target.value)}
+                  onChange={handleChange}
+                  value={lastname}
+                  name="lastname"
                   defaultValue={user && user.lastname}
                 />
               </Form.Group>
@@ -164,7 +170,9 @@ const User = props => {
               <Form.Label>Display Name</Form.Label>
               <Form.Control
                 type="text"
-                onChange={e => setDisplayName(e.target.value)}
+                onChange={handleChange}
+                value={displayname}
+                name="displayname"
                 defaultValue={user && user.displayname}
               />
               {/* add subtitle */}
@@ -173,7 +181,9 @@ const User = props => {
               <Form.Label>Image</Form.Label>
               <Form.Control
                 type="text"
-                onChange={e => setImage(e.target.value)}
+                onChange={handleChange}
+                value={image}
+                name="image"
                 // defaultValue={user && user.image}
                 defaultValue="https://via.placeholder.com/300x150"
               />
@@ -183,7 +193,9 @@ const User = props => {
               <Form.Label>Bio</Form.Label>
               <Form.Control
                 type="text"
-                onChange={e => setBio(e.target.value)}
+                onChange={handleChange}
+                value={bio}
+                name="bio"
                 defaultValue={user && user.bio}
               />
             </Form.Group>
@@ -192,11 +204,12 @@ const User = props => {
               <Form.Label>Change Email</Form.Label>
               <Form.Control
                 type="email"
-                defaultValue={user && user.email}
-                onChange={e => setEmail(e.target.value)}
+                onChange={handleChange}
+                value={email}
+                name="email"
               />
             </Form.Group>
-            <Form.Group controlId="changePassword">
+            {/* <Form.Group controlId="changePassword">
               <Form.Label>Change Password</Form.Label>
               <Form.Control
                 type="password"
@@ -212,7 +225,7 @@ const User = props => {
                 placeholder="Verify Password"
                 onChange={e => setPassWordVer(e.target.value)}
               />
-            </Form.Group>
+            </Form.Group> */}
 
             <Button type="submit">Submit</Button>
           </Form>

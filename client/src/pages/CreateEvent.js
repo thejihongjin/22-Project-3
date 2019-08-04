@@ -61,6 +61,7 @@ export default function CreateEvent() {
     category: "Movie",
     groupSize: "",
     description: "",
+    attendId: "",
     addressInfo: "",
     start: null,
     end: null
@@ -243,17 +244,6 @@ export default function CreateEvent() {
                         {eventCategories.map((category, i) => (
                           <option key={i}>{category}</option>
                         ))}
-                        {/* <option>Movie</option>
-                        <option>Concert</option>
-                        <option>Food/Drink</option>
-                        <option>Bar/Club</option>
-                        <option>Gaming</option>
-                        <option>Coding</option>
-                        <option>Party</option>
-                        <option>Conversation</option>
-                        <option>Travel</option>
-                        <option>Fitness</option>
-                        <option>Other</option> */}
                       </Form.Control>
                     </Form.Group>
                   </Col>
@@ -342,6 +332,8 @@ export default function CreateEvent() {
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <Grid container justify="space-around">
                           <KeyboardDatePicker
+                            endDate="d"
+                            minDate="0"
                             margin="normal"
                             id="startDate"
                             name="date"
@@ -353,6 +345,8 @@ export default function CreateEvent() {
                             }}
                           />
                           <KeyboardTimePicker
+                            endDate="d"
+                            minDate="0"
                             margin="normal"
                             id="startTime"
                             name="time"
@@ -368,6 +362,8 @@ export default function CreateEvent() {
                         {
                           <Grid container justify="space-around">
                             <KeyboardDatePicker
+                              endDate="d"
+                              minDate="0"
                               margin="normal"
                               id="endDate"
                               label="Day event ends"
@@ -378,6 +374,8 @@ export default function CreateEvent() {
                               }}
                             />
                             <KeyboardTimePicker
+                              endDate="d"
+                              minDate="0"
                               margin="normal"
                               id="endTime"
                               label="Time event ends"
