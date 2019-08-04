@@ -20,7 +20,7 @@ const SearchEvent = () => {
     filtered,
     events
   } = eventContext;
-  console.log(events)
+  console.log(events);
 
   //const text = useRef("");
 
@@ -29,8 +29,6 @@ const SearchEvent = () => {
     // eslint-disable-next-line
   }, []);
 
-
-
   // const handleChange = e => {
   //   if (text.current.value !== "") {
   //     filterEvents(e.target.value);
@@ -38,7 +36,17 @@ const SearchEvent = () => {
   //     clearFilter();
   //   }
   // };
-  const eventCategories = ["Movie","Concert","Food/Drink","Bar/Club","Gaming","Coding","Party","Conversation","Other"];
+  const eventCategories = [
+    "Movie",
+    "Concert",
+    "Food/Drink",
+    "Bar/Club",
+    "Gaming",
+    "Coding",
+    "Party",
+    "Conversation",
+    "Other"
+  ];
 
   return (
     <div style={{ margin: "0 auto" }}>
@@ -51,12 +59,14 @@ const SearchEvent = () => {
           <Form>
             <Form.Group controlId="exampleForm.ControlInput1">
               <Form.Label>Name</Form.Label>
-              <Form.Control  type="text"  />
+              <Form.Control type="text" />
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlSelect2">
               <Form.Label>Category</Form.Label>
               <Form.Control as="select" multiple>
-                {eventCategories.map((category, i) => <option key={i}>{category}</option>)}
+                {eventCategories.map((category, i) => (
+                  <option key={i}>{category}</option>
+                ))}
               </Form.Control>
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlTextarea1">
@@ -68,7 +78,8 @@ const SearchEvent = () => {
           </Form>
         </Card.Body>
       </Card>
-      <div>
+      {events ? (
+        <div>
           {events.map(event => (
             <EventItem key={event._id} event={event} />
           ))}
@@ -76,7 +87,10 @@ const SearchEvent = () => {
       {events.filter(attend => attend.attendId === user._id).map(event => (
         <EventItem key={event.id} event={event} />
       ))} */}
-       </div>
+        </div>
+      ) : (
+        <div>No events available</div>
+      )}
       {/* map over events meeting parameters in cards - look into pagination */}
 
       {/* div holding searched events? */}
@@ -106,6 +120,6 @@ const SearchEvent = () => {
       </Card> */}
     </div>
   );
-}
+};
 
 export default SearchEvent;

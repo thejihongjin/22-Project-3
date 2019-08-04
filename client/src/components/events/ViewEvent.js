@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, Fragment } from "react";
 import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
@@ -20,25 +20,17 @@ const ViewEvent = () => {
   const authContext = useContext(AuthContext);
   const [showToast, setShowToast] = useState(false);
   const { user } = authContext;
+  let didJoin = [];
 
   useEffect(() => {
     setEvent(current);
-    if (user._id === current.user) {
-      state.owner = true;
-    }
-
-    const didJoined = current.attendingId.filter(
-      attendId => attendId === user._id
-    );
-
-    if (didJoined[0] === user._id) {
-      console.log(didJoined);
-      state.joined = true;
-    }
-
     console.log(current);
     // eslint-disable-next-line
   }, [eventContext, current]);
+
+  if (current) {
+    didJoin = current.attendingId.filter(attendId => attendId === user._id);
+  }
 
   const [event, setEvent] = useState({
     name: "",
@@ -83,49 +75,55 @@ const ViewEvent = () => {
   };
 
   return (
-    <div>
-      <Card style={{ width: "25rem" }}>
-        {" "}
-        <Card.Body>
-          <Card.Title>{name.toUpperCase()}</Card.Title>
-          <Card.Subtitle className="mb-2 text-muted">{category}</Card.Subtitle>
-          <Card.Subtitle className="mb-2 text-muted">
-            Date: {start}
-          </Card.Subtitle>
-          <Card.Text>{description}</Card.Text>
+    <Fragment>
+      {current ? (
+        <Card style={{ width: "25rem" }}>
+          {" "}
+          <Card.Body>
+            <Card.Title>{name.toUpperCase()}</Card.Title>
+            <Card.Subtitle className="mb-2 text-muted">
+              {category}
+            </Card.Subtitle>
+            <Card.Subtitle className="mb-2 text-muted">
+              Date: {start}
+            </Card.Subtitle>
+            <Card.Text>{description}</Card.Text>
 
-          {state.owner ? (
-            <Button>Owned</Button>
-          ) : state.joined ? (
-            <Button
-              type="submit"
-              style={{ float: "right" }}
-              className="btn-success"
-              size="sm"
-              onClick={() => handleUnjoin()}
-            >
-              - Leave Event
-            </Button>
-          ) : (
-            <Button
-              type="submit"
-              style={{ float: "right" }}
-              className="btn-success"
-              size="sm"
-              onClick={() => handleJoin()}
-            >
-              + Join
-            </Button>
-          )}
+            {current.user === user._id ? (
+              <Button>Owned</Button>
+            ) : didJoin[0] === user._id ? (
+              <Button
+                type="submit"
+                style={{ float: "right" }}
+                className="btn-success"
+                size="sm"
+                onClick={() => handleUnjoin()}
+              >
+                - Leave Event
+              </Button>
+            ) : (
+              <Button
+                type="submit"
+                style={{ float: "right" }}
+                className="btn-success"
+                size="sm"
+                onClick={() => handleJoin()}
+              >
+                + Join
+              </Button>
+            )}
 
-          <Button size="sm" onClick={goBackSearch}>
-            Search More Events
-          </Button>
-          <Button size="sm" onClick={goBackUser}>
-            Back To Profile
-          </Button>
-        </Card.Body>
-      </Card>
+            <Button size="sm" onClick={goBackSearch}>
+              Search More Events
+            </Button>
+            <Button size="sm" onClick={goBackUser}>
+              Back To Profile
+            </Button>
+          </Card.Body>
+        </Card>
+      ) : (
+        <div> Sorry, this event is not available.</div>
+      )}
       <Row>
         <Col xs={6}>
           <Toast
@@ -141,7 +139,7 @@ const ViewEvent = () => {
           </Toast>
         </Col>
       </Row>
-    </div>
+    </Fragment>
   );
 };
 
