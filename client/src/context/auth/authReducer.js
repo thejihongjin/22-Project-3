@@ -26,14 +26,12 @@ export default (state, action) => {
         ...state,
         ...action.payload,
         isAuthenticated: true,
-        loading: false
       };
       case UPDATE_USER:
       console.log(action.payload);
       return {
         ...state,
         user: action.payload,
-        loading: false
       };
     case REGISTER_FAIL:
     case AUTH_ERROR:

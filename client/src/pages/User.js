@@ -38,42 +38,52 @@ const useStyles = {
   }
 };
 
-const User = () => {
+const User = props => {
   const [modalShow, setModalShow] = useState(false);
-
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [displayName, setDisplayName] = useState("");
+  const [image, setImage] = useState("");
+  const [bio, setBio] = useState("");
+  const [email, setEmail] = useState("");
+  const [passWord, setPassWord] = useState("");
+  const [passWordVer, setPassWordVer] = useState("");
   const authContext = useContext(AuthContext);
   const { user, updateUser } = authContext;
 
-  const { userUpdate, setUser } = useState({
-    firstname: "",
-    lastname: "",
-    displayname: "",
-    bio: "",
-    email: "",
-    image: ""
-  });
-
-  const { firstname, lastname, displayname, bio, email, image } = user;
-
   useEffect(() => {
-    authContext.loadUser();
-    //eslint-disable-next-line
-  }, []);
+    if (user) {
+      setFirstName(user.firstname);
+      setLastName(user.lastname);
+      setDisplayName(user.displayname);
+      setImage(user.avatar);
+      setEmail(user.email);
+      setBio(user.bio);
+    }
+  }, [user]);
 
   const handleProfileSubmit = e => {
     e.preventDefault();
-    // if (passWord !== passWordVer) {
-    //   alert("passwords must match");
-    // } else {
-    updateUser({
-      userUpdate
-    });
-    setModalShow(false);
-    //}
-  };
-
-  const handleChange = e => {
-    setUser({ ...userUpdate, [e.target.name]: e.target.value });
+    if (passWord !== passWordVer) {
+      alert("passwords must match");
+    } else {
+      console.log("firstName", firstName);
+      console.log("lastName", lastName);
+      console.log("displayname", displayName);
+      console.log("image", displayName);
+      console.log("bio", bio);
+      console.log("email", email);
+      updateUser({
+        ...user,
+        firstname: firstName,
+        lastname: lastName,
+        displayname: displayName,
+        image: image,
+        bio: bio,
+        email: email
+      });
+      setModalShow(false);
+    }
   };
 
   return (
@@ -147,10 +157,10 @@ const User = () => {
               <Form.Group as={Col} controlId="changeFirstName">
                 <Form.Label>First Name</Form.Label>
                 <Form.Control
-                  type="text"
-                  onChange={handleChange}
-                  value={firstname}
-                  name="firstname"
+                  onChange={e => {
+                    setFirstName(e.target.value);
+                    console.log(firstName);
+                  }}
                   defaultValue={user && user.firstname}
                 />
               </Form.Group>
@@ -158,9 +168,7 @@ const User = () => {
                 <Form.Label>Last Name</Form.Label>
                 <Form.Control
                   type="text"
-                  onChange={handleChange}
-                  value={lastname}
-                  name="lastname"
+                  onChange={e => setLastName(e.target.value)}
                   defaultValue={user && user.lastname}
                 />
               </Form.Group>
@@ -170,9 +178,7 @@ const User = () => {
               <Form.Label>Display Name</Form.Label>
               <Form.Control
                 type="text"
-                onChange={handleChange}
-                value={displayname}
-                name="displayname"
+                onChange={e => setDisplayName(e.target.value)}
                 defaultValue={user && user.displayname}
               />
               {/* add subtitle */}
@@ -181,9 +187,7 @@ const User = () => {
               <Form.Label>Image</Form.Label>
               <Form.Control
                 type="text"
-                onChange={handleChange}
-                value={image}
-                name="image"
+                onChange={e => setImage(e.target.value)}
                 // defaultValue={user && user.image}
                 defaultValue="https://via.placeholder.com/300x150"
               />
@@ -193,9 +197,7 @@ const User = () => {
               <Form.Label>Bio</Form.Label>
               <Form.Control
                 type="text"
-                onChange={handleChange}
-                value={bio}
-                name="bio"
+                onChange={e => setBio(e.target.value)}
                 defaultValue={user && user.bio}
               />
             </Form.Group>
@@ -204,12 +206,11 @@ const User = () => {
               <Form.Label>Change Email</Form.Label>
               <Form.Control
                 type="email"
-                onChange={handleChange}
-                value={email}
-                name="email"
+                defaultValue={user && user.email}
+                onChange={e => setEmail(e.target.value)}
               />
             </Form.Group>
-            {/* <Form.Group controlId="changePassword">
+            <Form.Group controlId="changePassword">
               <Form.Label>Change Password</Form.Label>
               <Form.Control
                 type="password"
@@ -225,7 +226,7 @@ const User = () => {
                 placeholder="Verify Password"
                 onChange={e => setPassWordVer(e.target.value)}
               />
-            </Form.Group> */}
+            </Form.Group>
 
             <Button type="submit">Submit</Button>
           </Form>
