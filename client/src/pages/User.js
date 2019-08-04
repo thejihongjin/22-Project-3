@@ -86,7 +86,9 @@ const User = props => {
             <Card.Body>
               <div style={useStyles.flexBetween}>
                 <Card.Title>Welcome, {user && user.displayname}</Card.Title>{" "}
-                <Link onClick={() => setModalShow(true)}>Edit</Link>
+                <Link to="#" onClick={() => setModalShow(true)}>
+                  Edit
+                </Link>
               </div>
               <Card.Subtitle className="mb-2 text-muted">
                 {/* {user && user.displayname} */}
