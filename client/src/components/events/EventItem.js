@@ -4,11 +4,23 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import EventContext from "../../context/event/eventContext";
+import AuthContext from "../../context/auth/authContext";
 
 const EventItem = ({ event }) => {
   const eventContext = useContext(EventContext);
-  const { deleteEvent, setCurrent, clearCurrent } = eventContext;
-  const { _id, name, location, category, description, addressInfo, start, end } = event;
+  const authContext = useContext(AuthContext);
+  const { user } = authContext;
+  const { deleteEvent, setCurrent, clearCurrent, updateEvent } = eventContext;
+  const {
+    _id,
+    name,
+    location,
+    category,
+    description,
+    addressInfo,
+    start,
+    end
+  } = event;
   const [showAlert, setShowAlert] = useState(false);
 
   const handleDelete = () => {
@@ -30,22 +42,25 @@ const EventItem = ({ event }) => {
   }
 
   let startDate;
-  let date = new Date (start)
-  startDate = date.toLocaleString()
+  let date = new Date(start);
+  startDate = date.toLocaleString();
   // console.log(date.toString('YYYY-MM-dd'))
 
   let endDate;
-  let dateEnd = new Date (end)
-  endDate = dateEnd.toLocaleString()
+  let dateEnd = new Date(end);
+  endDate = dateEnd.toLocaleString();
 
   return (
     <div>
       <Card style={{ width: "25rem" }}>
         {" "}
         <Card.Body>
-          <Card.Title>{name}</Card.Title>
+          <Card.Title>{name.toUpperCase()}</Card.Title>
           <Card.Subtitle className="mb-2 text-muted">{category}</Card.Subtitle>
-          <Card.Subtitle style={{ textTransform: "capitalize" }} className="mb-2 text-muted">
+          <Card.Subtitle
+            style={{ textTransform: "capitalize" }}
+            className="mb-2 text-muted"
+          >
             Location: {location}
           </Card.Subtitle>
           <Card.Subtitle className="mb-2 text-muted">
@@ -65,15 +80,33 @@ const EventItem = ({ event }) => {
           >
             Edit
           </Link>
-
-          <Button
-            style={{ float: "right" }}
-            className="btn-danger"
-            size="sm"
-            onClick={() => setShowAlert(true)}
+          <Link
+            onClick={() => setCurrent(event)}
+            to="/view"
+            className="card-link"
           >
-            Delete
-          </Button>
+            View
+          </Link>
+
+          {user ? (
+            <Button
+              style={{ float: "right" }}
+              className="btn-danger"
+              size="sm"
+              onClick={() => setShowAlert(true)}
+            >
+              Delete
+            </Button>
+          ) : (
+            <Button
+              style={{ float: "right" }}
+              className="btn-info"
+              size="sm"
+              onClick={() => setShowAlert(true)}
+            >
+              Join
+            </Button>
+          )}
         </Card.Body>
       </Card>
     </div>

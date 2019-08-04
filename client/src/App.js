@@ -12,6 +12,7 @@ import User from "./pages/User";
 import CreateEvent from "./pages/CreateEvent";
 import UserReview from "./pages/UserReview";
 import SearchEvent from "./pages/SearchEvent";
+import ViewEvent from "./components/events/ViewEvent";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -29,6 +30,7 @@ function App() {
                 <PrivateRoute exact path="/user" component={User} />
                 <PrivateRoute exact path="/create" component={CreateEvent} />
                 <PrivateRoute exact path="/review" component={UserReview} />
+                <PrivateRoute exact path="/view" component={ViewEvent} />
                 <Route exact path="/search" component={SearchEvent} />
                 <Route render={() => <h1>404 Page not found.</h1>} />
               </Switch>

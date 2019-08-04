@@ -1,4 +1,5 @@
 import {
+  GET_USER_EVENTS,
   GET_EVENTS,
   ADD_EVENT,
   DELETE_EVENT,
@@ -12,7 +13,15 @@ import {
 } from "../types";
 
 export default (state, action) => {
+  console.log(state)
   switch (action.type) {
+    
+    case GET_USER_EVENTS:
+      return {
+        ...state,
+        events: action.payload,
+        loading: false
+      };
     case GET_EVENTS:
       return {
         ...state,
@@ -62,7 +71,7 @@ export default (state, action) => {
         ...state,
         filtered: state.events.filter(event => {
           const regex = new RegExp(`${action.payload}`, "gi");
-          return event.name.match(regex) || event.email.match(regex);
+          return event.name.match(regex);
         })
       };
     case CLEAR_FILTER:

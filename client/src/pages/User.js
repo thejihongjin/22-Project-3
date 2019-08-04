@@ -54,7 +54,6 @@ const User = props => {
   useEffect(() => {
     authContext.loadUser();
     //eslint-disable-next-line
-    //console.log(user)
   }, []);
 
   const handleProfileSubmit = e => {
@@ -70,8 +69,8 @@ const User = props => {
         image: image,
         bio: bio,
         email: email
-      })
-      setModalShow(false)
+      });
+      setModalShow(false);
     }
   };
 
@@ -81,7 +80,9 @@ const User = props => {
       <Row>
         <Col>
           <Card style={{ width: "25em", margin: "10px 0" }}>
-            {user && user.image && <Card.Img variant="top" src={user && user.image} />}
+            {user && user.image && (
+              <Card.Img variant="top" src={user && user.image} />
+            )}
             <Card.Body>
               <div style={useStyles.flexBetween}>
                 <Card.Title>Welcome, {user && user.displayname}</Card.Title>{" "}
@@ -94,9 +95,11 @@ const User = props => {
                 User Profile
               </Card.Subtitle>
               <Card.Text>
-                {user && (user.firstname + " " + user.lastname) === "undefined undefined"
+                {user &&
+                user.firstname + " " + user.lastname === "undefined undefined"
                   ? "Update your first and last name"
-                  : "Name: " + (user && (user.firstname + " " + user.lastname))}</Card.Text>
+                  : "Name: " + (user && user.firstname + " " + user.lastname)}
+              </Card.Text>
               <Card.Text>
                 {user && user.bio === ""
                   ? "Add some info about yourself"
@@ -176,7 +179,6 @@ const User = props => {
               />
             </Form.Group>
 
-            
             <Form.Group>
               <Form.Label>Bio</Form.Label>
               <Form.Control

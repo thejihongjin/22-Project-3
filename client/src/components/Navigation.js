@@ -3,15 +3,17 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import { Link } from "react-router-dom";
 import AuthContext from "../context/auth/authContext";
+import history from "../utils/history"
 
 
 const Navigation = () => {
   const authContext = useContext(AuthContext);
 
-  const { isAuthenticated, logout, user } = authContext;
+  const { isAuthenticated, logout } = authContext;
 
   const onLogout = () => {
     logout();
+    history.push("/")
   };
   //console.log(user);
 

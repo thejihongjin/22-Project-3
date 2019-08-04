@@ -7,7 +7,19 @@ const { check, validationResult } = require("express-validator");
 const User = require("../models/User");
 const Event = require("../models/Event");
 
-router.get("/", auth, async (req, res) => {
+router.get("/", async (req, res) => {
+  try {
+    const events = await Event.find().sort({
+      date: -1
+    });
+    res.json(events);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+router.get("/user", auth, async (req, res) => {
   try {
     const events = await Event.find({ user: req.user.id }).sort({ date: -1 });
     res.json(events);
@@ -62,7 +74,12 @@ router.post(
         user: req.user.id
       });
       const event = await newEvent.save();
-      res.json(event);
+      const response = await User.findByIdAndUpdate(req.user.id, {
+        $push: { attendId: event._id }
+      });
+      if (response.isModified) {
+        res.json(event);
+      }
     } catch (error) {
       console.error(error.message);
       res.status(500).send("Server Error");

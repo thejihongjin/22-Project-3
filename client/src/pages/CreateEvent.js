@@ -18,13 +18,13 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import AuthContext from "../context/auth/authContext";
 // import { BrowserRouter as Router, Route } from 'react-router-dom';
-import MapCont from "../components/Map"
-import Navigation from "../components/Navigation"
+import MapCont from "../components/Map";
+import Navigation from "../components/Navigation";
 import EventContext from "../context/event/eventContext";
 import Geocode from "react-geocode";
-import axios from 'axios';
+import axios from "axios";
 
-Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY)
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY);
 
 const useStyles = {
   grid: {
@@ -63,45 +63,56 @@ export default function CreateEvent() {
     description: "",
     addressInfo: "",
     start: null,
-    end: null,
+    end: null
   });
 
-  const handleStartTime = (time)=>{
+  const handleStartTime = time => {
     setStartTime(time);
-    console.log(time)
+    console.log(time);
 
     const saveState = event;
-    saveState.start = time
-    setEvent(saveState)
+    saveState.start = time;
+    setEvent(saveState);
     //setEvent({...event, [start]: date})
-  }
+  };
 
-  const handleEndTime = (time)=>{
+  const handleEndTime = time => {
     setEndTime(time);
-    console.log(time)
+    console.log(time);
 
     const saveState = event;
-    saveState.end = time
-    setEvent(saveState)
+    saveState.end = time;
+    setEvent(saveState);
     //setEvent({...event, [start]: date})
-  }
+  };
   useEffect(() => {
     if (current) {
       setEvent(current);
-      setStartTime(current.start)
-      setEndTime(current.end)
+      setStartTime(current.start);
+      setEndTime(current.end);
     } else {
       // setEvent({
       //   category: "Movie",
       //   groupSize: "",
       //   addressInfo: ""
       // });
-      console.log("No event yet")
+      console.log("No event yet");
     }
-    
   }, [eventContext, current]);
 
-  const { name, location, category, groupSize, description, addressInfo } = event;
+  const {
+    name,
+    location,
+    category,
+    groupSize,
+    description,
+    addressInfo
+  } = event;
+
+  const goBack = () => {
+    clearCurrent();
+    history.push("/user");
+  };
 
   const handleChange = e => {
     setEvent({ ...event, [e.target.name]: e.target.value });
@@ -109,55 +120,66 @@ export default function CreateEvent() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    let userInput = event.location
+    let userInput = event.location;
     let address;
     let placeId;
-    console.log(userInput)
+    console.log(userInput);
 
-    Geocode.fromAddress(userInput).then(
-    response => {
-        // const { lat, lng } = response.results[0].geometry.location;
-        // console.log(lat, lng);
-        // setLocation({...locationInput, mapLat: lat})
-        // setLocation({...locationInput, mapLng: lng})
-        address = response.results[0].formatted_address;
-        console.log(response.results[0])
-        placeId = response.results[0].place_id
-      },
-      error => {
-        console.error(error);
-      })
+    Geocode.fromAddress(userInput)
+      .then(
+        response => {
+          // const { lat, lng } = response.results[0].geometry.location;
+          // console.log(lat, lng);
+          // setLocation({...locationInput, mapLat: lat})
+          // setLocation({...locationInput, mapLng: lng})
+          address = response.results[0].formatted_address;
+          console.log(response.results[0]);
+          placeId = response.results[0].place_id;
+        },
+        error => {
+          console.error(error);
+        }
+      )
       // .then(() => {
       //   axios.get(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&fields=name&key=${process.env.REACT_APP_GOOGLE_API_KEY}`).then(res => {
       //     console.log('places api response: ', res)
       //   })
       // })
       .finally(() => {
-        const postEvent = { ...event }
+        const postEvent = { ...event };
         postEvent.addressInfo = address;
-        setEvent(postEvent)
+        setEvent(postEvent);
         if (current) {
           updateEvent(event);
         } else {
-          addEvent(postEvent); 
+          addEvent(postEvent);
         }
         clearCurrent();
         history.push("/user");
         //console.log(e)
-      })
-
+      });
   };
 
   // const clearAll = () => {
   //   clearCurrent();
   // };
-  
-  const eventCategories = ["Movie","Concert","Food/Drink","Bar/Club","Gaming","Coding","Party","Conversation","Other"];
+
+  const eventCategories = [
+    "Movie",
+    "Concert",
+    "Food/Drink",
+    "Bar/Club",
+    "Gaming",
+    "Coding",
+    "Party",
+    "Conversation",
+    "Other"
+  ];
 
   const [locationInput, setLocation] = useState({
     mapLat: 32.712043,
     mapLng: -117.142254
-} )
+  });
 
   return (
     <Container>
@@ -206,7 +228,7 @@ export default function CreateEvent() {
                     />
                   </InputGroup>
                 </Form.Group>
-                
+
                 <Row>
                   {" "}
                   <Col>
@@ -218,7 +240,9 @@ export default function CreateEvent() {
                         onChange={handleChange}
                         as="select"
                       >
-                      {eventCategories.map((category, i) => <option key={i}>{category}</option>)}
+                        {eventCategories.map((category, i) => (
+                          <option key={i}>{category}</option>
+                        ))}
                         {/* <option>Movie</option>
                         <option>Concert</option>
                         <option>Food/Drink</option>
@@ -333,7 +357,7 @@ export default function CreateEvent() {
                             id="startTime"
                             name="time"
                             label="Select a time to meet"
-                            value={startTime} 
+                            value={startTime}
                             onChange={handleStartTime}
                             KeyboardButtonProps={{
                               "aria-label": "change time"
@@ -341,28 +365,30 @@ export default function CreateEvent() {
                           />
                         </Grid>
 
-                        {<Grid container justify="space-around">
-                          <KeyboardDatePicker
-                            margin="normal"
-                            id="endDate"
-                            label="Day event ends"
-                            value={endTime}
-                            onChange={handleEndTime}
-                            KeyboardButtonProps={{
-                              "aria-label": "change date"
-                            }}
-                          />
-                          <KeyboardTimePicker
-                            margin="normal"
-                            id="endTime"
-                            label="Time event ends"
-                            value={endTime}
-                            onChange={handleEndTime}
-                            KeyboardButtonProps={{
-                              "aria-label": "change time"
-                            }}
-                          />
-                        </Grid>}
+                        {
+                          <Grid container justify="space-around">
+                            <KeyboardDatePicker
+                              margin="normal"
+                              id="endDate"
+                              label="Day event ends"
+                              value={endTime}
+                              onChange={handleEndTime}
+                              KeyboardButtonProps={{
+                                "aria-label": "change date"
+                              }}
+                            />
+                            <KeyboardTimePicker
+                              margin="normal"
+                              id="endTime"
+                              label="Time event ends"
+                              value={endTime}
+                              onChange={handleEndTime}
+                              KeyboardButtonProps={{
+                                "aria-label": "change time"
+                              }}
+                            />
+                          </Grid>
+                        }
                       </MuiPickersUtilsProvider>
                     </div>
                   </Col>
@@ -375,7 +401,9 @@ export default function CreateEvent() {
                     {current ? "Update Event" : "Submit"}
                   </Button>
                   <Link to="/user">
-                    <Button variant="outline-info">Back To Profile</Button>
+                    <Button onClick={goBack} variant="outline-info">
+                      Back To Profile
+                    </Button>
                   </Link>
                 </div>
               </Form>
@@ -383,7 +411,7 @@ export default function CreateEvent() {
           </Card>
         </Col>
       </Row>
-{/* 
+      {/* 
       <Row>
         <Col>
           <div style={{ margin: "10px" }}>
@@ -391,7 +419,6 @@ export default function CreateEvent() {
             </div>
         </Col>
         </Row> */}
-        
     </Container>
   );
 }
