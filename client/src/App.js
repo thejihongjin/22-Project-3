@@ -1,7 +1,6 @@
 import React from "react";
 import { Router, Route, Switch } from "react-router-dom";
 import Loading from "./components/Loading";
-import { UserProvider } from "./utils/userContext";
 import setAuthToken from "./utils/setAuthToken";
 import history from "./utils/history";
 import PrivateRoute from "./components/routing/PrivateRoute";
@@ -23,19 +22,19 @@ function App() {
     <AuthState>
       <EventState>
         <Router history={history}>
-          <UserProvider>
+          
             <React.Suspense fallback={<Loading />}>
               <Switch>
                 <Route exact path="/" component={About} />
-                <PrivateRoute exact path="/user" component={User} />
                 <PrivateRoute exact path="/create" component={CreateEvent} />
+                <PrivateRoute exact path="/user" component={User} />
                 <PrivateRoute exact path="/review" component={UserReview} />
                 <PrivateRoute exact path="/view" component={ViewEvent} />
                 <Route exact path="/search" component={SearchEvent} />
                 <Route render={() => <h1>404 Page not found.</h1>} />
               </Switch>
             </React.Suspense>
-          </UserProvider>
+         
         </Router>
       </EventState>
     </AuthState>

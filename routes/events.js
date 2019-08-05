@@ -21,7 +21,11 @@ router.get("/", async (req, res) => {
 
 router.get("/user", auth, async (req, res) => {
   try {
-    const events = await Event.find({ user: req.user.id }).sort({ date: -1 });
+    const events = await Event.find({
+      attendingId: { $all: [req.user.id] }
+    }).sort({
+      date: -1
+    });
     res.json(events);
   } catch (err) {
     console.error(err.message);
@@ -68,14 +72,14 @@ router.post(
         end,
         category,
         description,
-        attendingId,
+        attendingId: req.user.id,
         pendingId,
         addressInfo,
         user: req.user.id
       });
       const event = await newEvent.save();
       const response = await User.findByIdAndUpdate(req.user.id, {
-        $push: { attendId: event._id }
+        $push: { attendingId: event._id }
       });
       if (response.isModified) {
         res.json(event);
@@ -129,6 +133,56 @@ router.put("/:id", auth, async (req, res) => {
       { new: true }
     );
     res.json(event);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+router.put("/join/:id", auth, async (req, res) => {
+  try {
+    let event = await Event.findById(req.params.id);
+
+    if (!event) return res.status(404).json({ msg: "Event not found" });
+
+    // Make sure user owns event
+
+    event = await Event.findByIdAndUpdate(
+      req.params.id,
+      { $push: { attendingId: req.user.id } },
+      { new: true }
+    );
+    const response = await User.findByIdAndUpdate(req.user.id, {
+      $push: { attendingId: event._id }
+    });
+    if (response.isModified) {
+      res.json(event);
+    }
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+router.put("/leave/:id", auth, async (req, res) => {
+  try {
+    let event = await Event.findById(req.params.id);
+
+    if (!event) return res.status(404).json({ msg: "Event not found" });
+
+    // Make sure user owns event
+
+    event = await Event.findByIdAndUpdate(
+      req.params.id,
+      { $pull: { attendingId: req.user.id } },
+      { new: true }
+    );
+    const response = await User.findByIdAndUpdate(req.user.id, {
+      $pull: { attendingId: event._id }
+    });
+    if (response.isModified) {
+      res.json(event);
+    }
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server Error");
