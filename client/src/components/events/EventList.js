@@ -1,8 +1,7 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect } from "react";
 import EventItem from "./EventItem";
 import EventContext from "../../context/event/eventContext";
 import AuthContext from "../../context/auth/authContext";
-import { join } from "path";
 
 const EventList = () => {
   const eventContext = useContext(EventContext);

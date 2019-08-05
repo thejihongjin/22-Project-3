@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useContext } from "react";
+import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
@@ -7,6 +7,7 @@ import EventContext from "../../context/event/eventContext";
 import AuthContext from "../../context/auth/authContext";
 
 const EventItem = ({ event }) => {
+
   const eventContext = useContext(EventContext);
   const authContext = useContext(AuthContext);
   const { user } = authContext;
@@ -22,6 +23,7 @@ const EventItem = ({ event }) => {
     end
   } = event;
   const [showAlert, setShowAlert] = useState(false);
+  console.log(user._id)
 
   const handleDelete = () => {
     setShowAlert(false);
@@ -90,7 +92,6 @@ const EventItem = ({ event }) => {
               >
                 Edit
               </Link>
-
               <Button
                 style={{ float: "right" }}
                 className="btn-danger"

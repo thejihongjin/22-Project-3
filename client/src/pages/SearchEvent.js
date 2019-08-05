@@ -1,23 +1,26 @@
-import React, { Fragment, useContext, useRef, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import EventContext from "../context/event/eventContext";
 import EventItem from "../components/events/EventItem";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
+import AuthContext from "../context/auth/authContext";
 import Button from "react-bootstrap/Button";
-
 import Navigation from "../components/Navigation";
+import Loading from "../components/Loading";
+import history from '../utils/history'
 
 const SearchEvent = () => {
-  const cardStyle = {
-    margin: "15px"
-  };
-
+  useEffect(() => {
+    if (!user) {
+      authContext.loadUser();
+    }
+  });
+  const authContext = useContext(AuthContext);
+  const { user } = authContext;
   const eventContext = useContext(EventContext);
   const {
-    filterEvents,
     getEvents,
-    clearFilter,
-    filtered,
+
     events
   } = eventContext;
   console.log(events);
@@ -47,6 +50,10 @@ const SearchEvent = () => {
     "Conversation",
     "Other"
   ];
+
+  if (!events) {
+    return <Loading />;
+  }
 
   return (
     <div style={{ margin: "0 auto" }}>
@@ -83,7 +90,6 @@ const SearchEvent = () => {
           {events.map(event => (
             <EventItem key={event._id} event={event} />
           ))}
-          
         </div>
       ) : (
         <div>No events available</div>
@@ -91,30 +97,6 @@ const SearchEvent = () => {
       {/* map over events meeting parameters in cards - look into pagination */}
 
       {/* div holding searched events? */}
-
-      {/* <Card style={cardStyle}>
-        <Card.Body>
-          <Card.Title>Search Results</Card.Title>
-          <Card style={cardStyle}>
-            <Card.Body>
-              <div className="float-right">
-                <Button>View</Button> <Button>Join</Button>
-              </div>
-              <Card.Title>Name</Card.Title>
-              <Card.Text>Date</Card.Text>
-            </Card.Body>
-          </Card>
-          <Card style={cardStyle}>
-            <Card.Body>
-              <div className="float-right">
-                <Button>View</Button> <Button>Join</Button>
-              </div>
-              <Card.Title>Name</Card.Title>
-              <Card.Text>Date</Card.Text>
-            </Card.Body>
-          </Card>
-        </Card.Body>
-      </Card> */}
     </div>
   );
 };

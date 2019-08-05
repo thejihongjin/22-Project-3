@@ -16,13 +16,12 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import AuthContext from "../context/auth/authContext";
+//import AuthContext from "../context/auth/authContext";
 // import { BrowserRouter as Router, Route } from 'react-router-dom';
-import MapCont from "../components/Map";
+//import MapCont from "../components/Map";
 import Navigation from "../components/Navigation";
 import EventContext from "../context/event/eventContext";
 import Geocode from "react-geocode";
-import axios from "axios";
 
 Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY);
 
@@ -49,9 +48,9 @@ const useStyles = {
 
 export default function CreateEvent() {
   const eventContext = useContext(EventContext);
-  const authContext = useContext(AuthContext);
+  //const authContext = useContext(AuthContext);
   const { addEvent, updateEvent, clearCurrent, current } = eventContext;
-  const { user } = authContext;
+  //const { user } = authContext;
   //const [date, setDate] = useState(new Date());
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
@@ -106,8 +105,8 @@ export default function CreateEvent() {
     location,
     category,
     groupSize,
-    description,
-    addressInfo
+    description
+    //addressInfo
   } = event;
 
   const goBack = () => {
@@ -332,8 +331,7 @@ export default function CreateEvent() {
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <Grid container justify="space-around">
                           <KeyboardDatePicker
-                            endDate="d"
-                            minDate="0"
+                            minDate="today"
                             margin="normal"
                             id="startDate"
                             name="date"
@@ -345,8 +343,7 @@ export default function CreateEvent() {
                             }}
                           />
                           <KeyboardTimePicker
-                            endDate="d"
-                            minDate="0"
+                            minDate="today"
                             margin="normal"
                             id="startTime"
                             name="time"
@@ -362,8 +359,7 @@ export default function CreateEvent() {
                         {
                           <Grid container justify="space-around">
                             <KeyboardDatePicker
-                              endDate="d"
-                              minDate="0"
+                              minDate="today"
                               margin="normal"
                               id="endDate"
                               label="Day event ends"
@@ -374,8 +370,7 @@ export default function CreateEvent() {
                               }}
                             />
                             <KeyboardTimePicker
-                              endDate="d"
-                              minDate="0"
+                              minDate="today"
                               margin="normal"
                               id="endTime"
                               label="Time event ends"
