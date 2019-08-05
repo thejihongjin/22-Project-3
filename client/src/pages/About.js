@@ -8,12 +8,13 @@ import SignIn from "./SignIn"
 import Carousel from "../components/Carousel"
 import Nav from 'react-bootstrap/Nav'
 import Footer from "../components/Footer"
+import Navigation from "../components/Navigation"
 
-import "./Style.css"
+// import "./Style.css"
 
 const About = props => {
-  const [showRegister, setShowRegister] = useState(false);
-  const [showSignIn, setShowSignIn] = useState(false);
+  // const [showRegister, setShowRegister] = useState(false);
+  // const [showSignIn, setShowSignIn] = useState(false);
   const authContext = useContext(AuthContext);
   const { isAuthenticated } = authContext;
 
@@ -28,62 +29,57 @@ const About = props => {
 
   return (
     <div className="main">
-      <Jumbotron fluid className="header">
-        <h1 className="text-center"> Friend Finder</h1>
-      </Jumbotron>
-    <Container className="container" >
 
-    <Carousel/>
+      <Navigation />
 
-      <Row className="buttonCol">
-      {/* className="d-flex justify-content-center" */}
-        <Col>
-        {/* className="d-flex justify-content-between" */}
-          <Button className="buttonClick" variant="primary" onClick={() => setShowRegister(true)}>
-            Register
-          </Button>
-          <Button className="buttonClick" variant="primary" onClick={() => setShowSignIn(true)}>
-            Sign In
-          </Button>
-        </Col>
-      </Row>
+      {/* <Jumbotron fluid className="header">
+        <div className="float-right">
+          <Button className="buttonClick" variant="primary" onClick={() => setShowRegister(true)}>Register</Button> <Button className="buttonClick" variant="primary" onClick={() => setShowSignIn(true)}>Sign In</Button>
+        </div>
+        <h1 className="text-center">Lonely Friend Finder</h1>
+      </Jumbotron> */}
 
-      <Modal
-        size="lg"
-        show={showRegister}
-        onHide={() => setShowRegister(false)}
-        aria-labelledby="example-modal-sizes-title-lg"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="example-modal-sizes-title-lg">Register</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Register onHide={() => setShowRegister(false)} />
-        </Modal.Body>
-      </Modal>
-      <Modal
-        size="lg"
-        show={showSignIn}
-        onHide={() => setShowSignIn(false)}
-        aria-labelledby="example-modal-sizes-title-lg"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="example-modal-sizes-title-lg">Sign In</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <SignIn onHide={() => setShowSignIn(false)} />
-        </Modal.Body>
-      </Modal>   
-      
-    </Container>
-    {/* <Footer/> */}
-  
+      <Container className="container" >
 
-  <Nav className="justify-content-center end-nav" activeKey="/home">
-    <Nav.Item>
-    <p className="footer-text"> © 2019 Friend Finder</p>
-    </Nav.Item>
-  </Nav>
+        <Carousel />
+
+
+        {/* <Modal
+          size="lg"
+          show={showRegister}
+          onHide={() => setShowRegister(false)}
+          aria-labelledby="example-modal-sizes-title-lg"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="example-modal-sizes-title-lg">Register</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Register onHide={() => setShowRegister(false)} />
+          </Modal.Body>
+        </Modal>
+        <Modal
+          size="lg"
+          show={showSignIn}
+          onHide={() => setShowSignIn(false)}
+          aria-labelledby="example-modal-sizes-title-lg"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="example-modal-sizes-title-lg">Sign In</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <SignIn onHide={() => setShowSignIn(false)} />
+          </Modal.Body>
+        </Modal> */}
+
+      </Container>
+      {/* <Footer/> */}
+
+
+      <Nav className="justify-content-center end-nav" activeKey="/home">
+        <Nav.Item>
+          <p className="footer-text"> © 2019 Friend Finder</p>
+        </Nav.Item>
+      </Nav>
 
     </div>
   );
