@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import EventList from "../components/events/EventList";
+import Loading from "../components/Loading";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import AuthContext from "../context/auth/authContext";
@@ -52,11 +53,11 @@ const User = props => {
   const authContext = useContext(AuthContext);
   const { user, updateUser } = authContext;
 
-  useEffect(()=> {
-    if(!user) {
+  useEffect(() => {
+    if (!user) {
       authContext.loadUser();
     }
-  })
+  });
 
   useEffect(() => {
     if (user) {
@@ -65,21 +66,21 @@ const User = props => {
       setDisplayName(user.displayname);
       setImage(user.avatar);
       setEmail(user.email);
-      setBio(user.bio)
-      console.log(user)
+      setBio(user.bio);
+      console.log(user);
     }
   }, [user]);
 
   const handleProfileSubmit = e => {
     e.preventDefault();
     updateUser({
-        ...user,
-        firstname: firstName,
-        lastname: lastName,
-        displayname: displayName,
-        image: image,
-        bio: bio,
-        email: email
+      ...user,
+      firstname: firstName,
+      lastname: lastName,
+      displayname: displayName,
+      image: image,
+      bio: bio,
+      email: email
     });
     setModalShow(false);
   };
@@ -88,15 +89,19 @@ const User = props => {
     e.preventDefault();
     if (passWord !== passWordVer) {
       alert("passwords must match");
-    } else if(passWordVer === "") {
-      alert("Passwords cannot be blank")
+    } else if (passWordVer === "") {
+      alert("Passwords cannot be blank");
     } else {
       updateUser({
         ...user,
         password: passWordVer
-      })
+      });
     }
-    setPasswordModalShow(false)
+    setPasswordModalShow(false);
+  };
+
+  if (!user) {
+    return <Loading />;
   }
 
   return (
@@ -227,7 +232,7 @@ const User = props => {
               />
             </Form.Group>
             <Button type="submit">Submit</Button>
-            <Button onClick={()=>setModalShow(false)}>Cancel</Button>
+            <Button onClick={() => setModalShow(false)}>Cancel</Button>
           </Form>
         </Modal.Body>
       </Modal>
@@ -239,11 +244,13 @@ const User = props => {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">Change Password</Modal.Title>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Change Password
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-         <h4>Change Password</h4>
-         <Form onSubmit={handlePasswordSubmit}>
+          <h4>Change Password</h4>
+          <Form onSubmit={handlePasswordSubmit}>
             <Form.Group controlId="changePassword">
               <Form.Label>Change Password</Form.Label>
               <Form.Control
@@ -263,9 +270,11 @@ const User = props => {
             </Form.Group>
             <Row>
               <Button type="submit">Submit</Button>
-              <Button onClick={()=>setPasswordModalShow(false)}>Cancel</Button>
+              <Button onClick={() => setPasswordModalShow(false)}>
+                Cancel
+              </Button>
             </Row>
-         </Form>
+          </Form>
         </Modal.Body>
       </Modal>
     </Container>

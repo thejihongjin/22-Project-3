@@ -11,27 +11,19 @@ import AuthContext from "../../context/auth/authContext";
 import history from "../../utils/history";
 
 const ViewEvent = () => {
-  const state = {
-    owner: false,
-    joined: false
-  };
   const eventContext = useContext(EventContext);
-  const { clearCurrent, current, joinEvent, unjoinEvent } = eventContext;
+  const {
+    clearCurrent,
+    current,
+    joinEvent,
+    unjoinEvent,
+    deleteEvent
+  } = eventContext;
   const authContext = useContext(AuthContext);
   const [showToast, setShowToast] = useState(false);
   const { user } = authContext;
-  let didJoin = [];
-
-  useEffect(() => {
-    setEvent(current);
-    console.log(current);
-    // eslint-disable-next-line
-  }, [eventContext, current]);
-
-  if (current) {
-    didJoin = current.attendingId.filter(attendId => attendId === user._id);
-  }
-
+  const state = { owned: false, joined: false };
+  const [showAlert, setShowAlert] = useState(false);
   const [event, setEvent] = useState({
     name: "",
     location: "",
@@ -40,8 +32,21 @@ const ViewEvent = () => {
     description: "",
     attendingId: [],
     start: null,
-    end: null
+    end: null,
+    didJoin: []
   });
+  useEffect(() => {
+    setEvent(current);
+    // eslint-disable-next-line
+  }, [eventContext, current]);
+
+  event.didJoin = current.attendingId.filter(attendId => attendId === user._id);
+  console.log(event.didJoin);
+  if (current.user === user._id) {
+    state.owned = true;
+  } else if (event.didJoin[0] === user._id) {
+    state.joined = true;
+  }
 
   const {
     name,
@@ -61,7 +66,6 @@ const ViewEvent = () => {
 
   const handleUnjoin = () => {
     unjoinEvent(event);
-    console.log("Unjoined");
   };
 
   const goBackUser = () => {
@@ -73,6 +77,28 @@ const ViewEvent = () => {
     clearCurrent();
     history.push("/search");
   };
+
+  const handleDelete = () => {
+    setShowAlert(false);
+    deleteEvent(current._id);
+    clearCurrent();
+    history.push("/user");
+  };
+
+  if (showAlert) {
+    return (
+      <Card style={{ width: "25rem" }}>
+        <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
+          <Alert.Heading>
+            Are you sure you want to delete this event?
+          </Alert.Heading>
+          <Button className="btn-danger" onClick={handleDelete}>
+            Yes
+          </Button>
+        </Alert>
+      </Card>
+    );
+  }
 
   return (
     <Fragment>
@@ -89,9 +115,16 @@ const ViewEvent = () => {
             </Card.Subtitle>
             <Card.Text>{description}</Card.Text>
 
-            {current.user === user._id ? (
-              <Button>Owned</Button>
-            ) : didJoin[0] === user._id ? (
+            {state.owned ? (
+              <Button
+                style={{ float: "right" }}
+                className="btn-danger"
+                size="sm"
+                onClick={() => setShowAlert(true)}
+              >
+                Delete
+              </Button>
+            ) : state.joined ? (
               <Button
                 type="submit"
                 style={{ float: "right" }}

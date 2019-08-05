@@ -21,8 +21,9 @@ router.get("/", async (req, res) => {
 
 router.get("/user", auth, async (req, res) => {
   try {
-    const events = await Event.find({ user: req.user.id })
-    .sort({
+    const events = await Event.find({
+      attendingId: { $all: [req.user.id] }
+    }).sort({
       date: -1
     });
     res.json(events);

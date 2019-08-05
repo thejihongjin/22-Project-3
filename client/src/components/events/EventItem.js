@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { Fragment, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
@@ -10,7 +10,7 @@ const EventItem = ({ event }) => {
   const eventContext = useContext(EventContext);
   const authContext = useContext(AuthContext);
   const { user } = authContext;
-  const { deleteEvent, setCurrent, clearCurrent} = eventContext;
+  const { deleteEvent, setCurrent, clearCurrent } = eventContext;
   const {
     _id,
     name,
@@ -54,8 +54,16 @@ const EventItem = ({ event }) => {
     <div>
       <Card style={{ width: "25rem" }}>
         {" "}
-        <Card.Body>
+        <Card.Body><Link
+            onClick={() => setCurrent(event)}
+            to="/view"
+            className="card-link"
+            
+          >
+            
           <Card.Title>{name.toUpperCase()}</Card.Title>
+          </Link>
+         
           <Card.Subtitle className="mb-2 text-muted">{category}</Card.Subtitle>
           <Card.Subtitle
             style={{ textTransform: "capitalize" }}
@@ -73,31 +81,26 @@ const EventItem = ({ event }) => {
             End Time: {endDate}
           </Card.Subtitle>
           <Card.Text>{description}</Card.Text>
-          <Link
-            onClick={() => setCurrent(event)}
-            to="/create"
-            className="card-link"
-          >
-            Edit
-          </Link>
-          <Link
-            onClick={() => setCurrent(event)}
-            to="/view"
-            className="card-link"
-          >
-            View
-          </Link>
+          {event.user === user._id ? (
+            <Fragment>
+              <Link
+                onClick={() => setCurrent(event)}
+                to="/create"
+                className="card-link"
+              >
+                Edit
+              </Link>
 
-         
-            <Button
-              style={{ float: "right" }}
-              className="btn-danger"
-              size="sm"
-              onClick={() => setShowAlert(true)}
-            >
-              Delete
-            </Button>
-          
+              <Button
+                style={{ float: "right" }}
+                className="btn-danger"
+                size="sm"
+                onClick={() => setShowAlert(true)}
+              >
+                Delete
+              </Button>
+            </Fragment>
+          ) : null}
         </Card.Body>
       </Card>
     </div>

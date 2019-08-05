@@ -83,10 +83,7 @@ const SearchEvent = () => {
           {events.map(event => (
             <EventItem key={event._id} event={event} />
           ))}
-          {/* <p>Your Joined Events</p>
-      {events.filter(attend => attend.attendId === user._id).map(event => (
-        <EventItem key={event.id} event={event} />
-      ))} */}
+          
         </div>
       ) : (
         <div>No events available</div>
