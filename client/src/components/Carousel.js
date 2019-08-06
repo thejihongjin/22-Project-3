@@ -20,7 +20,8 @@ const styleCarousel = {
 const CarouselTest = () => {
     console.log("style isnt working")
     return (
-        <Carousel interval={2700} indicators={false}  controls={false} style={styleCarousel}>
+        // <Carousel interval={2700} indicators={false} controls={false} style={styleCarousel}>
+        <Carousel interval={2700} indicators={false} controls={false} style={{margin: "25px"}}>
             <Carousel.Item>
                 <img
                     className="w-100"

@@ -8,13 +8,7 @@ import { Container, Modal } from "react-bootstrap";
 import Register from "../pages/Register"
 import SignIn from "../pages/SignIn"
 
-const useStyles = {
-  flexBetween: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "space-between"
-  },
-}
+
 
 const Navigation = () => {
   const authContext = useContext(AuthContext);
@@ -30,8 +24,6 @@ const Navigation = () => {
   //console.log(user);
 
   const authLinks = (
- 
-
     <Nav className="mr-auto">
       <Nav.Link href="/search">Find an Event</Nav.Link>
       <Nav.Link onClick={onLogout}>Logout</Nav.Link>
@@ -39,40 +31,33 @@ const Navigation = () => {
   );
 
   const guestLinks = (
-
-
     <Nav className="mr-auto">
-    <Nav.Link onClick={() => setShowRegister(true)}>Register</Nav.Link>
-    <Nav.Link onClick={() => setShowSignIn(true)}>Sign In</Nav.Link>
-      {/* <Nav.Link onClick={() => alert("register")}>Register</Nav.Link>
-      <Nav.Link onClick={() => alert("signin")}>Sign In</Nav.Link> */}
+      <Nav.Link onClick={() => setShowRegister(true)}>Register</Nav.Link>
+      <Nav.Link onClick={() => setShowSignIn(true)}>Sign In</Nav.Link>
     </Nav>
   );
 
   return (
-    <Container >
-    <Navbar sticky="top" bg="dark" variant="dark" expand="md">
-      <div style={useStyles.flexBetween}>
-        <div>
-      <Navbar.Brand>
-        {/* <Link to="/" className="nav-link"> */}
-        Lonely Friend Finder
+    <Fragment>
+      <Navbar sticky="top" bg="dark" variant="dark" expand="md">
+        <Navbar.Brand>
+          {/* <Link to="/" className="nav-link"> */}
+          Lonely Friend Finder
         {/* </Link> */}
-      </Navbar.Brand></div> <div>
-      {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
-      <Navbar.Collapse  id="basic-navbar-nav">
-        {/* <Nav className="mr-auto"> */}
-        {isAuthenticated
-          ? authLinks
-          : guestLinks
-        }
-        {/* </Nav> */}
-      </Navbar.Collapse></div></div>
-    </Navbar>
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          {isAuthenticated
+            ? authLinks
+            : guestLinks
+          }
+        </Navbar.Collapse>
+      </Navbar>
 
-      
 
-    <Modal
+      {
+        showRegister &&
+        <Modal
           size="lg"
           show={showRegister}
           onHide={() => setShowRegister(false)}
@@ -85,6 +70,9 @@ const Navigation = () => {
             <Register onHide={() => setShowRegister(false)} />
           </Modal.Body>
         </Modal>
+      }
+      {
+        showSignIn &&
         <Modal
           size="lg"
           show={showSignIn}
@@ -98,7 +86,8 @@ const Navigation = () => {
             <SignIn onHide={() => setShowSignIn(false)} />
           </Modal.Body>
         </Modal>
-    </Container>
+      }
+    </Fragment>
   );
 };
 
