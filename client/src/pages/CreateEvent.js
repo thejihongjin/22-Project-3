@@ -54,6 +54,7 @@ export default function CreateEvent() {
   //const [date, setDate] = useState(new Date());
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
+  const [timeMessage,setTimeMessage] = useState("");
   const [event, setEvent] = useState({
     name: "",
     location: "",
@@ -66,10 +67,17 @@ export default function CreateEvent() {
     end: null
   });
 
+  useEffect(()=>{
+    setTimeMessage(null)
+    if(endTime <= startTime) {
+      setTimeMessage("The end time should be later than the start time")
+    } 
+  },[startTime,endTime])
+  
   const handleStartTime = time => {
+   
     setStartTime(time);
-    console.log(time);
-
+   
     const saveState = event;
     saveState.start = time;
     setEvent(saveState);
@@ -77,9 +85,10 @@ export default function CreateEvent() {
   };
 
   const handleEndTime = time => {
-    setEndTime(time);
-    console.log(time);
 
+    setEndTime(time);
+    console.log("Hello,why you don't work")
+    
     const saveState = event;
     saveState.end = time;
     setEvent(saveState);
@@ -339,6 +348,7 @@ export default function CreateEvent() {
                   </Col>
                   <Col>
                     <div>
+                      <div className="text-danger">{timeMessage ? timeMessage : ""}</div>
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <Grid container justify="space-around">
                           <KeyboardDatePicker
@@ -352,6 +362,7 @@ export default function CreateEvent() {
                             KeyboardButtonProps={{
                               "aria-label": "change date"
                             }}
+                            disablePast
                           />
                           <KeyboardTimePicker
                             minDate="0"
@@ -379,6 +390,7 @@ export default function CreateEvent() {
                               KeyboardButtonProps={{
                                 "aria-label": "change date"
                               }}
+                              disablePast
                             />
                             <KeyboardTimePicker
                               minDate="0"
