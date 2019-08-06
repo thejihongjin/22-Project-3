@@ -62,11 +62,10 @@ const SearchEvent = () => {
   console.log(events);
 
   return (
-      <React.Fragment>
-      {/* navbar - HOME/OTHER NAV LINKS */}
-      {/* search bar - event name, category, time frame, distance (google api) */}
-      <Navigation />
+      
       <Container>
+        {/* navbar - HOME/OTHER NAV LINKS */}
+        {/* search bar - event name, category, time frame, distance (google api) */}
         <Card style={{ width: "90%", margin: "0 auto" }}>
           <Card.Body>
             <Card.Title>Event Search</Card.Title>
@@ -90,16 +89,7 @@ const SearchEvent = () => {
             /* ADD TIME RANGE */}
             <Button className="float-right">Search</Button>
           </Form>
-          <div>
-            {" "}
-            {events === null ? (
-              <div>No Events Available</div>
-            ) : filtered !== null ? (
-              filtered.map(event => <EventItem key={event._id} event={event} />)
-            ) : (
-              events.map(event => <EventItem key={event._id} event={event} />)
-            )}
-          </div>
+
         </Card.Body>
       </Card>
       <CardDeck>
@@ -114,7 +104,6 @@ const SearchEvent = () => {
         </Row>
       </CardDeck>
     </Container>
-    </React.Fragment>
   );
 };
 
