@@ -1,14 +1,10 @@
-
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import history from "../utils/history";
 import AuthContext from "../context/auth/authContext";
-import { Container, Row, Col, Jumbotron, Modal, Button } from "react-bootstrap";
-import Register from "./Register"
-import SignIn from "./SignIn"
-import Carousel from "../components/Carousel"
-import Nav from 'react-bootstrap/Nav'
-import Footer from "../components/Footer"
-import Navigation from "../components/Navigation"
+import { Container } from "react-bootstrap";
+import Carousel from "../components/Carousel";
+import Nav from "react-bootstrap/Nav";
+import Navigation from "../components/Navigation";
 
 // import "./Style.css"
 
@@ -16,20 +12,20 @@ const About = props => {
   // const [showRegister, setShowRegister] = useState(false);
   // const [showSignIn, setShowSignIn] = useState(false);
   const authContext = useContext(AuthContext);
-  const { isAuthenticated } = authContext;
+  const { isAuthenticated, user } = authContext;
 
   useEffect(() => {
     if (isAuthenticated) {
+      authContext.loadUser();
       // redirect to userpage
       history.push("/user");
     }
 
     // eslint-disable-next-line
-  }, [isAuthenticated]);
+  }, [isAuthenticated, history]);
 
   return (
     <div className="main">
-
       <Navigation />
 
       {/* <Jumbotron fluid className="header">
@@ -39,10 +35,8 @@ const About = props => {
         <h1 className="text-center">Lonely Friend Finder</h1>
       </Jumbotron> */}
 
-      <Container className="container" >
-
+      <Container className="container">
         <Carousel />
-
 
         {/* <Modal
           size="lg"
@@ -70,17 +64,14 @@ const About = props => {
             <SignIn onHide={() => setShowSignIn(false)} />
           </Modal.Body>
         </Modal> */}
-
       </Container>
       {/* <Footer/> */}
-
 
       <Nav className="justify-content-center end-nav" activeKey="/home">
         <Nav.Item>
           <p className="footer-text"> © 2019 Friend Finder</p>
         </Nav.Item>
       </Nav>
-
     </div>
   );
 };

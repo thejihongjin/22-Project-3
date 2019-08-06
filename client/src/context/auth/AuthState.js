@@ -9,6 +9,9 @@ import {
   USER_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
+  VIEW_USER,
+ 
+ 
   LOGIN_FAIL,
   LOGOUT,
   CLEAR_ERRORS,
@@ -34,7 +37,7 @@ const AuthState = props => {
 
     try {
       const res = await axios.get("/api/auth");
-      
+
       dispatch({
         type: USER_LOADED,
         payload: res.data
@@ -103,9 +106,9 @@ const AuthState = props => {
     };
 
     try {
-      console.log(user)
+      console.log(user);
       const res = await axios.put(`/api/users/${user._id}`, user, config);
-      console.log(res.data)
+      console.log(res.data);
       dispatch({
         type: UPDATE_USER,
         payload: res.data
@@ -116,6 +119,14 @@ const AuthState = props => {
       dispatch({ type: AUTH_ERROR });
     }
   };
+
+ 
+
+  // Set User To View
+  const viewUser = user => {
+    dispatch({ type: VIEW_USER, payload: user });
+  };
+
 
   // Logout
   const logout = () => dispatch({ type: LOGOUT });
@@ -135,6 +146,7 @@ const AuthState = props => {
         loadUser,
         login,
         logout,
+        viewUser,
         clearErrors,
         updateUser
       }}

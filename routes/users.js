@@ -7,12 +7,9 @@ const { check, validationResult } = require("express-validator");
 
 const User = require("../models/User");
 
-
 //@route put api/users/id
 //@desc update a user
 //@access private
-
-
 
 //@route   POSt api/users
 //@desc    Register a user
@@ -81,14 +78,7 @@ router.post(
 
 router.put("/:id", async (req, res) => {
   console.log(req.user.id);
-  const {
-    username,
-    firstname,
-    lastname,
-    displayname,
-    email,
-    bio
-  } = req.body;
+  const { username, firstname, lastname, displayname, email, bio } = req.body;
 
   const userFields = {};
   if (username) userFields.username = username;
@@ -113,6 +103,19 @@ router.put("/:id", async (req, res) => {
     res.json(user);
   } catch (error) {
     console.error(error.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+router.get("/", async (req, res) => {
+  console.log("req");
+  console.log(req.attending);
+  try {
+    const users = await User.find();
+    //console.log(users);
+    res.json(users);
+  } catch (err) {
+    console.error(err.message);
     res.status(500).send("Server Error");
   }
 });

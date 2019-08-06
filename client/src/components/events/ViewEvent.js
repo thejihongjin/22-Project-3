@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect, Fragment } from "react";
+import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
@@ -16,7 +17,10 @@ const ViewEvent = () => {
     current,
     joinEvent,
     unjoinEvent,
-    deleteEvent
+    deleteEvent,
+    getUsersProfile,
+    setUsers,
+    clearUsers
   } = eventContext;
   const authContext = useContext(AuthContext);
   const [showToast, setShowToast] = useState(false);
@@ -36,9 +40,16 @@ const ViewEvent = () => {
   });
   useEffect(() => {
     setEvent(current);
+    console.log(current.attendingId);
+    getUsersProfile(current);
     // eslint-disable-next-line
-  }, [eventContext, current]);
+  }, []);
 
+  if (current === null) {
+    history.push("/user");
+  }
+
+  console.log(setUsers);
   event.didJoin = current.attendingId.filter(attendId => attendId === user._id);
   console.log(event.didJoin);
   if (current.user === user._id) {
@@ -59,21 +70,31 @@ const ViewEvent = () => {
   } = event;
 
   const handleJoin = () => {
-    joinEvent(event);
-    setShowToast(true);
+    if (groupSize !== "Any" && parseInt(groupSize) === attendingId.length) {
+      alert("Sorry, this event is full. 😟");
+    } else {
+      joinEvent(event);
+      setShowToast(true);
+      setEvent(current);
+      getUsersProfile(current);
+    }
   };
 
   const handleUnjoin = () => {
     unjoinEvent(event);
+    setEvent(current);
+    getUsersProfile(current);
   };
 
   const goBackUser = () => {
     clearCurrent();
+    clearUsers();
     history.push("/user");
   };
 
   const goBackSearch = () => {
     clearCurrent();
+    clearUsers();
     history.push("/search");
   };
 
@@ -81,6 +102,7 @@ const ViewEvent = () => {
     setShowAlert(false);
     deleteEvent(current._id);
     clearCurrent();
+    clearUsers();
     history.push("/user");
   };
 
@@ -113,6 +135,21 @@ const ViewEvent = () => {
               Date: {start}
             </Card.Subtitle>
             <Card.Text>{description}</Card.Text>
+            <Card.Subtitle className="mb-2 text-muted">
+              {attendingId.length} out of {groupSize} people are going.
+            </Card.Subtitle>
+            <Card.Subtitle className="mb-2 text-muted">
+              People Attending:
+              <br />
+              {setUsers
+                ? setUsers.map(userLink => (
+                    <Fragment>
+                      <Link key={userLink._id}>{userLink.username}</Link>
+                      <br />
+                    </Fragment>
+                  ))
+                : null}
+            </Card.Subtitle>
 
             {state.owned ? (
               <Button
@@ -124,15 +161,19 @@ const ViewEvent = () => {
                 Delete
               </Button>
             ) : state.joined ? (
-              <Button
-                type="submit"
-                style={{ float: "right" }}
-                className="btn-success"
-                size="sm"
-                onClick={() => handleUnjoin()}
-              >
-                - Leave Event
-              </Button>
+              <Fragment>
+                <p>You have already joined this event!</p>
+
+                <Button
+                  type="submit"
+                  style={{ float: "right" }}
+                  className="btn-warning"
+                  size="sm"
+                  onClick={() => handleUnjoin()}
+                >
+                  - Leave Event
+                </Button>
+              </Fragment>
             ) : (
               <Button
                 type="submit"

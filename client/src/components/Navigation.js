@@ -52,22 +52,22 @@ const Navigation = () => {
   return (
     <Container >
     <Navbar sticky="top" bg="dark" variant="dark" expand="md">
-      <div style={useStyles.flexBetween}>
-        <div>
+      
       <Navbar.Brand>
         {/* <Link to="/" className="nav-link"> */}
         Lonely Friend Finder
         {/* </Link> */}
-      </Navbar.Brand></div> <div>
+      </Navbar.Brand>
+      
       {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
-      <Navbar.Collapse  id="basic-navbar-nav">
-        {/* <Nav className="mr-auto"> */}
+      <Nav  id="basic-navbar-nav" className="mr-auto">
+        
         {isAuthenticated
           ? authLinks
           : guestLinks
         }
-        {/* </Nav> */}
-      </Navbar.Collapse></div></div>
+       
+      </Nav>
     </Navbar>
 
       
