@@ -24,14 +24,15 @@ code {
   height: 100%;
 }
 
-/* .content { */
-.main {
+#content {
   flex: 1 0 auto;
+  padding: 10px;
 }
 
 .footer {
   flex-shrink: 0;
   text-align: center;
-  background-color: tomato;
-  color: white;
+  /* background-color: tomato; */
+  /* color: white; */
+  border-top: black solid 2px;
 }

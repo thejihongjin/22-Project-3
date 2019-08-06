@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, Fragment } from "react";
 import EventContext from "../context/event/eventContext";
 import EventItem from "../components/events/EventItem";
 import Card from "react-bootstrap/Card";
@@ -58,10 +58,7 @@ const SearchEvent = () => {
   console.log(events);
 
   return (
-    <div style={{ margin: "0 auto" }}>
-      {/* navbar - HOME/OTHER NAV LINKS */}
-      {/* search bar - event name, category, time frame, distance (google api) */}
-      <Navigation />
+    <Fragment>
       <Card style={{ width: "73%", margin: "0 auto" }}>
         <Card.Body>
           <Card.Title>Event Search</Card.Title>
@@ -98,7 +95,7 @@ const SearchEvent = () => {
           </div>
         </Card.Body>
       </Card>
-    </div>
+    </Fragment>
   );
 };
 

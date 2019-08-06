@@ -24,15 +24,8 @@ const About = props => {
 
   return (
     <div className="main">
-      <Navigation />
+      {/* <Navigation /> */}
       <Carousel />
-      {/* <Footer/> */}
-
-      <Nav className="justify-content-center end-nav" activeKey="/home">
-        <Nav.Item>
-          <p className="footer-text"> © 2019 Friend Finder</p>
-        </Nav.Item>
-      </Nav>
     </div>
   );
 };
