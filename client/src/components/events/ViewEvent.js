@@ -1,7 +1,8 @@
 import React, { useState, useContext, useEffect, Fragment } from "react";
 import { Link } from "react-router-dom";
+import Loading from "../Loading";
 import Card from "react-bootstrap/Card";
-import CardGroup from "react-bootstrap/CardGroup"
+import CardGroup from "react-bootstrap/CardGroup";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import Toast from "react-bootstrap/Toast";
@@ -13,6 +14,13 @@ import history from "../../utils/history";
 import Map from "../Map";
 
 const ViewEvent = () => {
+  useEffect(() => {
+    setEvent(current);
+    console.log(current.attendingId);
+    getUsersProfile(current);
+    // eslint-disable-next-line
+  }, []);
+
   const eventContext = useContext(EventContext);
   const {
     clearCurrent,
@@ -24,12 +32,17 @@ const ViewEvent = () => {
     setUsers,
     clearUsers
   } = eventContext;
+  if (current === null) {
+    history.push("/user");
+  }
   const authContext = useContext(AuthContext);
   const [showToast, setShowToast] = useState(false);
   const { user } = authContext;
-  const state = { owned: false, joined: false };
+
   const [showAlert, setShowAlert] = useState(false);
+
   const [event, setEvent] = useState({
+    _id: "",
     name: "",
     location: "",
     addressInfo: "",
@@ -40,28 +53,14 @@ const ViewEvent = () => {
     start: null,
     end: null,
     mapLat: null,
-    mapLng: null,
-    didJoin: []
+    mapLng: null
   });
-  useEffect(() => {
-    setEvent(current);
-    console.log(current.attendingId);
-    getUsersProfile(current);
-    // eslint-disable-next-line
-  }, []);
 
-  if (current === null) {
-    history.push("/user");
-  }
-
-  console.log(setUsers);
-  event.didJoin = current.attendingId.filter(attendId => attendId === user._id);
-  console.log(event.didJoin);
-  if (current.user === user._id) {
-    state.owned = true;
-  } else if (event.didJoin[0] === user._id) {
-    state.joined = true;
-  }
+  const [didJoin] = useState(
+    event.attendingId.filter(attendId => attendId === user._id)
+  );
+  const [isOwned] = useState(current.user === user._id ? true : false);
+  const [joined, setJoined] = useState(didJoin[0] === user._id ? true : false);
 
   const {
     name,
@@ -83,6 +82,7 @@ const ViewEvent = () => {
     } else {
       joinEvent(event);
       setShowToast(true);
+      setJoined(true);
       setEvent(current);
       getUsersProfile(current);
     }
@@ -90,6 +90,7 @@ const ViewEvent = () => {
 
   const handleUnjoin = () => {
     unjoinEvent(event);
+    setJoined(false);
     setEvent(current);
     getUsersProfile(current);
   };
@@ -113,6 +114,9 @@ const ViewEvent = () => {
     clearUsers();
     history.push("/user");
   };
+  if (!attendingId) {
+    return <Loading />;
+  }
 
   if (showAlert) {
     return (
@@ -129,98 +133,95 @@ const ViewEvent = () => {
     );
   }
 
+
+
   return (
     <Fragment>
       {current ? (
         <CardGroup>
-        <Card style={{ width: "25rem" }}>
-          {" "}
-          <Card.Body>
-            <Card.Title>{name.toUpperCase()}</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">
-              {category}
-            </Card.Subtitle>
-            <Card.Subtitle className="mb-2 text-muted">
-              Date: {start}
-            </Card.Subtitle>
-            <Card.Subtitle className="mb-2 text-muted">
-              Date: {end}
-            </Card.Subtitle>
-            <Card.Subtitle className="mb-2 text-muted">
-              {location}
-            </Card.Subtitle>
-            <Card.Subtitle className="mb-2 text-muted">
-              {addressInfo}
-            </Card.Subtitle>
-            <Card.Text>{description}</Card.Text>
+          <Card style={{ width: "25rem" }}>
+            {" "}
+            <Card.Body>
+              <Card.Title>{name.toUpperCase()}</Card.Title>
+              <Card.Subtitle className="mb-2 text-muted">
+                {category}
+              </Card.Subtitle>
+              <Card.Subtitle className="mb-2 text-muted">
+                Date: {start}
+              </Card.Subtitle>
+              <Card.Subtitle className="mb-2 text-muted">
+                Date: {end}
+              </Card.Subtitle>
+              <Card.Subtitle className="mb-2 text-muted">
+                {location}
+              </Card.Subtitle>
+              <Card.Subtitle className="mb-2 text-muted">
+                {addressInfo}
+              </Card.Subtitle>
+              <Card.Text>{description}</Card.Text>
+              <Card.Subtitle className="mb-2 text-muted">
+                {attendingId.length} out of {groupSize} people are going.
+              </Card.Subtitle>
+              <Card.Subtitle className="mb-2 text-muted">
+                People Attending:
+                <br />
+                {setUsers
+                  ? setUsers.map(userLink => (
+                      <Fragment>
+                        <Link to="#" key={userLink._id}>{userLink.username}</Link>
+                        <br />
+                      </Fragment>
+                    ))
+                  : null}
+              </Card.Subtitle>
+              {isOwned && (
+                <Button
+                  style={{ float: "right" }}
+                  className="btn-danger"
+                  size="sm"
+                  onClick={() => setShowAlert(true)}
+                >
+                  Delete
+                </Button>
+              )}{" "}
+              {joined && (
+                <Fragment>
+                  <p>You have already joined this event!</p>
 
-
-
-            <Card.Subtitle className="mb-2 text-muted">
-              {attendingId.length} out of {groupSize} people are going.
-            </Card.Subtitle>
-            <Card.Subtitle className="mb-2 text-muted">
-              People Attending:
-              <br />
-              {setUsers
-                ? setUsers.map(userLink => (
-                    <Fragment>
-                      <Link key={userLink._id}>{userLink.username}</Link>
-                      <br />
-                    </Fragment>
-                  ))
-                : null}
-            </Card.Subtitle>
-
-            {state.owned ? (
-              <Button
-                style={{ float: "right" }}
-                className="btn-danger"
-                size="sm"
-                onClick={() => setShowAlert(true)}
-              >
-                Delete
-              </Button>
-            ) : state.joined ? (
-              <Fragment>
-                <p>You have already joined this event!</p>
-
+                  <Button
+                    type="submit"
+                    style={{ float: "right" }}
+                    className="btn-warning"
+                    size="sm"
+                    onClick={() => handleUnjoin()}
+                  >
+                    - Leave Event
+                  </Button>
+                </Fragment>
+              )}{" "}
+              {!isOwned && !joined && (
                 <Button
                   type="submit"
                   style={{ float: "right" }}
-                  className="btn-warning"
+                  className="btn-success"
                   size="sm"
-                  onClick={() => handleUnjoin()}
+                  onClick={() => handleJoin()}
                 >
-                  - Leave Event
+                  + Join
                 </Button>
-              </Fragment>
-            ) : (
-              <Button
-                type="submit"
-                style={{ float: "right" }}
-                className="btn-success"
-                size="sm"
-                onClick={() => handleJoin()}
-              >
-                + Join
+              )}
+              <Button size="sm" onClick={goBackSearch}>
+                Search More Events
               </Button>
-            )}
+              <Button size="sm" onClick={goBackUser}>
+                Back To Profile
+              </Button>
+            </Card.Body>
+          </Card>
 
-            <Button size="sm" onClick={goBackSearch}>
-              Search More Events
-            </Button>
-            <Button size="sm" onClick={goBackUser}>
-              Back To Profile
-            </Button>
-          </Card.Body>
-        </Card>
-
-        <Card>
-          <Map lat={mapLat} lng={mapLng}
-          />
-        </Card>
-
+          <Card>
+            <Map lat={mapLat} lng={mapLng} />
+          </Card>
         </CardGroup>
       ) : (
         <div> Sorry, this event is not available.</div>
