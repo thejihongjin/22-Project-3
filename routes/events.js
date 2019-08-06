@@ -32,6 +32,24 @@ router.get("/user", auth, async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
+router.get("/profiles/:id", async (req, res) => {
+  console.log(req.params);
+  try {
+    const attending = await Event.findById(req.params.id).sort({
+      date: -1
+    });
+    const profiles = await User.find({
+      _id: { $in: attending.attendingId }
+    }).sort({
+      date: -1
+    });
+   
+    res.json(profiles);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
 
 router.post(
   "/",

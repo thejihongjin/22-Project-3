@@ -3,6 +3,8 @@ import {
   GET_EVENTS,
   ADD_EVENT,
   JOIN_EVENT,
+  GET_USERS,
+  CLEAR_USERS,
   UNJOIN_EVENT,
   DELETE_EVENT,
   SET_CURRENT,
@@ -23,7 +25,17 @@ export default (state, action) => {
         events: action.payload,
         loading: false
       };
-
+    case GET_USERS:
+      return {
+        ...state,
+        setUsers: action.payload,
+        loading: false
+      };
+    case CLEAR_USERS:
+      return {
+        ...state,
+        setUsers: null
+      };
     case ADD_EVENT:
       return {
         ...state,
