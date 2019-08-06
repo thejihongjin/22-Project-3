@@ -310,14 +310,25 @@ export default function CreateEvent() {
                       <Form.Check
                         custom
                         inline
-                        checked={groupSize === "5+"}
+                        checked={groupSize === "5"}
                         onChange={handleChange}
-                        label="5+"
+                        label="5"
                         name="groupSize"
-                        value="5+"
+                        value="5"
                         type="radio"
                         id={`custom-inline-radio-5`}
-                      />
+                      /> 
+                      <Form.Check
+                        custom
+                        inline
+                        checked={groupSize === "Any"}
+                        onChange={handleChange}
+                        label="Any"
+                        name="groupSize"
+                        value="Any"
+                        type="radio"
+                        id={`custom-inline-radio-6`}
+                      /> 
                     </div>
                   </Col>
                 </Row>
@@ -341,7 +352,7 @@ export default function CreateEvent() {
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <Grid container justify="space-around">
                           <KeyboardDatePicker
-                            minDate="today"
+                            minDate="0"
                             margin="normal"
                             id="startDate"
                             name="date"
@@ -354,7 +365,7 @@ export default function CreateEvent() {
                             disablePast
                           />
                           <KeyboardTimePicker
-                            minDate="today"
+                            minDate="0"
                             margin="normal"
                             id="startTime"
                             name="time"
@@ -370,7 +381,7 @@ export default function CreateEvent() {
                         {
                           <Grid container justify="space-around">
                             <KeyboardDatePicker
-                              minDate="today"
+                              minDate="0"
                               margin="normal"
                               id="endDate"
                               label="Day event ends"
@@ -382,7 +393,7 @@ export default function CreateEvent() {
                               disablePast
                             />
                             <KeyboardTimePicker
-                              minDate="today"
+                              minDate="0"
                               margin="normal"
                               id="endTime"
                               label="Time event ends"
