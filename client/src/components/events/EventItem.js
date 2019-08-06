@@ -59,8 +59,8 @@ const EventItem = ({ event }) => {
 
   return (
     <div>
-      <Card style={{ width: "25rem" }}>
-        {" "}
+    {/* <Card style={{ width: "25rem" }}> */}
+      <Card>
         <Card.Body>
           <Link
             onClick={() => setCurrent(event)}

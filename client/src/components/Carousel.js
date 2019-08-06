@@ -10,19 +10,9 @@ import image6 from "../images/adult-bar-birthday.jpg"
 import image7 from "../images/unicorn-beer.jpg"
 
 
-// const styleCarousel = {
-//     maxWidth: "100%",
-//     maxHeight: "100%",
-//     margin: 0,
-//     padding: 0,
-//     zIndex: "-1"
-// }
-
 const CarouselTest = () => {
-    console.log("style isnt working")
     return (
-        // <Carousel interval={2700} indicators={false} controls={false} style={styleCarousel}>
-        <Carousel interval={2700} indicators={false} controls={false} style={{margin: "25px"}}>
+        <Carousel interval={2700} indicators={false} controls={false}>
             <Carousel.Item>
                 <img
                     className="w-100"

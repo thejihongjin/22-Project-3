@@ -105,7 +105,6 @@ const User = props => {
 
   return (
     <Fragment>
-      <Navigation />
       <Row>
         <Col>
           <Card style={{ width: "25em", margin: "10px 0" }}>

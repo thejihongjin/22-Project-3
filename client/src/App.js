@@ -12,6 +12,7 @@ import CreateEvent from "./pages/CreateEvent";
 import UserReview from "./pages/UserReview";
 import SearchEvent from "./pages/SearchEvent";
 import ViewEvent from "./components/events/ViewEvent";
+import Navigation from "./components/Navigation"
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -22,7 +23,8 @@ function App() {
     <AuthState>
       <EventState>
         <Router history={history}>
-          
+          <Navigation />
+          <div id="content">
             <React.Suspense fallback={<Loading />}>
               <Switch>
                 <Route exact path="/" component={About} />
@@ -34,7 +36,7 @@ function App() {
                 <Route render={() => <h1>404 Page not found.</h1>} />
               </Switch>
             </React.Suspense>
-         
+         </div>
         </Router>
       </EventState>
     </AuthState>
