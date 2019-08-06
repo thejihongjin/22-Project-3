@@ -19,7 +19,7 @@ const SignIn = props => {
       alert("Email or Password is incorrect");
       clearErrors();
     }
-  }, [error, isAuthenticated]);
+  }, [error, isAuthenticated, clearErrors]);
 
   const handleSubmit = e => {
     e.preventDefault();
