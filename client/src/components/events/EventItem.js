@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, Fragment } from "react";
 import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
@@ -51,11 +51,11 @@ const EventItem = ({ event }) => {
   endDate = dateEnd.toLocaleString();
 
   return (
-    <div>
-      <Card style={{ width: "25rem" }}>
-        {" "}
+      <Card>
+        <Card.Header>
+            <Card.Title>{name.toUpperCase()}</Card.Title>
+        </Card.Header>
         <Card.Body>
-          <Card.Title>{name.toUpperCase()}</Card.Title>
           <Card.Subtitle className="mb-2 text-muted">{category}</Card.Subtitle>
           <Card.Subtitle
             style={{ textTransform: "capitalize" }}
@@ -73,13 +73,8 @@ const EventItem = ({ event }) => {
             End Time: {endDate}
           </Card.Subtitle>
           <Card.Text>{description}</Card.Text>
-          <Link
-            onClick={() => setCurrent(event)}
-            to="/create"
-            className="card-link"
-          >
-            Edit
-          </Link>
+        </Card.Body>
+        <Card.Footer>
           <Link
             onClick={() => setCurrent(event)}
             to="/view"
@@ -89,14 +84,24 @@ const EventItem = ({ event }) => {
           </Link>
 
           {user ? (
-            <Button
-              style={{ float: "right" }}
-              className="btn-danger"
-              size="sm"
-              onClick={() => setShowAlert(true)}
-            >
-              Delete
-            </Button>
+            <Fragment>
+              <Link
+                onClick={() => setCurrent(event)}
+                to="/create"
+                className="card-link"
+              >
+                Edit
+              </Link>
+            
+              <Button
+                style={{ float: "right" }}
+                className="btn-danger"
+                size="sm"
+                onClick={() => setShowAlert(true)}
+              >
+                Delete
+              </Button>
+            </Fragment>
           ) : (
             <Button
               style={{ float: "right" }}
@@ -107,9 +112,9 @@ const EventItem = ({ event }) => {
               Join
             </Button>
           )}
-        </Card.Body>
+        </Card.Footer>
+
       </Card>
-    </div>
   );
 };
 

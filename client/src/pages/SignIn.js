@@ -10,11 +10,8 @@ const SignIn = props => {
   const [email, setEmail] = useState("");
   const [passWord, setPassWord] = useState("");
   
-
-
   useEffect(() => {
     if (isAuthenticated) {
-      // redirect to userpage
       history.push("/user");
     }
 
@@ -22,7 +19,6 @@ const SignIn = props => {
       alert("Email or Password is incorrect");
       clearErrors();
     }
-    // eslint-disable-next-line
   }, [error, isAuthenticated]);
 
   const handleSubmit = e => {
