@@ -8,7 +8,7 @@ const EventList = () => {
   const authContext = useContext(AuthContext);
   const { user } = authContext;
   const { events, getUserEvents } = eventContext;
-  console.log(events)
+  
   let createdEvent;
   let joinedEvent;
 
@@ -36,7 +36,7 @@ const EventList = () => {
     joinedEvent = events.filter(event => event.user !== user._id);
   }
 
-  console.log(joinedEvent);
+  //console.log(joinedEvent);
 
   return (
     <Fragment>
