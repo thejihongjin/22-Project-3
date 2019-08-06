@@ -1,10 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import history from "../utils/history";
 import AuthContext from "../context/auth/authContext";
-import { Container } from "react-bootstrap";
 import Carousel from "../components/Carousel";
-import Nav from "react-bootstrap/Nav";
-import Navigation from "../components/Navigation";
 
 // import "./Style.css"
 
@@ -23,10 +20,7 @@ const About = props => {
   }, [isAuthenticated, history]);
 
   return (
-    <div className="main">
-      {/* <Navigation /> */}
       <Carousel />
-    </div>
   );
 };
 
