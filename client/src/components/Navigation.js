@@ -58,35 +58,36 @@ const Navigation = () => {
     // </div>
 
     <Nav className="mr-auto">
-    <Nav.Link onClick={() => setShowRegister(true)}>Register</Nav.Link>
-    <Nav.Link onClick={() => setShowSignIn(true)}>Sign In</Nav.Link>
+      <Nav.Link onClick={() => setShowRegister(true)}>Register</Nav.Link>
+      <Nav.Link onClick={() => setShowSignIn(true)}>Sign In</Nav.Link>
       {/* <Nav.Link onClick={() => alert("register")}>Register</Nav.Link>
       <Nav.Link onClick={() => alert("signin")}>Sign In</Nav.Link> */}
     </Nav>
   );
 
   return (
-    <Container>
-    <Navbar sticky="top" bg="dark" variant="dark" expand="md">
-      <Navbar.Brand>
-        {/* <Link to="/" className="nav-link"> */}
-        Lonely Friend Finder
+    <Fragment>
+      <Navbar sticky="top" bg="dark" variant="dark" expand="md">
+        <Navbar.Brand>
+          {/* <Link to="/" className="nav-link"> */}
+          Lonely Friend Finder
         {/* </Link> */}
-      </Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        {/* <Nav className="mr-auto"> */}
-        {isAuthenticated
-          ? authLinks
-          : guestLinks
-        }
-        {/* </Nav> */}
-      </Navbar.Collapse>
-    </Navbar>
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          {/* <Nav className="mr-auto"> */}
+          {isAuthenticated
+            ? authLinks
+            : guestLinks
+          }
+          {/* </Nav> */}
+        </Navbar.Collapse>
+      </Navbar>
 
-      
 
-    <Modal
+      {
+        showRegister &&
+        <Modal
           size="lg"
           show={showRegister}
           onHide={() => setShowRegister(false)}
@@ -99,6 +100,9 @@ const Navigation = () => {
             <Register onHide={() => setShowRegister(false)} />
           </Modal.Body>
         </Modal>
+      }
+      {
+        showSignIn &&
         <Modal
           size="lg"
           show={showSignIn}
@@ -112,7 +116,8 @@ const Navigation = () => {
             <SignIn onHide={() => setShowSignIn(false)} />
           </Modal.Body>
         </Modal>
-    </Container>
+      }
+    </Fragment>
   );
 };
 
