@@ -2,6 +2,8 @@ import React, { useState, useContext, Fragment } from "react";
 import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col"
+import Row from "react-bootstrap/Row"
 import Alert from "react-bootstrap/Alert";
 import EventContext from "../../context/event/eventContext";
 import AuthContext from "../../context/auth/authContext";
