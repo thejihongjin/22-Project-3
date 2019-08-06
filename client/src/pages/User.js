@@ -9,33 +9,33 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
-import Container from "react-bootstrap/Container";
+import Fragment from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Navigation from "../components/Navigation";
 
 const useStyles = {
-  flexBetween: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "space-between"
-  },
-  gridList: {
-    width: 500,
-    height: 450
-  },
-  icon: {
-    color: "rgba(255, 255, 255, 0.54)"
-  },
-  fab: {
-    textAlign: "right"
-  },
-  root: {
-    flexGrow: 1
-  },
-  media: {
-    height: 140
-  }
+  // flexBetween: {
+  //   display: "flex",
+  //   flexWrap: "wrap",
+  //   justifyContent: "space-between"
+  // },
+  // gridList: {
+  //   width: 500,
+  //   height: 450
+  // },
+  // icon: {
+  //   color: "rgba(255, 255, 255, 0.54)"
+  // },
+  // fab: {
+  //   textAlign: "right"
+  // },
+  // root: {
+  //   flexGrow: 1
+  // },
+  // media: {
+  //   height: 140
+  // }
 };
 
 const User = props => {
@@ -104,7 +104,7 @@ const User = props => {
   }
 
   return (
-    <Container>
+    <Fragment>
       <Navigation />
       <Row>
         <Col>
@@ -276,7 +276,7 @@ const User = props => {
           </Form>
         </Modal.Body>
       </Modal>
-    </Container>
+    </Fragment>
   );
 };
 
