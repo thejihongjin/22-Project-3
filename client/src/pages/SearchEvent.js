@@ -88,7 +88,7 @@ const SearchEvent = () => {
           </Form>
           <div>
             {" "}
-            {events ? (
+            {events === null ? (
               <div>No Events Available</div>
             ) : filtered !== null ? (
               filtered.map(event => <EventItem key={event._id} event={event} />)
