@@ -122,98 +122,98 @@ const ViewEvent = () => {
   }
 
   return (
-    <Fragment>
-      {current ? (
-        <Card style={{ width: "25rem" }}>
-          {" "}
-          <Card.Body>
-            <Card.Title>{name.toUpperCase()}</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">
-              {category}
-            </Card.Subtitle>
-            <Card.Subtitle className="mb-2 text-muted">
-              Date: {start}
-            </Card.Subtitle>
-            <Card.Text>{description}</Card.Text>
-            <Card.Subtitle className="mb-2 text-muted">
-              {attendingId.length} out of {groupSize} people are going.
-            </Card.Subtitle>
-            <Card.Subtitle className="mb-2 text-muted">
-              People Attending:
-              <br />
-              {setUsers
-                ? setUsers.map(userLink => (
-                    <Fragment>
-                      <Link key={userLink._id}>{userLink.username}</Link>
-                      <br />
-                    </Fragment>
-                  ))
-                : null}
-            </Card.Subtitle>
 
-            {state.owned ? (
-              <Button
-                style={{ float: "right" }}
-                className="btn-danger"
-                size="sm"
-                onClick={() => setShowAlert(true)}
-              >
-                Delete
-              </Button>
-            ) : state.joined ? (
-              <Fragment>
-                <p>You have already joined this event!</p>
-
+      <Fragment>
+        {current ? (
+          <Card style={{ width: "25rem" }}>
+            {" "}
+            <Card.Body>
+              <Card.Title>{name.toUpperCase()}</Card.Title>
+              <Card.Subtitle className="mb-2 text-muted">
+                {category}
+              </Card.Subtitle>
+              <Card.Subtitle className="mb-2 text-muted">
+                Date: {start}
+              </Card.Subtitle>
+              <Card.Text>{description}</Card.Text>
+              <Card.Subtitle className="mb-2 text-muted">
+                {attendingId.length} out of {groupSize} people are going.
+              </Card.Subtitle>
+              <Card.Subtitle className="mb-2 text-muted">
+                People Attending:
+                <br />
+                {setUsers
+                  ? setUsers.map(userLink => (
+                      <Fragment>
+                        <Link key={userLink._id}>{userLink.username}</Link>
+                        <br />
+                      </Fragment>
+                    ))
+                  : null}
+              </Card.Subtitle>
+  
+              {state.owned ? (
+                <Button
+                  style={{ float: "right" }}
+                  className="btn-danger"
+                  size="sm"
+                  onClick={() => setShowAlert(true)}
+                >
+                  Delete
+                </Button>
+              ) : state.joined ? (
+                <Fragment>
+                  <p>You have already joined this event!</p>
+  
+                  <Button
+                    type="submit"
+                    style={{ float: "right" }}
+                    className="btn-warning"
+                    size="sm"
+                    onClick={() => handleUnjoin()}
+                  >
+                    - Leave Event
+                  </Button>
+                </Fragment>
+              ) : (
                 <Button
                   type="submit"
                   style={{ float: "right" }}
-                  className="btn-warning"
+                  className="btn-success"
                   size="sm"
-                  onClick={() => handleUnjoin()}
+                  onClick={() => handleJoin()}
                 >
-                  - Leave Event
+                  + Join
                 </Button>
-              </Fragment>
-            ) : (
-              <Button
-                type="submit"
-                style={{ float: "right" }}
-                className="btn-success"
-                size="sm"
-                onClick={() => handleJoin()}
-              >
-                + Join
+              )}
+  
+              <Button size="sm" onClick={goBackSearch}>
+                Search More Events
               </Button>
-            )}
-
-            <Button size="sm" onClick={goBackSearch}>
-              Search More Events
-            </Button>
-            <Button size="sm" onClick={goBackUser}>
-              Back To Profile
-            </Button>
-          </Card.Body>
-        </Card>
-      ) : (
-        <div> Sorry, this event is not available.</div>
-      )}
-      <Row>
-        <Col xs={6}>
-          <Toast
-            onClose={() => setShowToast(false)}
-            show={showToast}
-            delay={3000}
-            autohide
-          >
-            <Toast.Header>
-              <strong className="mr-auto">{name.toUpperCase()}</strong>
-            </Toast.Header>
-            <Toast.Body>Event Joined!</Toast.Body>
-          </Toast>
-        </Col>
-      </Row>
-    </Fragment>
-  );
-};
-
+              <Button size="sm" onClick={goBackUser}>
+                Back To Profile
+              </Button>
+            </Card.Body>
+          </Card>
+        ) : (
+          <div> Sorry, this event is not available.</div>
+        )}
+        <Row>
+          <Col xs={6}>
+            <Toast
+              onClose={() => setShowToast(false)}
+              show={showToast}
+              delay={3000}
+              autohide
+            >
+              <Toast.Header>
+                <strong className="mr-auto">{name.toUpperCase()}</strong>
+              </Toast.Header>
+              <Toast.Body>Event Joined!</Toast.Body>
+            </Toast>
+          </Col>
+        </Row>
+      </Fragment>
+    );
+  };
 export default ViewEvent;
