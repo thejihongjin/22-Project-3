@@ -78,7 +78,9 @@ router.post(
       description,
       attendingId,
       pendingId,
-      addressInfo
+      addressInfo,
+      mapLat,
+      mapLng
     } = req.body;
 
     try {
@@ -93,6 +95,8 @@ router.post(
         attendingId: req.user.id,
         pendingId,
         addressInfo,
+        mapLat,
+        mapLng,
         user: req.user.id
       });
       const event = await newEvent.save();

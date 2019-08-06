@@ -4,7 +4,7 @@ import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 const mapStyles = {
     width: '400px',
     height: '300px',
-    margin: '50px'
+    margin: '5px'
 };
 
 export class MapContainer extends Component {
@@ -35,7 +35,7 @@ export class MapContainer extends Component {
     };
 
     render() {
-        console.log(this.props.lat,this.props.lng)
+        console.log("Map log", this.props.lat,this.props.lng)
         return (
             <Map
                 google={this.props.google}
