@@ -51,6 +51,12 @@ const EventSchema = new Schema({
   },
   addressInfo: {
     type: String
+  },
+  mapLat: {
+    type: Number
+  },
+  mapLng: {
+    type: Number
   }
 });
 

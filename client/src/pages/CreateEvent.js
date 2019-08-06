@@ -64,7 +64,9 @@ export default function CreateEvent() {
     attendId: "",
     addressInfo: "",
     start: null,
-    end: null
+    end: null,
+    mapLat: null,
+    mapLng: null
   });
 
   useEffect(()=>{
@@ -75,9 +77,9 @@ export default function CreateEvent() {
   },[startTime,endTime])
   
   const handleStartTime = time => {
-   
+
     setStartTime(time);
-   
+
     const saveState = event;
     saveState.start = time;
     setEvent(saveState);
@@ -132,16 +134,20 @@ export default function CreateEvent() {
     let userInput = event.location;
     let address;
     let placeId;
+    let mapLatData;
+    let mapLngData;
     console.log(userInput);
 
     Geocode.fromAddress(userInput)
       .then(
         response => {
-          // const { lat, lng } = response.results[0].geometry.location;
-          // console.log(lat, lng);
+          const { lat, lng } = response.results[0].geometry.location;
+          console.log(lat, lng);
           // setLocation({...locationInput, mapLat: lat})
           // setLocation({...locationInput, mapLng: lng})
           address = response.results[0].formatted_address;
+          mapLatData = lat;
+          mapLngData = lng;
           console.log(response.results[0]);
           placeId = response.results[0].place_id;
         },
@@ -149,14 +155,11 @@ export default function CreateEvent() {
           console.error(error);
         }
       )
-      // .then(() => {
-      //   axios.get(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&fields=name&key=${process.env.REACT_APP_GOOGLE_API_KEY}`).then(res => {
-      //     console.log('places api response: ', res)
-      //   })
-      // })
       .finally(() => {
         const postEvent = { ...event };
         postEvent.addressInfo = address;
+        postEvent.mapLat = mapLatData;
+        postEvent.mapLng = mapLngData;
         setEvent(postEvent);
         if (current) {
           updateEvent(event);
