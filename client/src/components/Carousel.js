@@ -9,6 +9,7 @@ import image5 from "../images/friends-dinner-drinks.jpg"
 import image6 from "../images/adult-bar-birthday.jpg"
 import image7 from "../images/unicorn-beer.jpg"
 
+
 const styleCarousel = {
     maxWidth: "100%",
     maxHeight: "100%",
