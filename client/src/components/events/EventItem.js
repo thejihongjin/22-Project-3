@@ -1,7 +1,9 @@
-import React, { Fragment, useState, useContext, useEffect } from "react";
+import React, { useState, useContext, Fragment } from "react";
 import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col"
+import Row from "react-bootstrap/Row"
 import Alert from "react-bootstrap/Alert";
 import EventContext from "../../context/event/eventContext";
 import AuthContext from "../../context/auth/authContext";
@@ -58,18 +60,11 @@ const EventItem = ({ event }) => {
   }
 
   return (
-    <div>
-    {/* <Card style={{ width: "25rem" }}> */}
       <Card>
-        <Card.Body>
-          <Link
-            onClick={() => setCurrent(event)}
-            to="/view"
-            className="card-link"
-          >
+        <Card.Header>
             <Card.Title>{name.toUpperCase()}</Card.Title>
-          </Link>
-
+        </Card.Header>
+        <Card.Body>
           <Card.Subtitle className="mb-2 text-muted">{category}</Card.Subtitle>
           <Card.Subtitle
             style={{ textTransform: "capitalize" }}
@@ -90,7 +85,17 @@ const EventItem = ({ event }) => {
             People Going: {attendingId.length} / {groupSize}
           </Card.Subtitle>
           <Card.Text>{description}</Card.Text>
-          {event.user === user._id ? (
+        </Card.Body>
+        <Card.Footer>
+          <Link
+            onClick={() => setCurrent(event)}
+            to="/view"
+            className="card-link"
+          >
+            View
+          </Link>
+
+          {user ? (
             <Fragment>
               <Link
                 onClick={() => setCurrent(event)}
@@ -99,6 +104,7 @@ const EventItem = ({ event }) => {
               >
                 Edit
               </Link>
+            
               <Button
                 style={{ float: "right" }}
                 className="btn-danger"
@@ -108,10 +114,19 @@ const EventItem = ({ event }) => {
                 Delete
               </Button>
             </Fragment>
-          ) : null}
-        </Card.Body>
+          ) : (
+            <Button
+              style={{ float: "right" }}
+              className="btn-info"
+              size="sm"
+              onClick={() => setShowAlert(true)}
+            >
+              Join
+            </Button>
+          )}
+        </Card.Footer>
+
       </Card>
-    </div>
   );
 };
 
