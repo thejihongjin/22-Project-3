@@ -12,7 +12,7 @@ const EventItem = ({ event }) => {
   const eventContext = useContext(EventContext);
   const authContext = useContext(AuthContext);
   const { user } = authContext;
-  const { deleteEvent, setCurrent, clearCurrent, updateEvent } = eventContext;
+  const { deleteEvent, setCurrent, clearCurrent, events } = eventContext;
   const {
     _id,
     name,
@@ -20,10 +20,13 @@ const EventItem = ({ event }) => {
     category,
     description,
     addressInfo,
+    groupSize,
+    attendingId,
     start,
     end
   } = event;
   const [showAlert, setShowAlert] = useState(false);
+  console.log(user._id);
 
   const handleDelete = () => {
     setShowAlert(false);
@@ -52,6 +55,10 @@ const EventItem = ({ event }) => {
   let dateEnd = new Date(end);
   endDate = dateEnd.toLocaleString();
 
+  if (events.lenght === 0) {
+    return <div>No events availble at this time. Try adding one!</div>;
+  }
+
   return (
       <Card>
         <Card.Header>
@@ -73,6 +80,9 @@ const EventItem = ({ event }) => {
           </Card.Subtitle>
           <Card.Subtitle className="mb-2 text-muted">
             End Time: {endDate}
+          </Card.Subtitle>
+          <Card.Subtitle className="mb-2 text-muted">
+            People Going: {attendingId.length} / {groupSize}
           </Card.Subtitle>
           <Card.Text>{description}</Card.Text>
         </Card.Body>

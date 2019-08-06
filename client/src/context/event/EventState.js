@@ -1,12 +1,15 @@
-import React, { useReducer, useContext } from "react";
+import React, { useReducer } from "react";
 import axios from "axios";
 import EventContext from "./eventContext";
 import eventReducer from "./eventReducer";
-import AuthContext from "../auth/authContext";
 import {
   GET_USER_EVENTS,
   GET_EVENTS,
   ADD_EVENT,
+  JOIN_EVENT,
+  GET_USERS,
+  CLEAR_USERS,
+  UNJOIN_EVENT,
   DELETE_EVENT,
   SET_CURRENT,
   CLEAR_CURRENT,
@@ -20,13 +23,12 @@ import {
 const EventState = props => {
   const initialState = {
     events: null,
+    current: null,
     filtered: null,
-    error: null,
-    current: null
+    setUsers: null,
+    error: null
   };
-  const authContext = useContext(AuthContext);
-  const { user } = authContext;
-  //console.log(user);
+
   const [state, dispatch] = useReducer(eventReducer, initialState);
 
   //Get Events
@@ -48,7 +50,6 @@ const EventState = props => {
 
   //Get User Events
   const getUserEvents = async () => {
-    
     try {
       const res = await axios.get("/api/events/user");
 
@@ -62,6 +63,11 @@ const EventState = props => {
         payload: err.response.msg
       });
     }
+  };
+
+  // Clear Profiles
+  const clearUsers = () => {
+    dispatch({ type: CLEAR_USERS });
   };
 
   // Add Event
@@ -85,6 +91,60 @@ const EventState = props => {
       dispatch({
         type: EVENT_ERROR,
         payload: err
+      });
+    }
+  };
+
+  //Join Event
+  const joinEvent = async event => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    try {
+      const res = await axios.put(
+        `/api/events/join/${event._id}`,
+        event,
+        config
+      );
+
+      dispatch({
+        type: JOIN_EVENT,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: EVENT_ERROR,
+        payload: err.response.msg
+      });
+    }
+  };
+
+  //Leave Event
+  const unjoinEvent = async event => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    try {
+      const res = await axios.put(
+        `/api/events/leave/${event._id}`,
+        event,
+        config
+      );
+
+      dispatch({
+        type: UNJOIN_EVENT,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: EVENT_ERROR,
+        payload: err.response.msg
       });
     }
   };
@@ -128,6 +188,22 @@ const EventState = props => {
       });
     }
   };
+  //View User Profile
+  const getUsersProfile = async event => {
+    try {
+      const res = await axios.get(`/api/events/profiles/${event._id}`, event);
+
+      dispatch({
+        type: GET_USERS,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: EVENT_ERROR,
+        payload: err.response.msg
+      });
+    }
+  };
 
   // Clear Events
   const clearEvents = () => {
@@ -158,14 +234,19 @@ const EventState = props => {
     <EventContext.Provider
       value={{
         events: state.events,
+        setUsers: state.setUsers,
         current: state.current,
         filtered: state.filtered,
         error: state.error,
         getUserEvents,
+        getUsersProfile,
         addEvent,
+        joinEvent,
+        unjoinEvent,
         deleteEvent,
         setCurrent,
         clearCurrent,
+        clearUsers,
         updateEvent,
         filterEvents,
         clearFilter,

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import AuthContext from "../context/auth/authContext";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container as Fragment, Row, Col } from "react-bootstrap";
 import { Form, Button } from "react-bootstrap";
 import history from "../utils/history";
 
@@ -49,7 +49,7 @@ const Register = props => {
   };
 
   return (
-    <Container>
+    <Fragment>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="newUser">
           <Form.Label>Username: </Form.Label>
@@ -104,7 +104,7 @@ const Register = props => {
           </Col>
         </Row>
       </Form>
-    </Container>
+    </Fragment>
   );
 };
 

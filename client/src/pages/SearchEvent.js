@@ -1,10 +1,10 @@
-import React, { Fragment, useContext, useRef, useEffect } from "react";
+import React, { useContext, useEffect, useRef, Fragment } from "react";
 import EventContext from "../context/event/eventContext";
 import EventItem from "../components/events/EventItem";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
+import AuthContext from "../context/auth/authContext";
 import Button from "react-bootstrap/Button";
-
 import Navigation from "../components/Navigation";
 import Loading from "../components/Loading";
 import history from "../utils/history";
@@ -14,37 +14,52 @@ import Col from "react-bootstrap/Col"
 import Row from "react-bootstrap/Row"
 
 const SearchEvent = () => {
-  const cardStyle = {
-    margin: "15px"
-  };
-
+  useEffect(() => {
+    if (!user) {
+      authContext.loadUser();
+    }
+  });
+  const authContext = useContext(AuthContext);
+  const { user, isAuthenticated } = authContext;
+  const text = useRef("");
   const eventContext = useContext(EventContext);
   const {
-    filterEvents,
     getEvents,
+    filterEvents,
     clearFilter,
-    filtered,
-    events
+    events,
+    filtered
   } = eventContext;
-  console.log(events)
-
-  //const text = useRef("");
+  console.log(events);
 
   useEffect(() => {
     getEvents();
     // eslint-disable-next-line
   }, []);
 
+  const handleChange = e => {
+    if (text.current.value !== "") {
+      filterEvents(e.target.value);
+    } else {
+      clearFilter();
+    }
+  };
+  const eventCategories = [
+    "Movie",
+    "Concert",
+    "Food/Drink",
+    "Bar/Club",
+    "Gaming",
+    "Coding",
+    "Party",
+    "Conversation",
+    "Other"
+  ];
 
-
-  // const handleChange = e => {
-  //   if (text.current.value !== "") {
-  //     filterEvents(e.target.value);
-  //   } else {
-  //     clearFilter();
-  //   }
-  // };
-  const eventCategories = ["Movie","Concert","Food/Drink","Bar/Club","Gaming","Coding","Party","Conversation","Other"];
+  if (!events) {
+    return <Loading />;
+  }
+  console.log(events);
 
   return (
       <React.Fragment>
@@ -63,7 +78,9 @@ const SearchEvent = () => {
             { /*<Form.Group controlId="exampleForm.ControlSelect2">
               <Form.Label>Category</Form.Label>
               <Form.Control as="select" multiple>
-                {eventCategories.map((category, i) => <option key={i}>{category}</option>)}
+                {eventCategories.map((category, i) => (
+                  <option key={i}>{category}</option>
+                ))}
               </Form.Control>
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlTextarea1">
@@ -73,6 +90,16 @@ const SearchEvent = () => {
             /* ADD TIME RANGE */}
             <Button className="float-right">Search</Button>
           </Form>
+          <div>
+            {" "}
+            {events === null ? (
+              <div>No Events Available</div>
+            ) : filtered !== null ? (
+              filtered.map(event => <EventItem key={event._id} event={event} />)
+            ) : (
+              events.map(event => <EventItem key={event._id} event={event} />)
+            )}
+          </div>
         </Card.Body>
       </Card>
       <CardDeck>
@@ -89,6 +116,6 @@ const SearchEvent = () => {
     </Container>
     </React.Fragment>
   );
-}
+};
 
 export default SearchEvent;

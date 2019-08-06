@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import AuthContext from "../context/auth/authContext";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container as Fragment, Row, Col } from "react-bootstrap";
 import { Form, Button } from "react-bootstrap";
 import history from "../utils/history";
 
@@ -34,7 +34,7 @@ const SignIn = props => {
   };
 
   return (
-    <Container>
+    <Fragment>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="signInUser">
           <Form.Label>Email: </Form.Label>
@@ -67,7 +67,7 @@ const SignIn = props => {
           </Col>
         </Row>
       </Form>
-    </Container>
+    </Fragment>
   );
 };
 

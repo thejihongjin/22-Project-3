@@ -7,39 +7,9 @@ const { check, validationResult } = require("express-validator");
 
 const User = require("../models/User");
 
-
 //@route put api/users/id
 //@desc update a user
 //@access private
-
-router.put(
-  "/:id",
-  [
-    //check
-  ],
-  async (req,res) => {
-
-
-    const updateUserId = req.params.id;
-    const newUserInfo = req.body;
-    
-    try {
-      let user = await User.findById(updateUserId);
-     
-      if (newUserInfo.password) {
-        const salt = await bcrypt.genSalt(10);
-        newUserInfo.password = await bcrypt.hash(newUserInfo.password, salt);
-      }
-      await user.update(newUserInfo)
-      res.json(user)
-
-    } catch(err) {
-      console.error(err);
-      res.status(500).send("Server error");
-    }
-
-  }
-)
 
 //@route   POSt api/users
 //@desc    Register a user
@@ -108,16 +78,7 @@ router.post(
 
 router.put("/:id", async (req, res) => {
   console.log(req.user.id);
-  const {
-    username,
-    firstname,
-    lastname,
-    displayname,
-    email,
-    bio,
-    attendingId,
-    petitionId
-  } = req.body;
+  const { username, firstname, lastname, displayname, email, bio } = req.body;
 
   const userFields = {};
   if (username) userFields.username = username;
@@ -126,8 +87,6 @@ router.put("/:id", async (req, res) => {
   if (displayname) userFields.displayname = displayname;
   if (email) userFields.email = email;
   if (bio) userFields.bio = bio;
-  if (attendingId) userFields.attendingId = attendingId;
-  if (petitionId) userFields.petitionId = petitionId;
 
   try {
     let user = await User.findById(req.params.id);
@@ -144,6 +103,19 @@ router.put("/:id", async (req, res) => {
     res.json(user);
   } catch (error) {
     console.error(error.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+router.get("/", async (req, res) => {
+  console.log("req");
+  console.log(req.attending);
+  try {
+    const users = await User.find();
+    //console.log(users);
+    res.json(users);
+  } catch (err) {
+    console.error(err.message);
     res.status(500).send("Server Error");
   }
 });

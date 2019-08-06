@@ -7,7 +7,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  VIEW_USER
 } from '../types';
 
 export default (state, action) => {
@@ -33,6 +34,13 @@ export default (state, action) => {
         ...state,
         user: action.payload,
       };
+      case VIEW_USER:
+      return {
+        ...state,
+        setUsers: action.payload
+      };
+     
+   
     case REGISTER_FAIL:
     case AUTH_ERROR:
     case LOGIN_FAIL:

@@ -1,0 +1,26 @@
+[
+    {
+        "name": "friends 1",
+        "src": "images/adult-adventure.jpg"
+    },
+    {
+        "name": "friends 2",
+        "src": "images/adult-bar-birthday.jpg"
+    },
+    {
+        "name": "friends 3",
+        "src": "images/adult-bestfriends.jpg"
+    },
+    {
+        "name": "friends 4",
+        "src": "images/band-celebration.jpg"
+    },
+    {
+        "name": "friends 5",
+        "src": "images/beautiful-bestfriends.jpg"
+    },
+    {
+        "name": "friends 6",
+        "src": "images/friends-dinner-drinks.jpg"
+    }
+]
