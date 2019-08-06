@@ -8,7 +8,13 @@ import { Container, Modal } from "react-bootstrap";
 import Register from "../pages/Register"
 import SignIn from "../pages/SignIn"
 
-
+const useStyles = {
+  flexBetween: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-between"
+  },
+}
 
 const Navigation = () => {
   const authContext = useContext(AuthContext);
@@ -24,18 +30,7 @@ const Navigation = () => {
   //console.log(user);
 
   const authLinks = (
-    // <div>
-    //   <li>
-    //     <Link to="/search" className="nav-link">
-    //       Find an Event
-    //     </Link>
-    //   </li>
-    //   <li>
-    //     <a onClick={onLogout} href="#!" className="hide-sm nav-link">
-    //       Logout
-    //     </a>
-    //   </li>
-    // </div>
+
 
     <Nav className="mr-auto">
       <Nav.Link href="/search">Find an Event</Nav.Link>
@@ -44,18 +39,7 @@ const Navigation = () => {
   );
 
   const guestLinks = (
-    // <div>
-    //   <li>
-    //     <Link to="/" className="nav-link">
-    //       Register
-    //     </Link>
-    //   </li>
-    //   <li>
-    //     <Link to="/" className="nav-link">
-    //       Login
-    //     </Link>
-    //   </li>
-    // </div>
+
 
     <Nav className="mr-auto">
       <Nav.Link onClick={() => setShowRegister(true)}>Register</Nav.Link>
@@ -68,20 +52,22 @@ const Navigation = () => {
   return (
     <Fragment>
       <Navbar sticky="top" bg="dark" variant="dark" expand="md">
-        <Navbar.Brand>
-          {/* <Link to="/" className="nav-link"> */}
-          Lonely Friend Finder
+        <div style={useStyles.flexBetween}>
+          <div>
+            <Navbar.Brand>
+              {/* <Link to="/" className="nav-link"> */}
+              Lonely Friend Finder
         {/* </Link> */}
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          {/* <Nav className="mr-auto"> */}
-          {isAuthenticated
-            ? authLinks
-            : guestLinks
-          }
-          {/* </Nav> */}
-        </Navbar.Collapse>
+            </Navbar.Brand></div> <div>
+            {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
+            <Navbar.Collapse id="basic-navbar-nav">
+              {/* <Nav className="mr-auto"> */}
+              {isAuthenticated
+                ? authLinks
+                : guestLinks
+              }
+              {/* </Nav> */}
+            </Navbar.Collapse></div></div>
       </Navbar>
 
 

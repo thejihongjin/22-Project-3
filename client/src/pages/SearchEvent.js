@@ -1,26 +1,29 @@
-import React, { Fragment, useContext, useRef, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import EventContext from "../context/event/eventContext";
 import EventItem from "../components/events/EventItem";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
+import AuthContext from "../context/auth/authContext";
 import Button from "react-bootstrap/Button";
-
 import Navigation from "../components/Navigation";
+import Loading from "../components/Loading";
+import history from '../utils/history'
 
 const SearchEvent = () => {
-  const cardStyle = {
-    margin: "15px"
-  };
-
+  useEffect(() => {
+    if (!user) {
+      authContext.loadUser();
+    }
+  });
+  const authContext = useContext(AuthContext);
+  const { user } = authContext;
   const eventContext = useContext(EventContext);
   const {
-    filterEvents,
     getEvents,
-    clearFilter,
-    filtered,
+
     events
   } = eventContext;
-  console.log(events)
+  console.log(events);
 
   //const text = useRef("");
 
@@ -29,8 +32,6 @@ const SearchEvent = () => {
     // eslint-disable-next-line
   }, []);
 
-
-
   // const handleChange = e => {
   //   if (text.current.value !== "") {
   //     filterEvents(e.target.value);
@@ -38,7 +39,21 @@ const SearchEvent = () => {
   //     clearFilter();
   //   }
   // };
-  const eventCategories = ["Movie","Concert","Food/Drink","Bar/Club","Gaming","Coding","Party","Conversation","Other"];
+  const eventCategories = [
+    "Movie",
+    "Concert",
+    "Food/Drink",
+    "Bar/Club",
+    "Gaming",
+    "Coding",
+    "Party",
+    "Conversation",
+    "Other"
+  ];
+
+  if (!events) {
+    return <Loading />;
+  }
 
   return (
     <div style={{ margin: "0 auto" }}>
@@ -51,12 +66,14 @@ const SearchEvent = () => {
           <Form>
             <Form.Group controlId="exampleForm.ControlInput1">
               <Form.Label>Name</Form.Label>
-              <Form.Control  type="text"  />
+              <Form.Control type="text" />
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlSelect2">
               <Form.Label>Category</Form.Label>
               <Form.Control as="select" multiple>
-                {eventCategories.map((category, i) => <option key={i}>{category}</option>)}
+                {eventCategories.map((category, i) => (
+                  <option key={i}>{category}</option>
+                ))}
               </Form.Control>
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlTextarea1">
@@ -68,44 +85,20 @@ const SearchEvent = () => {
           </Form>
         </Card.Body>
       </Card>
-      <div>
+      {events ? (
+        <div>
           {events.map(event => (
             <EventItem key={event._id} event={event} />
           ))}
-          {/* <p>Your Joined Events</p>
-      {events.filter(attend => attend.attendId === user._id).map(event => (
-        <EventItem key={event.id} event={event} />
-      ))} */}
-       </div>
+        </div>
+      ) : (
+        <div>No events available</div>
+      )}
       {/* map over events meeting parameters in cards - look into pagination */}
 
       {/* div holding searched events? */}
-
-      {/* <Card style={cardStyle}>
-        <Card.Body>
-          <Card.Title>Search Results</Card.Title>
-          <Card style={cardStyle}>
-            <Card.Body>
-              <div className="float-right">
-                <Button>View</Button> <Button>Join</Button>
-              </div>
-              <Card.Title>Name</Card.Title>
-              <Card.Text>Date</Card.Text>
-            </Card.Body>
-          </Card>
-          <Card style={cardStyle}>
-            <Card.Body>
-              <div className="float-right">
-                <Button>View</Button> <Button>Join</Button>
-              </div>
-              <Card.Title>Name</Card.Title>
-              <Card.Text>Date</Card.Text>
-            </Card.Body>
-          </Card>
-        </Card.Body>
-      </Card> */}
     </div>
   );
-}
+};
 
 export default SearchEvent;

@@ -2,6 +2,8 @@ import {
   GET_USER_EVENTS,
   GET_EVENTS,
   ADD_EVENT,
+  JOIN_EVENT,
+  UNJOIN_EVENT,
   DELETE_EVENT,
   SET_CURRENT,
   CLEAR_CURRENT,
@@ -13,27 +15,23 @@ import {
 } from "../types";
 
 export default (state, action) => {
-  console.log(state)
   switch (action.type) {
-    
+    case GET_EVENTS:
     case GET_USER_EVENTS:
       return {
         ...state,
         events: action.payload,
         loading: false
       };
-    case GET_EVENTS:
-      return {
-        ...state,
-        events: action.payload,
-        loading: false
-      };
+
     case ADD_EVENT:
       return {
         ...state,
         events: [action.payload, ...state.events],
         loading: false
       };
+    case UNJOIN_EVENT:
+    case JOIN_EVENT:
     case UPDATE_EVENT:
       return {
         ...state,
