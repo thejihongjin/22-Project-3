@@ -17,7 +17,6 @@ import ViewGuest from "../modals/ViewGuest"
 import Modal from "react-bootstrap/Modal"
 
 const ViewEvent = () => {
- 
   const authContext = useContext(AuthContext);
   const eventContext = useContext(EventContext);
   const {
@@ -64,9 +63,11 @@ const ViewEvent = () => {
     }
   }, [eventContext, current]);
 
+
   /*const [didJoin,setDidJoin] = useState([])
   const [isOwned,setIsOwned] = useState(false)
   const [joined,setJoined] = useState(false)*/
+
 
   //console.log("non-effect",authContext)
   //console.log("non-effect",eventContext)
