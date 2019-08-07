@@ -25,6 +25,8 @@ const SearchEvent = () => {
   const eventContext = useContext(EventContext);
   const {
     getEvents,
+    clearUsers,
+    clearCurrent,
     filterEvents,
     clearFilter,
     events,
@@ -34,6 +36,8 @@ const SearchEvent = () => {
 
   useEffect(() => {
     getEvents();
+    clearUsers()
+    clearCurrent()
     // eslint-disable-next-line
   }, []);
 

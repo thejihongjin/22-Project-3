@@ -5,10 +5,10 @@ import Loading from "../components/Loading";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import AuthContext from "../context/auth/authContext";
+import EventContext from "../context/event/eventContext";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import Tabs from "react-bootstrap/Tabs";
-import Tab from "react-bootstrap/Tab";
+
 import Fragment from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -51,12 +51,21 @@ const User = props => {
   const [passWordVer, setPassWordVer] = useState("");
   const authContext = useContext(AuthContext);
   const { user, updateUser } = authContext;
+  const eventContext = useContext(EventContext);
+  const { clearCurrent, clearUsers , events,  getUserEvents } = eventContext;
 
   useEffect(() => {
     if (!user) {
       authContext.loadUser();
     }
+    
   });
+  useEffect(() => {
+    clearUsers()
+    clearCurrent()
+    getUserEvents();
+    // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     if (user) {
@@ -144,15 +153,10 @@ const User = props => {
         </Col>
         <Col>
           {" "}
+         
           <Card style={{ margin: "10px 0" }}>
             <Card.Body>
-              <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
-                <Tab eventKey="home" title="Upcoming Events">
-                  <br />
-                  <EventList />
-                </Tab>
-                <Tab eventKey="profile" title="Past Events" />
-              </Tabs>
+               <EventList events={events} />
             </Card.Body>
           </Card>
         </Col>
