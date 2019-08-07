@@ -98,7 +98,7 @@ const ViewEvent = () => {
 
    
     // eslint-disable-next-line
-  });
+  },[]);
 
   /*useEffect(()=> {
     setEvent(current)
@@ -121,6 +121,10 @@ const ViewEvent = () => {
   );
   const [isOwned] = useState(current.user === user._id ? true : false);
   const [joined, setJoined] = useState(didJoin[0] === user._id ? true : false);
+
+  const [modalShow, setModalShow] = useState(false);
+  const [modalUserChoice, setUserChoice] = useState({ displayname: "Undefined", bio: "undefined" });
+
 
   const {
     name,
@@ -178,13 +182,18 @@ const ViewEvent = () => {
     return <Loading />;
   }
 
-  const [modalShow,setModalShow] = useState(false);
-  const [modalIndex,setModalIndex] = useState(-1);
-
-  const handleModalShow = e => {
+ 
+  const handleModalShow = async e => {
     e.preventDefault();
-    setModalShow(true);
-    setModalIndex(e.target.key)
+    console.log(e.target)
+    console.log(e.target.getAttribute("index"))
+    console.log(e.target.index)
+    const userIndex = parseInt(e.target.getAttribute("index"))
+    console.log(userIndex)
+    console.log(setUsers[userIndex])
+    await setUserChoice(setUsers[userIndex])
+    //console.log(modalUserChoice)
+    setModalShow(true)
   }
 
   if (showAlert) {
@@ -235,8 +244,9 @@ const ViewEvent = () => {
                 {setUsers
                   ? setUsers.map( (user,index) => (
                       <Button 
-                        type="Link" 
-                        key="index"
+                        variant="link" 
+                        key={index}
+                        index={index}
                         onClick = {handleModalShow}
                       >
                         {user.displayname}
@@ -313,8 +323,12 @@ const ViewEvent = () => {
       </Row>
       <Modal 
         show={modalShow}
+        onHide={()=>{
+          setModalShow(false)
+          setUserChoice({ displayname: "Undefined", bio: "undefined" });
+        }}
         >
-          <ViewGuest data={setUsers[modalIndex]}/>
+          <ViewGuest data={modalUserChoice}/>
       </Modal>
     </Fragment>
   );

@@ -3,6 +3,8 @@ import Modal from "react-bootstrap/Modal"
 
 const ViewGuest = (props) => {
     const user = props.data
+    console.log(props)
+    console.log(props.data)
     return (
       <React.Fragment>
         <Modal.Header closeButton>
