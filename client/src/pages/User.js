@@ -12,8 +12,6 @@ import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-// import "./styles.css";
-
 import data from "../bg.json"
 
 const lightsImg = data[0].src
@@ -127,9 +125,7 @@ const User = props => {
                                 </Card.Subtitle>
                             </Card.Header> */}
                             <Card.Body>
-                                {events
-                                    ? <EventList events={events} />
-                                    : <Card.Text>No events available.</Card.Text>}
+                                {events ? <EventList events={events} /> : <Card.Text>No events available.</Card.Text>}
                             </Card.Body>
                         </Card>
                     </Col>

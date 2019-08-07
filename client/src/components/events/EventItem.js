@@ -1,12 +1,10 @@
 import React, { useState, useContext, Fragment } from "react";
 import { Link } from "react-router-dom";
+import AuthContext from "../../context/auth/authContext";
+import EventContext from "../../context/event/eventContext";
+import Alert from "react-bootstrap/Alert";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col"
-import Row from "react-bootstrap/Row"
-import Alert from "react-bootstrap/Alert";
-import EventContext from "../../context/event/eventContext";
-import AuthContext from "../../context/auth/authContext";
 
 const EventItem = ({ event }) => {
     const eventContext = useContext(EventContext);
@@ -74,21 +72,19 @@ const EventItem = ({ event }) => {
             </Card.Body>
             <Card.Footer>
                 <Link onClick={() => setCurrent(event)} to="/view" className="card-link">View</Link>
+                {
+                    user._id === event.user &&
+                    <Fragment>
+                        <Link className="card-link" to="/create" onClick={() => setCurrent(event)}>Edit</Link>
+                        <Button className="btn-danger" size="sm" onClick={() => setShowAlert(true)} style={{ float: "right" }}>Delete</Button>
+                    </Fragment>
+                }
 
                 {
-                    (user._id === event.user) && (
-                        // ? (
-                            <Fragment>
-                                <Link className="card-link" to="/create" onClick={() => setCurrent(event)}>Edit</Link>
-                                <Button className="btn-danger" size="sm" onClick={() => setShowAlert(true)} style={{ float: "right" }}>Delete</Button>
-                            </Fragment>
-                        )
-                        // : (
-                        //     <Button style={{ float: "right" }} className="btn-info" size="sm" onClick={() => setShowAlert(true)}>Join</Button>
-                        // )
+                    user._id !== event.user && event.attendingId.includes(user._id) &&
+                    <Button style={{ float: "right" }} className="btn-info" size="sm" onClick={() => setShowAlert(true)}>Join</Button>
                 }
             </Card.Footer>
-
         </Card>
     );
 };
