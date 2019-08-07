@@ -77,8 +77,7 @@ router.post(
 );
 
 router.put("/:id", async (req, res) => {
-  console.log(req.user.id);
-  const { username, firstname, lastname, displayname, email, bio } = req.body;
+  const { username, firstname, lastname, displayname, email, bio, password } = req.body;
 
   const userFields = {};
   if (username) userFields.username = username;
@@ -92,15 +91,23 @@ router.put("/:id", async (req, res) => {
     let user = await User.findById(req.params.id);
 
     // Make sure user owns event
-    if (user._id.toString() !== req.user.id) {
+    if (user._id.toString() !== req.params.id) {
       return res.status(401).json({ msg: "Not authorized" });
+    } else {
+      //If new password, encrypt them
+      if (password) {
+        const salt = await bcrypt.genSalt(10);
+        userFields.password = await bcrypt.hash(password, salt);
+      }
+
+      //update user and return 
+      const response = await user.updateOne(
+        { $set: userFields },
+        { new: true }
+      );
+
+      res.json(response);
     }
-    user = await User.findByIdAndUpdate(
-      req.params.id,
-      { $set: userFields },
-      { new: true }
-    );
-    res.json(user);
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server Error");

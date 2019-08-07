@@ -4,7 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import { Link } from "react-router-dom";
 import AuthContext from "../context/auth/authContext";
 import history from "../utils/history"
-import { Container, Modal } from "react-bootstrap";
+import Modal from "react-bootstrap/Modal";
 import Register from "../pages/Register"
 import SignIn from "../pages/SignIn"
 
@@ -58,7 +58,7 @@ const Navigation = () => {
       {
         showRegister &&
         <Modal
-          size="lg"
+          size="md"
           show={showRegister}
           onHide={() => setShowRegister(false)}
           aria-labelledby="example-modal-sizes-title-lg"
@@ -74,7 +74,7 @@ const Navigation = () => {
       {
         showSignIn &&
         <Modal
-          size="lg"
+          size="md"
           show={showSignIn}
           onHide={() => setShowSignIn(false)}
           aria-labelledby="example-modal-sizes-title-lg"
