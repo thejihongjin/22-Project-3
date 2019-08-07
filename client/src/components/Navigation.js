@@ -4,7 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import { Link } from "react-router-dom";
 import AuthContext from "../context/auth/authContext";
 import history from "../utils/history"
-import { Container, Modal } from "react-bootstrap";
+import Modal from "react-bootstrap/Modal";
 import Register from "../pages/Register"
 import SignIn from "../pages/SignIn"
 

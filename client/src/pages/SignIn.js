@@ -35,26 +35,26 @@ const SignIn = props => {
 
     return (
         <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="signInUser">
+            <Form.Group controlId="signInEmail">
                 <Form.Label>Email: </Form.Label>
                 <Form.Control
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
                     type="text"
                     placeholder="Email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
                 />
             </Form.Group>
-            <Form.Group controlId="signInPass">
+            <Form.Group controlId="signInPassword">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}
                     type="password"
                     placeholder="Password"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
                 />
             </Form.Group>
             <Row className="justify-content-center">
-                <Button variant="primary" type="submit" style={{ margin: "0 5px" }}>Sign In</Button>
+                <Button type="submit" variant="primary" style={{ margin: "0 5px" }}>Sign In</Button>
                 <Button onClick={props.onHide} varient="danger" style={{ margin: "0 5px" }}>Cancel</Button>
             </Row>
         </Form>

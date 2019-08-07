@@ -7,7 +7,8 @@ import Carousel from "../components/Carousel";
 
 const About = props => {
   const authContext = useContext(AuthContext);
-  const { isAuthenticated, user } = authContext;
+  // const { isAuthenticated, user } = authContext;
+  const { isAuthenticated } = authContext;
 
   useEffect(() => {
     if (isAuthenticated) {

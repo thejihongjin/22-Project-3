@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
+import { Row, Form, Button } from "react-bootstrap";
 import AuthContext from "../context/auth/authContext";
-import { Container as Fragment, Row, Col } from "react-bootstrap";
-import { Form, Button } from "react-bootstrap";
 import history from "../utils/history";
 
 const Register = props => {
@@ -9,12 +8,12 @@ const Register = props => {
     const { register, error, clearErrors, isAuthenticated } = authContext;
 
     const [user, setUser] = useState({
-        newUserName: "",
+        newUsername: "",
         newEmail: "",
-        newPassWord: "",
-        passWordVer: ""
+        newPassword: "",
+        passwordMatch: ""
     });
-    const { newUserName, newEmail, newPassWord, passWordVer } = user;
+    const { newUsername, newEmail, newPassword, passwordMatch } = user;
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -34,78 +33,68 @@ const Register = props => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        if (newUserName === "" || newEmail === "" || newPassWord === "") {
+        if (newUsername === "" || newEmail === "" || newPassword === "") {
             alert("Please enter all fields");
-        } else if (newPassWord !== passWordVer) {
+        } else if (newPassword !== passwordMatch) {
             alert("Passwords do not match");
         } else {
             register({
-                username: newUserName,
-                displayname: newUserName,
+                username: newUsername,
+                displayname: newUsername,
                 email: newEmail,
-                password: passWordVer
+                password: passwordMatch
             });
             props.onHide();
         }
     };
 
     return (
-        <Fragment>
-            <Form onSubmit={handleSubmit}>
-                <Form.Group controlId="newUser">
-                    <Form.Label>Username: </Form.Label>
-                    <Form.Control
-                        value={newUserName}
-                        name="newUserName"
-                        onChange={handleChange}
-                        type="text"
-                        placeholder="Username"
-                    />
-                </Form.Group>
-                <Form.Group controlId="newemail">
-                    <Form.Label>Email:</Form.Label>
-                    <Form.Control
-                        value={newEmail}
-                        name="newEmail"
-                        onChange={handleChange}
-                        type="email"
-                        placeholder="Email"
-                    />
-                </Form.Group>
-                <Form.Group controlId="newPass">
-                    <Form.Label>Password:</Form.Label>
-                    <Form.Control
-                        value={newPassWord}
-                        name="newPassWord"
-                        onChange={handleChange}
-                        type="password"
-                        placeholder="Password"
-                    />
-                </Form.Group>
-                <Form.Group controlId="newPassVer">
-                    <Form.Label>Re-type Password:</Form.Label>
-                    <Form.Control
-                        value={passWordVer}
-                        name="passWordVer"
-                        onChange={handleChange}
-                        type="password"
-                        placeholder="Type in your password again"
-                    />
-                </Form.Group>
-                <Row className="justify-content-center">
-                    <Col md="4">
-                        <Row className="justify-content-between">
-                            <Button variant="primary" type="submit">
-                                Register
-              </Button>
-                            <Button onClick={props.onHide} varient="danger">
-                                Cancel
-              </Button>
-                        </Row>
-                    </Col>
-                </Row>
-            </Form>
-        </Fragment>
+        <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="registerUsername">
+                <Form.Label>Username: </Form.Label>
+                <Form.Control
+                    type="text"
+                    placeholder="Username"
+                    name="newUsername"
+                    value={newUsername}
+                    onChange={handleChange}
+                />
+            </Form.Group>
+            <Form.Group controlId="registerEmail">
+                <Form.Label>Email:</Form.Label>
+                <Form.Control
+                    type="email"
+                    placeholder="Email"
+                    name="newEmail"
+                    value={newEmail}
+                    onChange={handleChange}
+                />
+            </Form.Group>
+            <Form.Group controlId="registerPassword">
+                <Form.Label>Password:</Form.Label>
+                <Form.Control
+                    type="password"
+                    placeholder="Password"
+                    name="newPassword"
+                    value={newPassword}
+                    onChange={handleChange}
+                />
+            </Form.Group>
+            <Form.Group controlId="registerPasswordMatch">
+                <Form.Label>Re-type Password:</Form.Label>
+                <Form.Control
+                    type="password"
+                    placeholder="Type in your password again"
+                    name="passwordMatch"
+                    value={passwordMatch}
+                    onChange={handleChange}
+                />
+            </Form.Group>
+            <Row className="justify-content-center">
+                <Button type="submit" variant="primary" style={{ margin: "0 5px" }}>Register</Button>
+                <Button onClick={props.onHide} varient="danger" style={{ margin: "0 5px" }}>Cancel</Button>
+            </Row>
+        </Form>
     );
 };
 
