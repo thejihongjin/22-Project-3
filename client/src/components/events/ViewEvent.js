@@ -11,10 +11,14 @@ import EventContext from "../../context/event/eventContext";
 import AuthContext from "../../context/auth/authContext";
 import history from "../../utils/history";
 import Map from "../Map";
+import EventState from "../../context/event/EventState";
 
 const ViewEvent = () => {
+ 
+  const authContext = useContext(AuthContext);
   const eventContext = useContext(EventContext);
   const {
+    setCurrent,
     clearCurrent,
     current,
     joinEvent,
@@ -24,10 +28,14 @@ const ViewEvent = () => {
     setUsers,
     clearUsers
   } = eventContext;
-  const authContext = useContext(AuthContext);
+  /*if (current === null) {
+    history.push("/user");
+  }*/
+ 
   const [showToast, setShowToast] = useState(false);
-  const { user } = authContext;
-  const state = { owned: false, joined: false };
+  const { user}  = authContext;
+  //console.log(user)
+  //const user = '';
   const [showAlert, setShowAlert] = useState(false);
   const [event, setEvent] = useState({
     name: "",
@@ -50,18 +58,65 @@ const ViewEvent = () => {
     // eslint-disable-next-line
   }, []);
 
-  if (current === null) {
-    history.push("/user");
-  }
+  const [didJoin,setDidJoin] = useState([])
+  const [isOwned,setIsOwned] = useState(false)
+  const [joined,setJoined] = useState(false)
 
-  console.log(setUsers);
-  event.didJoin = current.attendingId.filter(attendId => attendId === user._id);
-  console.log(event.didJoin);
-  if (current.user === user._id) {
-    state.owned = true;
-  } else if (event.didJoin[0] === user._id) {
-    state.joined = true;
-  }
+  //console.log("non-effect",authContext)
+  //console.log("non-effect",eventContext)
+
+  useEffect(() => {
+    const CacheEvent = localStorage.getItem("currentEvent");
+    //console.log("run")
+    if(!user) {
+    //console.log("Why ??")
+    authContext.loadUser();
+    //console.log(user)
+   }
+   //console.log("currentEvent", current)
+   //console.log("Cache", CacheEvent)
+   if(current === null && CacheEvent !== "null") {
+     console.log("Cache",JSON.parse(CacheEvent))
+     setCurrent(JSON.parse(CacheEvent))
+     console.log(current)
+   } 
+
+   //setEvent(current)
+
+   if(current && CacheEvent === "null") {
+     localStorage.setItem("currentEvent",JSON.stringify(current))
+   }
+    //console.log(current.attendingId);
+    //getUsersProfile(current);
+
+    console.log("Effect", authContext);
+    console.log("Effect", eventContext)
+
+   
+    // eslint-disable-next-line
+  });
+
+  useEffect(()=> {
+    setEvent(current)
+  },[current,eventContext])
+
+  useEffect(()=> {
+    setDidJoin(event.attendingId.filter(attendId => attendId === user._id))
+    setIsOwned(current.user === user._id ? true : false);
+    setJoined(didJoin[0] === user._id ? true : false)
+  },[event])
+
+  /*useEffect(()=> {
+    setDidJoin(event.attendingId.filter(attendId => attendId === user._id))
+    setIsOwned(current.user === user._id ? true : false);
+    setJoined(didJoin[0] === user._id ? true : false)
+  },[current,user,event])*/
+
+  /*const [didJoin] = useState(
+    event.attendingId.filter(attendId => attendId === user._id)
+  );
+  const [isOwned] = useState(current.user === user._id ? true : false);
+  const [joined, setJoined] = useState(didJoin[0] === user._id ? true : false);*/
 
   const {
     name,
@@ -242,6 +297,10 @@ const ViewEvent = () => {
       </Row>
     </Fragment>
   );
+
+  /*return (
+    <h1>Debug in process </h1>
+  )*/
 };
 
 export default ViewEvent;
