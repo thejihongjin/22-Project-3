@@ -133,8 +133,6 @@ const ViewEvent = () => {
     );
   }
 
-
-
   return (
     <Fragment>
       {current ? (
@@ -168,7 +166,9 @@ const ViewEvent = () => {
                 {setUsers
                   ? setUsers.map(userLink => (
                       <Fragment>
-                        <Link to="#" key={userLink._id}>{userLink.username}</Link>
+                        <Link to="#" key={userLink._id}>
+                          {userLink.username}
+                        </Link>
                         <br />
                       </Fragment>
                     ))
