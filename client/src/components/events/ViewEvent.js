@@ -59,7 +59,7 @@ const ViewEvent = () => {
     } else {
       console.log("No event yet");
     }
-  }, [eventContext, current]);
+  }, [eventContext, current, setCurrent]);
 
   const [didJoin, setDidJoin] = useState([]);
   const [isOwned, setIsOwned] = useState(false);
