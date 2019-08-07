@@ -24,6 +24,7 @@ const Navigation = () => {
 
     const authLinks = (
         <Nav className="mr-auto">
+            <Nav.Link href="/create">Create an Event</Nav.Link>
             <Nav.Link href="/search">Find an Event</Nav.Link>
             <Nav.Link onClick={onLogout}>Logout</Nav.Link>
         </Nav>
@@ -50,7 +51,7 @@ const Navigation = () => {
 
             {
                 showRegister &&
-                <Modal size="md" show={showRegister} onHide={() => setShowRegister(false)}>
+                <Modal size="md" show={showRegister} onHide={() => setShowRegister(false)} centered>
                     <Modal.Header closeButton>
                         <Modal.Title>Register</Modal.Title>
                     </Modal.Header>
@@ -61,7 +62,7 @@ const Navigation = () => {
             }
             {
                 showSignIn &&
-                <Modal size="md" show={showSignIn} onHide={() => setShowSignIn(false)}>
+                <Modal size="md" show={showSignIn} onHide={() => setShowSignIn(false)} centered>
                     <Modal.Header closeButton>
                         <Modal.Title>Sign In</Modal.Title>
                     </Modal.Header>

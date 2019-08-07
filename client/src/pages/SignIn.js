@@ -4,6 +4,7 @@ import history from "../utils/history";
 import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import "./styles.css";
 
 const SignIn = props => {
     const authContext = useContext(AuthContext);
