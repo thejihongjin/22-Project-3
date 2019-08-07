@@ -43,10 +43,11 @@ router.get("/profiles/:id", async (req, res) => {
     }).sort({
       date: -1
     });
-   
+
+    //return array of profiles
     res.json(profiles);
   } catch (err) {
-    console.error(err.message);
+    console.error(err);
     res.status(500).send("Server Error");
   }
 });
