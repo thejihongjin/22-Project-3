@@ -11,6 +11,9 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+
+import "./styles.css";
+
 import data from "../bg.json"
 
 const lightsImg = data[0].src
@@ -97,30 +100,33 @@ const User = props => {
                 <Row>
                     <Col md={6}>
                         <Card>
+                            {user && user.image && <Card.Img variant="top" src={user && user.image} />}
                             <Card.Body>
                                 <Card.Title>Welcome, {user && user.displayname}!</Card.Title>
-                                <Card.Subtitle className="mb-2 text-muted">
-                                    <Link to="#" onClick={() => setShowProfile(true)}>Edit profile</Link><br />
-                                    <Link to="#" onClick={() => setShowPassword(true)}>Change password</Link>
-                                </Card.Subtitle>
                                 <Card.Text>
                                     {user && user.firstname + " " + user.lastname === "undefined undefined"
                                         ? "Update your first and last name"
                                         : "Name: " + (user && user.firstname + " " + user.lastname)}
-                                </Card.Text>
-                                <Card.Text>
+                                    <br />
                                     {user && user.bio === "undefined"
                                         ? "Add some info about yourself"
                                         : "Bio: " + (user && user.bio)}
                                 </Card.Text>
                             </Card.Body>
-                            {user && user.image && <Card.Img variant="bottom" src={user && user.image} />}
+                            <Card.Footer style={{textAlign: "right"}}>
+                                    <Link to="#" onClick={() => setShowProfile(true)}>Edit profile</Link><br />
+                                    <Link to="#" onClick={() => setShowPassword(true)}>Change password</Link>
+                            </Card.Footer>
                         </Card>
                     </Col>
                     <Col md={6}>
                         <Card>
+                            {/* <Card.Header>
+                                <Card.Subtitle style={{ marginBottom: "10px" }}>
+                                    <Link to="/create" className="card-link">Create New Event</Link>
+                                </Card.Subtitle>
+                            </Card.Header> */}
                             <Card.Body>
-                                <Card.Subtitle style={{marginBottom: "10px"}}><Link to="/create" className="card-link">Create New Event</Link></Card.Subtitle>
                                 {events
                                     ? <EventList events={events} />
                                     : <Card.Text>No events available.</Card.Text>}

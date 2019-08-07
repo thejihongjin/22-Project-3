@@ -11,8 +11,9 @@ const EventList = () => {
     const { user } = authContext;
     const { events, getUserEvents } = eventContext;
 
-    let createdEvent;
-    let joinedEvent;
+    // let createdEvent;
+    // let joinedEvent;
+    let upcomingEvents;
     let pastEvents;
 
     useEffect(() => {
@@ -26,20 +27,20 @@ const EventList = () => {
         // eslint-disable-next-line
     }, []);
 
-    // if (events === null) {
-    if (!events) {
+    if (events === null) {
         return (
             <div>
                 <br /> <h4>Welcome! Try adding an event</h4>
             </div>
         );
     } else {
-        createdEvent = events.filter(
-            event => event.user === user._id && new Date(event.end) > new Date()
-        );
-        joinedEvent = events.filter(
-            event => event.user !== user._id && new Date(event.end) > new Date()
-        );
+        // createdEvent = events.filter(
+        //     event => event.user === user._id && new Date(event.end) > new Date()
+        // );
+        // joinedEvent = events.filter(
+        //     event => event.user !== user._id && new Date(event.end) > new Date()
+        // );
+        upcomingEvents = events.filter(event => new Date(event.end) > new Date());
         pastEvents = events.filter(event => new Date(event.end) < new Date());
     }
 
@@ -48,14 +49,14 @@ const EventList = () => {
     return (
         <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
             <Tab eventKey="home" title="Upcoming Events">
-                <br />
+                {/* <br />
                 <Fragment>
                     <div>
                         <h6>Your Created Events:</h6>
                         {createdEvent.map(event => (
                             <EventItem key={event._id} event={event} />
                         ))}
-                    </div>{" "}
+                    </div>
                     <br />
                     <div>
                         <h6>Your Joined Events</h6>
@@ -63,15 +64,24 @@ const EventList = () => {
                             <EventItem key={joined._id} event={joined} />
                         ))}
                     </div>
-                </Fragment>
+                </Fragment> */}
+                <br />
+                {
+                    upcomingEvents.map(event => (
+                        <EventItem key={event._id} event={event} />
+                    ))
+                }
             </Tab>
             <Tab eventKey="profile" title="Past Events">
+                {/* <br />
+                <Fragment> */}
                 <br />
-                <Fragment>
-                    {pastEvents.map(past => (
-                        <EventItem key={past._id} event={past} />
-                    ))}{" "}
-                </Fragment>
+                {
+                    pastEvents.map(event => (
+                        <EventItem key={event._id} event={event} />
+                    ))
+                }
+                {/* </Fragment> */}
             </Tab>
         </Tabs>
     );

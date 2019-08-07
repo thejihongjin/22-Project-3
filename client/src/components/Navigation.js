@@ -24,6 +24,7 @@ const Navigation = () => {
 
     const authLinks = (
         <Nav className="mr-auto">
+            <Nav.Link href="/create">Create an Event</Nav.Link>
             <Nav.Link href="/search">Find an Event</Nav.Link>
             <Nav.Link onClick={onLogout}>Logout</Nav.Link>
         </Nav>
