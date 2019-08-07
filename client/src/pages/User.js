@@ -12,6 +12,9 @@ import Modal from "react-bootstrap/Modal";
 import Fragment from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import data from "../bg.json"
+
+const lightsImg = data[0].src
 
 const useStyles = {
     // flexBetween: {
@@ -186,6 +189,7 @@ const User = props => {
                             </Form.Group>
                             {/* </Form.Row> */}
 
+<<<<<<< HEAD
                             <Form.Group>
                                 <Form.Label>Display Name</Form.Label>
                                 <Form.Control
@@ -204,6 +208,91 @@ const User = props => {
                                 // defaultValue="https://via.placeholder.com/300x150"
                                 />
                             </Form.Group>
+=======
+  return (
+    <div className="bg" style={{backgroundImage: `url(${lightsImg})`, backgroundSize: "cover", minHeight: "100vh" }}>
+    <Fragment >
+      <Row>
+        <Col>
+          <Card style={{ width: "25em", margin: "10px 0" }}>
+            {user && user.image && (
+              <Card.Img variant="top" src={user && user.image} />
+            )}
+            <Card.Body>
+              <div style={useStyles.flexBetween}>
+                <Card.Title>Welcome, {user && user.displayname}</Card.Title>{" "}
+                <Link to="#" onClick={() => setModalShow(true)}>
+                  Edit Profile
+                </Link>
+                <Link style={{marginLeft: "10px"}}to="#" onClick={() => setPasswordModalShow(true)}>
+                  Change Password
+                </Link>
+              </div>
+              <Card.Subtitle style={{marginTop: "10px"}}className="mb-2 text-muted">
+                {/* {user && user.displayname} */}
+                User Profile
+              </Card.Subtitle>
+              <Card.Text>
+                {user &&
+                user.firstname + " " + user.lastname === "undefined undefined"
+                  ? "Update your first and last name"
+                  : "Name: " + (user && user.firstname + " " + user.lastname)}
+              </Card.Text>
+              <Card.Text>
+                {user && user.bio === ""
+                  ? "Add some info about yourself"
+                  : "Bio: " + (user && user.bio)}
+              </Card.Text>
+              <Link to="/create" className="card-link">
+                Create New Event
+              </Link>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col>
+          <Card style={{ margin: "10px 0" }}>
+            <Card.Body>
+                <EventList events={events} />
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+      {/* <EditProfileModal show={modalShow} onHide={() => setModalShow(false)} /> */}
+      <Modal
+        // {...props}
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">Lizard</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h4>Edit Profile</h4>
+          <Form onSubmit={handleProfileSubmit}>
+            <Form.Row>
+              <Form.Group as={Col} controlId="changeFirstName">
+                <Form.Label>First Name</Form.Label>
+                <Form.Control
+                  onChange={e => {
+                    setFirstName(e.target.value);
+                    console.log(firstName);
+                  }}
+                  defaultValue={user && user.firstname}
+                />
+              </Form.Group>
+              <Form.Group as={Col} controlId="changeLastName">
+                <Form.Label>Last Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  onChange={e => setLastName(e.target.value)}
+                  defaultValue={user && user.lastname}
+                />
+              </Form.Group>
+            </Form.Row>
+>>>>>>> master
 
                             <Form.Group>
                                 <Form.Label>Bio</Form.Label>
@@ -268,6 +357,7 @@ const User = props => {
                                 <Button onClick={() => setShowPassword(false)}>
                                     Cancel
               </Button>
+<<<<<<< HEAD
                             </Row>
                         </Form>
                     </Modal.Body>
@@ -275,6 +365,15 @@ const User = props => {
             }
         </Fragment>
     );
+=======
+            </Row>
+          </Form>
+        </Modal.Body>
+      </Modal>
+    </Fragment>
+    </div> 
+  );
+>>>>>>> master
 };
 
 export default User;
