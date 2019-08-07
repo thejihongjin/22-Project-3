@@ -17,7 +17,7 @@ import ViewGuest from "../modals/ViewGuest"
 import Modal from "react-bootstrap/Modal"
 
 const ViewEvent = () => {
- 
+
   const authContext = useContext(AuthContext);
   const eventContext = useContext(EventContext);
   const {

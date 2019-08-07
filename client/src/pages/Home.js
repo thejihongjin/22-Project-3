@@ -1,28 +1,25 @@
 import React, { useEffect, useContext } from "react";
-import history from "../utils/history";
 import AuthContext from "../context/auth/authContext";
+import history from "../utils/history";
 import Carousel from "../components/Carousel";
-
 // import "./Style.css"
 
-const About = props => {
-  const authContext = useContext(AuthContext);
-  // const { isAuthenticated, user } = authContext;
-  const { isAuthenticated } = authContext;
+const Home = () => {
+    const authContext = useContext(AuthContext);
+    const { isAuthenticated } = authContext;
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      authContext.loadUser();
-      // redirect to userpage
-      history.push("/user");
-    }
+    useEffect(() => {
+        if (isAuthenticated) {
+            authContext.loadUser();
+            history.push("/user"); // redirect to userpage
+        }
 
-    // eslint-disable-next-line
-  }, [isAuthenticated, history]);
+        // eslint-disable-next-line
+    }, [isAuthenticated, history]);
 
-  return (
-      <Carousel />
-  );
+    return (
+        <Carousel />
+    );
 };
 
-export default About;
+export default Home;
