@@ -57,6 +57,7 @@ const User = props => {
   useEffect(() => {
     if (!user) {
       authContext.loadUser();
+      console.log("missing user")
     }
     
   });
@@ -152,15 +153,13 @@ const User = props => {
           </Card>
         </Col>
         <Col>
-          {" "}
-         
           <Card style={{ margin: "10px 0" }}>
             <Card.Body>
                <EventList events={events} />
             </Card.Body>
           </Card>
         </Col>
-      </Row>{" "}
+      </Row>
       {/* <EditProfileModal show={modalShow} onHide={() => setModalShow(false)} /> */}
       <Modal
         // {...props}

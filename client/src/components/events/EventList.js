@@ -10,7 +10,7 @@ const EventList = () => {
   const authContext = useContext(AuthContext);
   const { user } = authContext;
   const { events, getUserEvents } = eventContext;
-  console.log(events);
+  
   let createdEvent;
   let joinedEvent;
   let pastEvents;
@@ -42,8 +42,7 @@ const EventList = () => {
     pastEvents = events.filter(event => new Date(event.end) < new Date());
   }
 
-  console.log(pastEvents);
-  console.log(Date());
+  //console.log(joinedEvent);
 
   return (
     <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
