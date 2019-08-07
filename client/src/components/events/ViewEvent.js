@@ -17,7 +17,7 @@ import ViewGuest from "../modals/ViewGuest"
 import Modal from "react-bootstrap/Modal"
 
 const ViewEvent = () => {
-
+ 
   const authContext = useContext(AuthContext);
   const eventContext = useContext(EventContext);
   const {
@@ -185,12 +185,8 @@ const ViewEvent = () => {
  
   const handleModalShow = async e => {
     e.preventDefault();
-    console.log(e.target)
-    console.log(e.target.getAttribute("index"))
-    console.log(e.target.index)
     const userIndex = parseInt(e.target.getAttribute("index"))
-    console.log(userIndex)
-    console.log(setUsers[userIndex])
+    
     await setUserChoice(setUsers[userIndex])
     //console.log(modalUserChoice)
     setModalShow(true)
