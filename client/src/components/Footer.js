@@ -1,3 +1,4 @@
+// JJ done except for info
 import React from "react";
 
 const Footer = () => (
@@ -7,6 +8,6 @@ const Footer = () => (
         <span>Jihong Jin <a href="https://www.linkedin.com/in/thejihongjin/">LinkedIn</a></span><br />
         <span>Terrance Lyttles <a href="https://www.linkedin.com/in/terrance-lyttles-32b617173/">LinkedIn</a></span>
     </footer>
-  );
+);
 
 export default Footer;

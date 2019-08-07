@@ -58,7 +58,7 @@ const Navigation = () => {
       {
         showRegister &&
         <Modal
-          size="lg"
+          size="md"
           show={showRegister}
           onHide={() => setShowRegister(false)}
           aria-labelledby="example-modal-sizes-title-lg"
@@ -74,7 +74,7 @@ const Navigation = () => {
       {
         showSignIn &&
         <Modal
-          size="lg"
+          size="md"
           show={showSignIn}
           onHide={() => setShowSignIn(false)}
           aria-labelledby="example-modal-sizes-title-lg"
