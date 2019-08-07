@@ -26,7 +26,7 @@ const EventItem = ({ event }) => {
     end
   } = event;
   const [showAlert, setShowAlert] = useState(false);
-  console.log(user._id);
+ 
 
   const handleDelete = () => {
     setShowAlert(false);
@@ -49,7 +49,7 @@ const EventItem = ({ event }) => {
   let startDate;
   let date = new Date(start);
   startDate = date.toLocaleString();
-  // console.log(date.toString('YYYY-MM-dd'))
+ 
 
   let endDate;
   let dateEnd = new Date(end);
