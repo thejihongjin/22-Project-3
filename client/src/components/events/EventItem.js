@@ -10,17 +10,10 @@ import EventContext from "../../context/event/eventContext";
 import AuthContext from "../../context/auth/authContext";
 
 const EventItem = ({ event }) => {
-  console.log(event);
   const eventContext = useContext(EventContext);
   const authContext = useContext(AuthContext);
   const { user } = authContext;
-  const {
-    deleteEvent,
-    clearCurrent,
-    events,
-    setCurrent,
-    current
-  } = eventContext;
+  const { deleteEvent, setCurrent, clearCurrent, events } = eventContext;
   const {
     _id,
     name,
@@ -40,6 +33,7 @@ const EventItem = ({ event }) => {
     deleteEvent(_id);
     clearCurrent();
   };
+
   if (showAlert) {
     return (
       <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
@@ -60,68 +54,65 @@ const EventItem = ({ event }) => {
   let endDate;
   let dateEnd = new Date(end);
   endDate = dateEnd.toLocaleString();
-  console.log(current);
 
   if (events.length === 0) {
-    return <div>No events availble at this time. Try adding one!</div>;
+    return <div>No events available at this time. Try adding one!</div>;
   }
 
   return (
     <Card>
       <Card.Header>
         <Card.Title>{name.toUpperCase()}</Card.Title>
+        <Card.Subtitle className="mb-2 text-muted">{category}</Card.Subtitle>
       </Card.Header>
       <Card.Body>
-        <Card.Subtitle className="mb-2 text-muted">{category}</Card.Subtitle>
-        <Card.Subtitle
-          style={{ textTransform: "capitalize" }}
-          className="mb-2 text-muted"
-        >
+        <Card.Text style={{ textTransform: "capitalize" }}>
           Location: {location}
-        </Card.Subtitle>
-        <Card.Subtitle className="mb-2 text-muted">
+          <br />
           Address: {addressInfo}
-        </Card.Subtitle>
-        <Card.Subtitle className="mb-2 text-muted">
+          <br />
           Start Time: {startDate}
-        </Card.Subtitle>
-        <Card.Subtitle className="mb-2 text-muted">
+          <br />
           End Time: {endDate}
-        </Card.Subtitle>
+        </Card.Text>
+        <Card.Text>{description}</Card.Text>
         <Card.Subtitle className="mb-2 text-muted">
           People Going: {attendingId.length} / {groupSize}
         </Card.Subtitle>
-        <Card.Text>{description}</Card.Text>
       </Card.Body>
       <Card.Footer>
         <Link
           onClick={() => setCurrent(event)}
-          to="/view"
+          to="/#"
           className="card-link"
         >
           View
         </Link>
 
         {user._id === event.user && (
+          // ? (
           <Fragment>
             <Link
-              onClick={() => setCurrent(event)}
-              to="/create"
               className="card-link"
+              to="/create"
+              onClick={() => setCurrent(event)}
             >
               Edit
             </Link>
-
             <Button
-              style={{ float: "right" }}
               className="btn-danger"
               size="sm"
               onClick={() => setShowAlert(true)}
+              style={{ float: "right" }}
             >
               Delete
             </Button>
           </Fragment>
-        )}
+        )
+        // : (
+        //     <Button style={{ float: "right" }} className="btn-info" size="sm" onClick={() => setShowAlert(true)}>Join</Button>
+        // )
+        }
       </Card.Footer>
     </Card>
   );
