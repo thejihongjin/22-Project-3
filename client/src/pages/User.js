@@ -13,6 +13,9 @@ import Fragment from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Navigation from "../components/Navigation";
+import data from "../bg.json"
+
+const lightsImg = data[0].src
 
 const useStyles = {
   // flexBetween: {
@@ -114,7 +117,8 @@ const User = props => {
   }
 
   return (
-    <Fragment>
+    <div className="bg" style={{backgroundImage: `url(${lightsImg})`, backgroundSize: "cover", minHeight: "100vh" }}>
+    <Fragment >
       <Row>
         <Col>
           <Card style={{ width: "25em", margin: "10px 0" }}>
@@ -125,13 +129,13 @@ const User = props => {
               <div style={useStyles.flexBetween}>
                 <Card.Title>Welcome, {user && user.displayname}</Card.Title>{" "}
                 <Link to="#" onClick={() => setModalShow(true)}>
-                  Edit
+                  Edit Profile
                 </Link>
-                <Link to="#" onClick={() => setPasswordModalShow(true)}>
-                  Change password
+                <Link style={{marginLeft: "10px"}}to="#" onClick={() => setPasswordModalShow(true)}>
+                  Change Password
                 </Link>
               </div>
-              <Card.Subtitle className="mb-2 text-muted">
+              <Card.Subtitle style={{marginTop: "10px"}}className="mb-2 text-muted">
                 {/* {user && user.displayname} */}
                 User Profile
               </Card.Subtitle>
@@ -155,7 +159,7 @@ const User = props => {
         <Col>
           <Card style={{ margin: "10px 0" }}>
             <Card.Body>
-               <EventList events={events} />
+                <EventList events={events} />
             </Card.Body>
           </Card>
         </Col>
@@ -279,6 +283,7 @@ const User = props => {
         </Modal.Body>
       </Modal>
     </Fragment>
+    </div> 
   );
 };
 

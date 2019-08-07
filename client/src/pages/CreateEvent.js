@@ -195,7 +195,7 @@ export default function CreateEvent() {
 
   return (
     <Container>
-      <Navigation />
+      {/* <Navigation /> */}
       <br />
       <Row>
         <Col>

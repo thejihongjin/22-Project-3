@@ -41,7 +41,7 @@ const Navigation = () => {
     <Fragment>
       <Navbar sticky="top" bg="dark" variant="dark" expand="md">
         <Navbar.Brand>
-          <Link to="/" className="nav-link">
+          <Link style={{fontWeight:"bold"}} to="/" className="nav-link">
           Lonely Friend Finder
         </Link>
         </Navbar.Brand>

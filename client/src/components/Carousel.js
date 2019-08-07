@@ -9,7 +9,11 @@ const ImageCarousel = () => {
         <Carousel interval={2700} indicators={false} controls={false}>
             {data.map((image, i) => (
                 <Carousel.Item key={i}>
-                    <img key={i} src={image.src} alt={image.name} className="w-100" />
+                    <img
+                        src={image.src}
+                        alt={image.name}
+                        className="w-100"
+                    />
                 </Carousel.Item>
             ))}
         </Carousel>

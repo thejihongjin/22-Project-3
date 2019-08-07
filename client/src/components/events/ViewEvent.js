@@ -15,7 +15,7 @@ import Map from "../Map";
 import EventState from "../../context/event/EventState";
 
 const ViewEvent = () => {
- 
+
   const authContext = useContext(AuthContext);
   const eventContext = useContext(EventContext);
   const {
