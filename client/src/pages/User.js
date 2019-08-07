@@ -16,30 +16,6 @@ import data from "../bg.json"
 
 const lightsImg = data[0].src
 
-const useStyles = {
-    // flexBetween: {
-    //   display: "flex",
-    //   flexWrap: "wrap",
-    //   justifyContent: "space-between"
-    // },
-    // gridList: {
-    //   width: 500,
-    //   height: 450
-    // },
-    // icon: {
-    //   color: "rgba(255, 255, 255, 0.54)"
-    // },
-    // fab: {
-    //   textAlign: "right"
-    // },
-    // root: {
-    //   flexGrow: 1
-    // },
-    // media: {
-    //   height: 140
-    // }
-};
-
 const User = props => {
     const [showProfile, setShowProfile] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
@@ -75,7 +51,7 @@ const User = props => {
             setFirstName(user.firstname);
             setLastName(user.lastname);
             setDisplayName(user.displayname);
-            setImage(user.avatar);
+            setImage(user.image);
             setEmail(user.email);
             setBio(user.bio);
             console.log(user);
@@ -116,264 +92,144 @@ const User = props => {
     }
 
     return (
-        <Fragment>
-            <Row>
-                <Col md={6}>
-                    <Card>
-                        {user && user.image && (
-                            <Card.Img variant="top" src={user && user.image} />
-                        )}
-                        <Card.Body>
-                            {/* <div style={useStyles.flexBetween}> */}
-                            <div>
-                                <Card.Title>Welcome, {user && user.displayname}</Card.Title>
-                                <Link to="#" onClick={() => setShowProfile(true)}>Edit</Link>
-                                <Link to="#" onClick={() => setShowPassword(true)}>Change password</Link>
-                            </div>
-                            <Card.Subtitle className="mb-2 text-muted">User Profile</Card.Subtitle>
-                            <Card.Text>
-                                {user &&
-                                    user.firstname + " " + user.lastname === "undefined undefined"
-                                    ? "Update your first and last name"
-                                    : "Name: " + (user && user.firstname + " " + user.lastname)}
-                            </Card.Text>
-                            <Card.Text>
-                                {user && user.bio === "undefined"
-                                    ? "Add some info about yourself"
-                                    : "Bio: " + (user && user.bio)}
-                            </Card.Text>
-                            <Link to="/create" className="card-link">Create New Event</Link>
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Col md={6}>
-                    <Card>
-                        <Card.Body>
-                            <EventList events={events} />
-                        </Card.Body>
-                    </Card>
-                </Col>
-            </Row>
+        // move background to app.js...
+        <div className="bg" style={{ backgroundImage: `url(${lightsImg})`, backgroundSize: "cover", minHeight: "100vh", padding: "10px" }}>
+            <Fragment>
+                <Row>
+                    <Col md={6}>
+                        <Card>
+                            <Card.Body>
+                                <Card.Title>Welcome, {user && user.displayname}!</Card.Title>
+                                <Card.Subtitle className="mb-2 text-muted">
+                                    <Link to="#" onClick={() => setShowProfile(true)}>Edit profile</Link><br />
+                                    <Link to="#" onClick={() => setShowPassword(true)}>Change password</Link>
+                                </Card.Subtitle>
+                                <Card.Text>
+                                    {user && user.firstname + " " + user.lastname === "undefined undefined"
+                                        ? "Update your first and last name"
+                                        : "Name: " + (user && user.firstname + " " + user.lastname)}
+                                </Card.Text>
+                                <Card.Text>
+                                    {user && user.bio === "undefined"
+                                        ? "Add some info about yourself"
+                                        : "Bio: " + (user && user.bio)}
+                                </Card.Text>
+                            </Card.Body>
+                            {user && user.image && <Card.Img variant="bottom" src={user && user.image} />}
+                        </Card>
+                    </Col>
+                    <Col md={6}>
+                        <Card>
+                            <Card.Body>
+                                <Card.Subtitle><Link to="/create" className="card-link">Create New Event</Link></Card.Subtitle>
+                                {events
+                                    ? <EventList events={events} />
+                                    : <Card.Text>No events available.</Card.Text>}
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
 
-            {
-                showProfile &&
-                <Modal size="lg"
-                    show={showProfile}
-                    onHide={() => setShowProfile(false)}
-                // aria-labelledby="contained-modal-title-vcenter"
-                // centered
-                >
-                    <Modal.Header closeButton>
-                        <Modal.Title id="contained-modal-title-vcenter">Edit Profile</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Form onSubmit={handleProfileSubmit}>
-                            {/* <Form.Row> */}
-                            <Form.Group as={Col} controlId="changeFirstName">
-                                <Form.Label>First Name</Form.Label>
-                                <Form.Control
-                                    onChange={e => {
-                                        setFirstName(e.target.value);
-                                        console.log(firstName);
-                                    }}
-                                    defaultValue={user && user.firstname}
-                                />
-                            </Form.Group>
-                            <Form.Group as={Col} controlId="changeLastName">
-                                <Form.Label>Last Name</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    onChange={e => setLastName(e.target.value)}
-                                    defaultValue={user && user.lastname}
-                                />
-                            </Form.Group>
-                            {/* </Form.Row> */}
+                {
+                    showProfile &&
+                    <Modal size="md" show={showProfile} onHide={() => setShowProfile(false)}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Edit Profile</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Form onSubmit={handleProfileSubmit}>
+                                <Form.Group controlId="updateFirstName">
+                                    <Form.Label>First Name</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        onChange={e => setFirstName(e.target.value)}
+                                        defaultValue={user && user.firstname}
+                                    />
+                                </Form.Group>
+                                <Form.Group controlId="updateLastName">
+                                    <Form.Label>Last Name</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        onChange={e => setLastName(e.target.value)}
+                                        defaultValue={user && user.lastname}
+                                    />
+                                </Form.Group>
+                                <Form.Group controlId="updateDisplayName">
+                                    <Form.Label>Display Name</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        onChange={e => setDisplayName(e.target.value)}
+                                        defaultValue={user && user.displayname}
+                                    />
+                                </Form.Group>
+                                <Form.Group controlId="updateImage">
+                                    <Form.Label>Image</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        onChange={e => setImage(e.target.value)}
+                                        defaultValue={user && user.image}
+                                    />
+                                </Form.Group>
+                                <Form.Group controlId="updateBio">
+                                    <Form.Label>Bio</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        onChange={e => setBio(e.target.value)}
+                                        defaultValue={user && user.bio}
+                                    />
+                                </Form.Group>
+                                <Form.Group controlId="updateEmail">
+                                    <Form.Label>Change Email</Form.Label>
+                                    <Form.Control
+                                        type="email"
+                                        defaultValue={user && user.email}
+                                        onChange={e => setEmail(e.target.value)}
+                                    />
+                                </Form.Group>
+                                <Row className="justify-content-center">
+                                    <Button type="submit" style={{ margin: "0 5px" }}>Submit</Button>
+                                    <Button onClick={() => setShowProfile(false)} style={{ margin: "0 5px" }}>Cancel</Button>
+                                </Row>
+                            </Form>
+                        </Modal.Body>
+                    </Modal>
+                }
 
-<<<<<<< HEAD
-                            <Form.Group>
-                                <Form.Label>Display Name</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    onChange={e => setDisplayName(e.target.value)}
-                                    defaultValue={user && user.displayname}
-                                />
-                                {/* add subtitle */}
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Label>Image</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    onChange={e => setImage(e.target.value)}
-                                    defaultValue={user && user.image}
-                                // defaultValue="https://via.placeholder.com/300x150"
-                                />
-                            </Form.Group>
-=======
-  return (
-    <div className="bg" style={{backgroundImage: `url(${lightsImg})`, backgroundSize: "cover", minHeight: "100vh" }}>
-    <Fragment >
-      <Row>
-        <Col>
-          <Card style={{ width: "25em", margin: "10px 0" }}>
-            {user && user.image && (
-              <Card.Img variant="top" src={user && user.image} />
-            )}
-            <Card.Body>
-              <div style={useStyles.flexBetween}>
-                <Card.Title>Welcome, {user && user.displayname}</Card.Title>{" "}
-                <Link to="#" onClick={() => setModalShow(true)}>
-                  Edit Profile
-                </Link>
-                <Link style={{marginLeft: "10px"}}to="#" onClick={() => setPasswordModalShow(true)}>
-                  Change Password
-                </Link>
-              </div>
-              <Card.Subtitle style={{marginTop: "10px"}}className="mb-2 text-muted">
-                {/* {user && user.displayname} */}
-                User Profile
-              </Card.Subtitle>
-              <Card.Text>
-                {user &&
-                user.firstname + " " + user.lastname === "undefined undefined"
-                  ? "Update your first and last name"
-                  : "Name: " + (user && user.firstname + " " + user.lastname)}
-              </Card.Text>
-              <Card.Text>
-                {user && user.bio === ""
-                  ? "Add some info about yourself"
-                  : "Bio: " + (user && user.bio)}
-              </Card.Text>
-              <Link to="/create" className="card-link">
-                Create New Event
-              </Link>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col>
-          <Card style={{ margin: "10px 0" }}>
-            <Card.Body>
-                <EventList events={events} />
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-      {/* <EditProfileModal show={modalShow} onHide={() => setModalShow(false)} /> */}
-      <Modal
-        // {...props}
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">Lizard</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <h4>Edit Profile</h4>
-          <Form onSubmit={handleProfileSubmit}>
-            <Form.Row>
-              <Form.Group as={Col} controlId="changeFirstName">
-                <Form.Label>First Name</Form.Label>
-                <Form.Control
-                  onChange={e => {
-                    setFirstName(e.target.value);
-                    console.log(firstName);
-                  }}
-                  defaultValue={user && user.firstname}
-                />
-              </Form.Group>
-              <Form.Group as={Col} controlId="changeLastName">
-                <Form.Label>Last Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  onChange={e => setLastName(e.target.value)}
-                  defaultValue={user && user.lastname}
-                />
-              </Form.Group>
-            </Form.Row>
->>>>>>> master
-
-                            <Form.Group>
-                                <Form.Label>Bio</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    onChange={e => setBio(e.target.value)}
-                                    defaultValue={user && user.bio}
-                                />
-                            </Form.Group>
-
-                            <Form.Group controlId="changeEmail">
-                                <Form.Label>Change Email</Form.Label>
-                                <Form.Control
-                                    type="email"
-                                    defaultValue={user && user.email}
-                                    onChange={e => setEmail(e.target.value)}
-                                />
-                            </Form.Group>
-                            <Button type="submit">Submit</Button>
-                            <Button onClick={() => setShowProfile(false)}>Cancel</Button>
-                        </Form>
-                    </Modal.Body>
-                </Modal>
-            }
-
-            {
-                showPassword &&
-                <Modal
-                    size="lg"
-                    show={showPassword}
-                    onHide={() => setShowPassword(false)}
-                // aria-labelledby="contained-modal-title-vcenter"
-                // centered
-                >
-                    <Modal.Header closeButton>
-                        <Modal.Title id="contained-modal-title-vcenter">
-                            Change Password
-          </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <h4>Change Password</h4>
-                        <Form onSubmit={handlePasswordSubmit}>
-                            <Form.Group controlId="changePassword">
-                                <Form.Label>Change Password</Form.Label>
-                                <Form.Control
-                                    type="password"
-                                    placeholder="Password"
-                                    onChange={e => setPassword(e.target.value)}
-                                />
-                            </Form.Group>
-
-                            <Form.Group controlId="verChangePassword">
-                                <Form.Label>Verify Password</Form.Label>
-                                <Form.Control
-                                    type="password"
-                                    placeholder="Verify Password"
-                                    onChange={e => setPasswordMatch(e.target.value)}
-                                />
-                            </Form.Group>
-                            <Row>
-                                <Button type="submit">Submit</Button>
-                                <Button onClick={() => setShowPassword(false)}>
-                                    Cancel
-              </Button>
-<<<<<<< HEAD
-                            </Row>
-                        </Form>
-                    </Modal.Body>
-                </Modal>
-            }
-        </Fragment>
+                {
+                    showPassword &&
+                    <Modal size="md" show={showPassword} onHide={() => setShowPassword(false)}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Update Password</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Form onSubmit={handlePasswordSubmit}>
+                                <Form.Group controlId="updatePassword">
+                                    <Form.Label>Change Password</Form.Label>
+                                    <Form.Control
+                                        type="password"
+                                        placeholder="Password"
+                                        onChange={e => setPassword(e.target.value)}
+                                    />
+                                </Form.Group>
+                                <Form.Group controlId="updatePasswordMatch">
+                                    <Form.Label>Verify Password</Form.Label>
+                                    <Form.Control
+                                        type="password"
+                                        placeholder="Verify Password"
+                                        onChange={e => setPasswordMatch(e.target.value)}
+                                    />
+                                </Form.Group>
+                                <Row className="justify-content-center">
+                                    <Button type="submit" style={{ margin: "0 5px" }}>Submit</Button>
+                                    <Button onClick={() => setShowPassword(false)} style={{ margin: "0 5px" }}>Cancel</Button>
+                                </Row>
+                            </Form>
+                        </Modal.Body>
+                    </Modal>
+                }
+            </Fragment>
+        </div>
     );
-=======
-            </Row>
-          </Form>
-        </Modal.Body>
-      </Modal>
-    </Fragment>
-    </div> 
-  );
->>>>>>> master
 };
 
 export default User;

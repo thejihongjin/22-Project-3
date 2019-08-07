@@ -14,9 +14,9 @@ const Footer = () => (
     // </footer>
     <Accordion className="footer">
         <Card>
-            <Card.Header style={{backgroundColor:"white"}} >
-                <Accordion.Toggle style={{textDecoration: "none"}} as={Button} variant="link" eventKey="0">
-                    2019 Lonley Friend Finder - Contact Us
+            <Card.Header style={{ backgroundColor: "white" }} >
+                <Accordion.Toggle style={{ textDecoration: "none" }} as={Button} variant="link" eventKey="0">
+                    2019 Lonely Friend Finder - Contact Us
         </Accordion.Toggle>
             </Card.Header>
             <Accordion.Collapse eventKey="0">

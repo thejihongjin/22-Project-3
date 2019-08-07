@@ -5,14 +5,11 @@ import data from "../data.json";
 
 const ImageCarousel = () => {
     return (
-        <Carousel interval={2700} indicators={false} controls={false}>
+        // move margin to content div in app.js
+        <Carousel interval={2700} indicators={false} controls={false} style={{ margin: "10px" }}>
             {data.map((image, i) => (
                 <Carousel.Item key={i}>
-                    <img
-                        src={image.src}
-                        alt={image.name}
-                        className="w-100"
-                    />
+                    <img key={i} src={image.src} alt={image.name} className="w-100"/>
                 </Carousel.Item>
             ))}
         </Carousel>
