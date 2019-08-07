@@ -14,7 +14,13 @@ const EventItem = ({ event }) => {
   const eventContext = useContext(EventContext);
   const authContext = useContext(AuthContext);
   const { user } = authContext;
-  const { deleteEvent, setCurrent, clearCurrent, events } = eventContext;
+  const {
+    deleteEvent,
+    clearCurrent,
+    events,
+    setCurrent,
+    current
+  } = eventContext;
   const {
     _id,
     name,
@@ -54,6 +60,7 @@ const EventItem = ({ event }) => {
   let endDate;
   let dateEnd = new Date(end);
   endDate = dateEnd.toLocaleString();
+  console.log(current);
 
   if (events.length === 0) {
     return <div>No events availble at this time. Try adding one!</div>;

@@ -23,7 +23,8 @@ import {
 const EventState = props => {
   const initialState = {
     events: null,
-    current: null,
+    current: localStorage.getItem("cacheEvent"),
+
     filtered: null,
     setUsers: null,
     error: null
@@ -221,8 +222,22 @@ const EventState = props => {
   };
 
   // Set Current Event
-  const setCurrent = event => {
-    dispatch({ type: SET_CURRENT, payload: event });
+  const setCurrent = async event => {
+    try {
+      localStorage.removeItem("cacheEvent");
+      const res = await axios.get(`/api/events/set/${event._id}`, event);
+      
+      localStorage.setItem("cacheEvent", JSON.stringify(res.data));
+      dispatch({
+        type: SET_CURRENT,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: EVENT_ERROR,
+        payload: err
+      });
+    }
   };
 
   // Clear Current Event
@@ -236,6 +251,7 @@ const EventState = props => {
         events: state.events,
         setUsers: state.setUsers,
         current: state.current,
+        cacheEvent: state.cacheEvent,
         filtered: state.filtered,
         error: state.error,
         getUserEvents,

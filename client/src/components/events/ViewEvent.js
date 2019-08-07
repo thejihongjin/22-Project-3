@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect, Fragment } from "react";
 import { Link } from "react-router-dom";
 import Loading from "../Loading";
-import Buttons from "./Buttons";
 import Card from "react-bootstrap/Card";
 import CardGroup from "react-bootstrap/CardGroup";
 import Button from "react-bootstrap/Button";
@@ -16,7 +15,6 @@ import Map from "../Map";
 import EventState from "../../context/event/EventState";
 
 const ViewEvent = () => {
- 
   const authContext = useContext(AuthContext);
   const eventContext = useContext(EventContext);
   const {
@@ -33,9 +31,9 @@ const ViewEvent = () => {
   /*if (current === null) {
     history.push("/user");
   }*/
- 
+  const parsedEvent = JSON.parse(current);
   const [showToast, setShowToast] = useState(false);
-  const { user}  = authContext;
+  const { user } = authContext;
   //console.log(user)
   //const user = '';
   const [showAlert, setShowAlert] = useState(false);
@@ -52,63 +50,60 @@ const ViewEvent = () => {
     start: null,
     end: null,
     mapLat: null,
-    mapLng: null,
-    user
+    mapLng: null
   });
   useEffect(() => {
-    setEvent(current);
-    console.log(current.attendingId);
-    getUsersProfile(current);
+    setEvent(parsedEvent);
+    console.log("current: ", JSON.parse(current));
+    //getUsersProfile(current);
     // eslint-disable-next-line
   }, []);
 
-  const [didJoin,setDidJoin] = useState([])
-  const [isOwned,setIsOwned] = useState(false)
-  const [joined,setJoined] = useState(false)
+  const [didJoin, setDidJoin] = useState([]);
+  const [isOwned, setIsOwned] = useState(false);
+  const [joined, setJoined] = useState(false);
 
   //console.log("non-effect",authContext)
   //console.log("non-effect",eventContext)
 
   useEffect(() => {
-    const CacheEvent = localStorage.getItem("currentEvent");
     //console.log("run")
-    if(!user) {
-    //console.log("Why ??")
-    authContext.loadUser();
-    //console.log(user)
-   }
-   //console.log("currentEvent", current)
-   //console.log("Cache", CacheEvent)
-   if(current === null && CacheEvent !== "null") {
-     console.log("Cache",JSON.parse(CacheEvent))
-     setCurrent(JSON.parse(CacheEvent))
-     console.log(current)
-   } 
+    if (!user) {
+      //console.log("Why ??")
+      authContext.loadUser();
+      //console.log(user)
+    }
+    //console.log("currentEvent", current)
+    //console.log("Cache", CacheEvent)
+    if (current !== null) {
+      //console.log("Cache", JSON.parse(CacheEvent));
+      setEvent(parsedEvent);
+      //console.log(current);
+    }
 
-   //setEvent(current)
+    //setEvent(current)
 
-   if(current && CacheEvent === "null") {
-     localStorage.setItem("currentEvent",JSON.stringify(current))
-   }
+    //  if(current && CacheEvent === "null") {
+    //    localStorage.setItem("currentEvent",JSON.stringify(current))
+    //  }
     //console.log(current.attendingId);
     //getUsersProfile(current);
 
-    console.log("Effect", authContext);
-    console.log("Effect", eventContext)
+    // console.log("Effect", authContext);
+    // console.log("Effect", eventContext)
 
-   
     // eslint-disable-next-line
   });
 
-  useEffect(()=> {
-    setEvent(current)
-  },[current,eventContext])
+  // useEffect(()=> {
+  //   setEvent(current)
+  // },[current,eventContext])
 
-  useEffect(()=> {
-    setDidJoin(event.attendingId.filter(attendId => attendId === user._id))
-    setIsOwned(current.user === user._id ? true : false);
-    setJoined(didJoin[0] === user._id ? true : false)
-  },[event])
+  // useEffect(()=> {
+  //   setDidJoin(event.attendingId.filter(attendId => attendId === user._id))
+  //   setIsOwned(current.user === user._id ? true : false);
+  //   setJoined(didJoin[0] === user._id ? true : false)
+  // },[event])
 
   /*useEffect(()=> {
     setDidJoin(event.attendingId.filter(attendId => attendId === user._id))
@@ -120,9 +115,7 @@ const ViewEvent = () => {
     event.attendingId.filter(attendId => attendId === user._id)
   );
   const [isOwned] = useState(current.user === user._id ? true : false);
-  const [isJoined, setJoined] = useState(
-    didJoin[0] === user._id ? true : false
-  );
+  const [joined, setJoined] = useState(didJoin[0] === user._id ? true : false);*/
 
   const {
     name,
@@ -145,7 +138,7 @@ const ViewEvent = () => {
       joinEvent(event);
       setShowToast(true);
       setJoined(true);
-      setEvent(current);
+      setEvent(parsedEvent);
       getUsersProfile(current);
     }
   };
@@ -153,7 +146,7 @@ const ViewEvent = () => {
   const handleUnjoin = () => {
     unjoinEvent(event);
     setJoined(false);
-    setEvent(current);
+    setEvent(parsedEvent);
     getUsersProfile(current);
   };
 
@@ -176,7 +169,7 @@ const ViewEvent = () => {
     clearUsers();
     history.push("/user");
   };
-  if (!attendingId) {
+  if (!parsedEvent) {
     return <Loading />;
   }
 
@@ -246,7 +239,7 @@ const ViewEvent = () => {
                   Delete
                 </Button>
               )}{" "}
-              {isJoined && (
+              {joined && (
                 <Fragment>
                   <p>You have already joined this event!</p>
 
@@ -261,7 +254,7 @@ const ViewEvent = () => {
                   </Button>
                 </Fragment>
               )}{" "}
-              {!isOwned && !isJoined && (
+              {!isOwned && !joined && (
                 <Button
                   type="submit"
                   style={{ float: "right" }}
