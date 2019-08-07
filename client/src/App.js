@@ -36,7 +36,7 @@ function App() {
                 <Route render={() => <h1>404 Page not found.</h1>} />
               </Switch>
             </React.Suspense>
-         </div>
+          </div>
         </Router>
       </EventState>
     </AuthState>
