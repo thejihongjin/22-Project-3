@@ -67,9 +67,11 @@ export default (state, action) => {
         current: null
       };
     case SET_CURRENT:
+        localStorage.setItem("cacheEvent", JSON.stringify(action.payload))
       return {
         ...state,
-        current: action.payload
+        current: action.payload,
+        
       };
     case CLEAR_CURRENT:
       return {

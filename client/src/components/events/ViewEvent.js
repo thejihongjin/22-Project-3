@@ -13,11 +13,8 @@ import AuthContext from "../../context/auth/authContext";
 import history from "../../utils/history";
 import Map from "../Map";
 import EventState from "../../context/event/EventState";
-import ViewGuest from "../modals/ViewGuest"
-import Modal from "react-bootstrap/Modal"
 
 const ViewEvent = () => {
- 
   const authContext = useContext(AuthContext);
   const eventContext = useContext(EventContext);
   const {
@@ -34,9 +31,10 @@ const ViewEvent = () => {
   /*if (current === null) {
     history.push("/user");
   }*/
- 
+  // let currentEvent = localStorage.getItem("cacheEvent")
+  // console.log(JSON.stringify(currentEvent))
   const [showToast, setShowToast] = useState(false);
-  const { user}  = authContext;
+  const { user } = authContext;
   //console.log(user)
   //const user = '';
   const [showAlert, setShowAlert] = useState(false);
@@ -56,59 +54,59 @@ const ViewEvent = () => {
     mapLng: null
   });
   useEffect(() => {
-    setEvent(current);
-    console.log(current.attendingId);
-    getUsersProfile(current);
-    // eslint-disable-next-line
-  }, []);
+    if (current) {
+      setEvent(current);
+    } else {
+      console.log("No event yet");
+    }
+  }, [eventContext, current, setCurrent]);
 
-  /*const [didJoin,setDidJoin] = useState([])
-  const [isOwned,setIsOwned] = useState(false)
-  const [joined,setJoined] = useState(false)*/
+  const [didJoin, setDidJoin] = useState([]);
+  const [isOwned, setIsOwned] = useState(false);
+  const [joined, setJoined] = useState(false);
 
   //console.log("non-effect",authContext)
   //console.log("non-effect",eventContext)
 
   useEffect(() => {
-    const CacheEvent = localStorage.getItem("currentEvent");
     //console.log("run")
-    if(!user) {
-    //console.log("Why ??")
-    authContext.loadUser();
-    //console.log(user)
-   }
-   //console.log("currentEvent", current)
-   //console.log("Cache", CacheEvent)
-   if(current === null && CacheEvent !== "null") {
-     console.log("Cache",JSON.parse(CacheEvent))
-     setCurrent(JSON.parse(CacheEvent))
-     console.log(current)
-   } 
+    if (!user) {
+      //console.log("Why ??")
+      authContext.loadUser();
+      //console.log(user)
+    }
+    //console.log("currentEvent", current)
+    //console.log("Cache", CacheEvent)
+    // if (current === null) {
+    //   //console.log("Cache", JSON.parse(CacheEvent));
+    //   current = localStorage.getItem("cacheEvent")
+    //   setCurrent(current);
+    //   console.log(current);
+    // }
 
-   //setEvent(current)
+    //setEvent(current)
 
-   if(current && CacheEvent === "null") {
-     localStorage.setItem("currentEvent",JSON.stringify(current))
-   }
+    //  if(current && CacheEvent === "null") {
+    //    localStorage.setItem("currentEvent",JSON.stringify(current))
+    //  }
     //console.log(current.attendingId);
-    getUsersProfile(current);
+    //getUsersProfile(current);
 
-    console.log("Effect", authContext);
-    console.log("Effect", eventContext)
+    // console.log("Effect", authContext);
+    // console.log("Effect", eventContext)
 
-   
     // eslint-disable-next-line
-  },[]);
+  });
 
-  /*useEffect(()=> {
-    setEvent(current)
-  },[current,eventContext])
+  // useEffect(()=> {
+  //   setEvent(current)
+  // },[current,eventContext])
 
-  useEffect(()=> {
-    setDidJoin(event.attendingId.filter(attendId => attendId === user._id))
-    setIsOwned(current.user === user._id ? true : false);
-    setJoined(didJoin[0] === user._id ? true : false)
-  },[event])
+  // useEffect(()=> {
+  //   setDidJoin(event.attendingId.filter(attendId => attendId === user._id))
+  //   setIsOwned(current.user === user._id ? true : false);
+  //   setJoined(didJoin[0] === user._id ? true : false)
+  // },[event])
 
   /*useEffect(()=> {
     setDidJoin(event.attendingId.filter(attendId => attendId === user._id))
@@ -116,15 +114,11 @@ const ViewEvent = () => {
     setJoined(didJoin[0] === user._id ? true : false)
   },[current,user,event])*/
 
-  const [didJoin] = useState(
+  /*const [didJoin] = useState(
     event.attendingId.filter(attendId => attendId === user._id)
   );
   const [isOwned] = useState(current.user === user._id ? true : false);
-  const [joined, setJoined] = useState(didJoin[0] === user._id ? true : false);
-
-  const [modalShow, setModalShow] = useState(false);
-  const [modalUserChoice, setUserChoice] = useState({ displayname: "Undefined", bio: "undefined" });
-
+  const [joined, setJoined] = useState(didJoin[0] === user._id ? true : false);*/
 
   const {
     name,
@@ -178,18 +172,8 @@ const ViewEvent = () => {
     clearUsers();
     history.push("/user");
   };
-  if (!attendingId) {
+  if (!current) {
     return <Loading />;
-  }
-
- 
-  const handleModalShow = async e => {
-    e.preventDefault();
-    const userIndex = parseInt(e.target.getAttribute("index"))
-    
-    await setUserChoice(setUsers[userIndex])
-    //console.log(modalUserChoice)
-    setModalShow(true)
   }
 
   if (showAlert) {
@@ -238,15 +222,13 @@ const ViewEvent = () => {
                 People Attending:
                 <br />
                 {setUsers
-                  ? setUsers.map( (user,index) => (
-                      <Button 
-                        variant="link" 
-                        key={index}
-                        index={index}
-                        onClick = {handleModalShow}
-                      >
-                        {user.displayname}
-                      </Button>
+                  ? setUsers.map(userLink => (
+                      <Fragment>
+                        <Link to="#" key={userLink._id}>
+                          {userLink.username}
+                        </Link>
+                        <br />
+                      </Fragment>
                     ))
                   : null}
               </Card.Subtitle>
@@ -317,15 +299,6 @@ const ViewEvent = () => {
           </Toast>
         </Col>
       </Row>
-      <Modal 
-        show={modalShow}
-        onHide={()=>{
-          setModalShow(false)
-          setUserChoice({ displayname: "Undefined", bio: "undefined" });
-        }}
-        >
-          <ViewGuest data={modalUserChoice}/>
-      </Modal>
     </Fragment>
   );
 
