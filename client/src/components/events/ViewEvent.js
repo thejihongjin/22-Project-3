@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect, Fragment } from "react";
 import { Link } from "react-router-dom";
 import Loading from "../Loading";
+import Buttons from "./Buttons";
 import Card from "react-bootstrap/Card";
 import CardGroup from "react-bootstrap/CardGroup";
 import Button from "react-bootstrap/Button";
@@ -53,14 +54,17 @@ const ViewEvent = () => {
     start: null,
     end: null,
     mapLat: null,
-    mapLng: null
+    mapLng: null,
+    user
   });
 
   const [didJoin] = useState(
     event.attendingId.filter(attendId => attendId === user._id)
   );
   const [isOwned] = useState(current.user === user._id ? true : false);
-  const [joined, setJoined] = useState(didJoin[0] === user._id ? true : false);
+  const [isJoined, setJoined] = useState(
+    didJoin[0] === user._id ? true : false
+  );
 
   const {
     name,
@@ -184,7 +188,7 @@ const ViewEvent = () => {
                   Delete
                 </Button>
               )}{" "}
-              {joined && (
+              {isJoined && (
                 <Fragment>
                   <p>You have already joined this event!</p>
 
@@ -199,7 +203,7 @@ const ViewEvent = () => {
                   </Button>
                 </Fragment>
               )}{" "}
-              {!isOwned && !joined && (
+              {!isOwned && !isJoined && (
                 <Button
                   type="submit"
                   style={{ float: "right" }}
