@@ -31,8 +31,8 @@ const ViewEvent = () => {
   /*if (current === null) {
     history.push("/user");
   }*/
-// let currentEvent = localStorage.getItem("cacheEvent")
-// console.log(JSON.stringify(currentEvent))
+  // let currentEvent = localStorage.getItem("cacheEvent")
+  // console.log(JSON.stringify(currentEvent))
   const [showToast, setShowToast] = useState(false);
   const { user } = authContext;
   //console.log(user)
@@ -54,12 +54,12 @@ const ViewEvent = () => {
     mapLng: null
   });
   useEffect(() => {
-    
-    setEvent(localStorage.getItem("cacheEvent"));
-    //console.log(current);
-    //getUsersProfile(current);
-    // eslint-disable-next-line
-  }, []);
+    if (current) {
+      setEvent(current);
+    } else {
+      console.log("No event yet");
+    }
+  }, [eventContext, current]);
 
   const [didJoin, setDidJoin] = useState([]);
   const [isOwned, setIsOwned] = useState(false);
@@ -198,11 +198,11 @@ const ViewEvent = () => {
           <Card style={{ width: "25rem" }}>
             {" "}
             <Card.Body>
-              <Card.Title>{current && current.name.toUpperCase()}</Card.Title>
+              <Card.Title>{current.name.toUpperCase()}</Card.Title>
               <Card.Subtitle className="mb-2 text-muted">
                 {category}
               </Card.Subtitle>
-              {/* <Card.Subtitle className="mb-2 text-muted">
+              <Card.Subtitle className="mb-2 text-muted">
                 Date: {start}
               </Card.Subtitle>
               <Card.Subtitle className="mb-2 text-muted">
@@ -217,7 +217,7 @@ const ViewEvent = () => {
               <Card.Text>{description}</Card.Text>
               <Card.Subtitle className="mb-2 text-muted">
                 {attendingId.length} out of {groupSize} people are going.
-              </Card.Subtitle> */}
+              </Card.Subtitle>
               <Card.Subtitle className="mb-2 text-muted">
                 People Attending:
                 <br />

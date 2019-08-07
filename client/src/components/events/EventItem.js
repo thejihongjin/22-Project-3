@@ -83,7 +83,7 @@ const EventItem = ({ event }) => {
       <Card.Footer>
         <Link
           onClick={() => setCurrent(event)}
-          to="/#"
+          to="/view"
           className="card-link"
         >
           View
