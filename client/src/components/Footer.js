@@ -1,4 +1,3 @@
-// JJ done except for info
 import React from "react";
 
 const Footer = () => (

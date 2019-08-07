@@ -1,4 +1,3 @@
-// JJ done
 import React from "react";
 import Carousel from "react-bootstrap/Carousel";
 import data from "../data.json";

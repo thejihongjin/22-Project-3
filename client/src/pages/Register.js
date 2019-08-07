@@ -17,8 +17,7 @@ const Register = props => {
 
     useEffect(() => {
         if (isAuthenticated) {
-            // redirect to userpage
-            history.push("/user");
+            history.push("/user"); // redirect to userpage
         }
 
         if (error === "User already exists") {
