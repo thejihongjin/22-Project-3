@@ -12,7 +12,7 @@ import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import "./styles.css";
+// import "./styles.css";
 
 import data from "../bg.json"
 
@@ -95,7 +95,7 @@ const User = props => {
 
     return (
         // move background to app.js...
-        <div className="bg" style={{ backgroundImage: `url(${lightsImg})`, backgroundSize: "cover", minHeight: "100vh", padding: "10px" }}>
+        // <div className="bg" style={{ backgroundImage: `url(${lightsImg})`, backgroundSize: "cover", minHeight: "100vh", padding: "10px" }}>
             <Fragment>
                 <Row>
                     <Col md={6}>
@@ -233,7 +233,7 @@ const User = props => {
                     </Modal>
                 }
             </Fragment>
-        </div>
+        // </div>
     );
 };
 
