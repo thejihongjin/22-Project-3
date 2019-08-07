@@ -19,7 +19,6 @@ import Button from "react-bootstrap/Button";
 //import AuthContext from "../context/auth/authContext";
 // import { BrowserRouter as Router, Route } from 'react-router-dom';
 //import MapCont from "../components/Map";
-import Navigation from "../components/Navigation";
 import EventContext from "../context/event/eventContext";
 import Geocode from "react-geocode";
 

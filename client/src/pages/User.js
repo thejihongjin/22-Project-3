@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, Fragment } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../context/auth/authContext";
 import EventContext from "../context/event/eventContext";
@@ -9,7 +9,6 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import Fragment from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import data from "../bg.json"
@@ -121,7 +120,7 @@ const User = props => {
                     <Col md={6}>
                         <Card>
                             <Card.Body>
-                                <Card.Subtitle><Link to="/create" className="card-link">Create New Event</Link></Card.Subtitle>
+                                <Card.Subtitle style={{marginBottom: "10px"}}><Link to="/create" className="card-link">Create New Event</Link></Card.Subtitle>
                                 {events
                                     ? <EventList events={events} />
                                     : <Card.Text>No events available.</Card.Text>}
@@ -132,7 +131,7 @@ const User = props => {
 
                 {
                     showProfile &&
-                    <Modal size="md" show={showProfile} onHide={() => setShowProfile(false)}>
+                    <Modal size="md" show={showProfile} onHide={() => setShowProfile(false)} centered>
                         <Modal.Header closeButton>
                             <Modal.Title>Edit Profile</Modal.Title>
                         </Modal.Header>
@@ -197,7 +196,7 @@ const User = props => {
 
                 {
                     showPassword &&
-                    <Modal size="md" show={showPassword} onHide={() => setShowPassword(false)}>
+                    <Modal size="md" show={showPassword} onHide={() => setShowPassword(false)} centered>
                         <Modal.Header closeButton>
                             <Modal.Title>Update Password</Modal.Title>
                         </Modal.Header>

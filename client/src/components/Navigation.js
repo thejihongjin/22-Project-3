@@ -50,7 +50,7 @@ const Navigation = () => {
 
             {
                 showRegister &&
-                <Modal size="md" show={showRegister} onHide={() => setShowRegister(false)}>
+                <Modal size="md" show={showRegister} onHide={() => setShowRegister(false)} centered>
                     <Modal.Header closeButton>
                         <Modal.Title>Register</Modal.Title>
                     </Modal.Header>
@@ -61,7 +61,7 @@ const Navigation = () => {
             }
             {
                 showSignIn &&
-                <Modal size="md" show={showSignIn} onHide={() => setShowSignIn(false)}>
+                <Modal size="md" show={showSignIn} onHide={() => setShowSignIn(false)} centered>
                     <Modal.Header closeButton>
                         <Modal.Title>Sign In</Modal.Title>
                     </Modal.Header>
