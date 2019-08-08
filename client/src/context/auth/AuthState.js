@@ -10,8 +10,6 @@ import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
   VIEW_USER,
- 
- 
   LOGIN_FAIL,
   LOGOUT,
   CLEAR_ERRORS,
