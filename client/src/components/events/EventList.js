@@ -1,12 +1,12 @@
-import React, { Fragment, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import AuthContext from "../../context/auth/authContext";
 import EventContext from "../../context/event/eventContext";
-import EventItem from "./EventItem";
+// import EventItem from "./EventItem";
 import EventCardPreview from "./EventCardPreview";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 
-const EventList = () => {
+const EventList = () => { // rename as UserEvents
     const eventContext = useContext(EventContext);
     const authContext = useContext(AuthContext);
     const { user } = authContext;
@@ -35,8 +35,6 @@ const EventList = () => {
     return (
         <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
             <Tab eventKey="home" title="Upcoming Events">
-                {/* <br />
-                <EventCardPreview /> */}
                 <br />
                 {
                     upcomingEvents.map(event => (
@@ -49,7 +47,7 @@ const EventList = () => {
                 <br />
                 {
                     pastEvents.map(event => (
-                        <EventItem key={event._id} event={event} />
+                        <EventCardPreview key={event._id} user={user} event={event} />
                     ))
                 }
             </Tab>

@@ -13,10 +13,9 @@ const DeleteButton = props => {
         //     Delete
         // </Button>
         <Fragment>
-        {/* <Link className="card-link" to="/create" onClick={() => props.setCurrent(props.event)}>Edit</Link>
-        <Button className="btn-danger" onClick={() => props.setShowAlert(true)} style={{ float: "right" }}>Delete</Button> */}
+        {/* <Link className="card-link" to="/create" onClick={() => props.setCurrent(props.event)}>Edit</Link> */}
             <Link className="card-link" to="/create">Edit</Link>
-            <Button className="btn-danger" size="sm" style={{ float: "right" }}>Delete</Button>
+            <Button className="btn-danger" onClick={() => props.setShowAlert(true)} size="sm" style={{ float: "right" }}>Delete</Button>
         </Fragment>
     );
 }

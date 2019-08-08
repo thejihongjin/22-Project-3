@@ -193,9 +193,9 @@ const ViewEvent = () => {
                     </Card>
 
 
-                    <Card>
+                    {/* <Card>
                         <Map lat={mapLat} lng={mapLng} />
-                    </Card>
+                    </Card> */}
                 </CardGroup>
             ) : (
                     <div> Sorry, this event is not available.</div>
