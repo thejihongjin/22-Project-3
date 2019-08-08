@@ -12,10 +12,6 @@ import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import data from "../bg.json"
-
-const lightsImg = data[0].src;
-
 const User = props => {
     const [showProfile, setShowProfile] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
@@ -95,8 +91,6 @@ const User = props => {
     }
 
     return (
-        // move background to app.js...
-        // <div className="bg" style={{ backgroundImage: `url(${lightsImg})`, backgroundSize: "cover", minHeight: "100vh", padding: "10px" }}>
         <Fragment>
             <Row>
                 <Col md={6}>
@@ -243,7 +237,6 @@ const User = props => {
                 </Modal>
             }
         </Fragment>
-        // </div>
     );
 };
 
