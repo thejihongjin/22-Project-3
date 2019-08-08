@@ -18,6 +18,15 @@ router.get("/", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
+router.get("/set/:id", async (req, res) => {
+  try {
+    const event = await Event.findById(req.params.id);
+    res.json(event);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
 
 router.get("/user", auth, async (req, res) => {
   try {

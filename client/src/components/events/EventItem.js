@@ -7,50 +7,50 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
 const EventItem = ({ event }) => {
-    const eventContext = useContext(EventContext);
-    const authContext = useContext(AuthContext);
-    const { user } = authContext;
-    const { deleteEvent, setCurrent, clearCurrent, events } = eventContext;
-    const {
-        _id,
-        name,
-        location,
-        category,
-        description,
-        addressInfo,
-        groupSize,
-        attendingId,
-        start,
-        end,
-    } = event;
-    const [showAlert, setShowAlert] = useState(false);
+  const eventContext = useContext(EventContext);
+  const authContext = useContext(AuthContext);
+  const { user } = authContext;
+  const { deleteEvent, setCurrent, clearCurrent, events } = eventContext;
+  const {
+    _id,
+    name,
+    location,
+    category,
+    description,
+    addressInfo,
+    groupSize,
+    attendingId,
+    start,
+    end
+  } = event;
+  const [showAlert, setShowAlert] = useState(false);
 
-    const handleDelete = () => {
-        setShowAlert(false);
-        deleteEvent(_id);
-        clearCurrent();
-    };
+  const handleDelete = () => {
+    setShowAlert(false);
+    deleteEvent(_id);
+    clearCurrent();
+  };
 
-    if (showAlert) {
-        return (
-            <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
-                <Alert.Heading>Are you sure you want to delete this event?</Alert.Heading>
-                <Button className="btn-danger" onClick={handleDelete}>Yes</Button>
-            </Alert>
-        );
-    }
+  if (showAlert) {
+    return (
+      <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
+        <Alert.Heading>
+          Are you sure you want to delete this event?
+        </Alert.Heading>
+        <Button className="btn-danger" onClick={handleDelete}>
+          Yes
+        </Button>
+      </Alert>
+    );
+  }
 
-    let startDate;
-    let date = new Date(start);
-    startDate = date.toLocaleString();
+  let startDate;
+  let date = new Date(start);
+  startDate = date.toLocaleString();
 
-    let endDate;
-    let dateEnd = new Date(end);
-    endDate = dateEnd.toLocaleString();
-
-    if (events.length === 0) {
-        return <div>No events available at this time. Try adding one!</div>;
-    }
+  let endDate;
+  let dateEnd = new Date(end);
+  endDate = dateEnd.toLocaleString();
 
     return (
         <Card>
