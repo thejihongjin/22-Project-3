@@ -58,19 +58,22 @@ const User = props => {
         }
     }, [user]);
 
-    const handleProfileSubmit = e => {
-        e.preventDefault();
-        updateUser({
-            ...user,
-            firstname: firstName,
-            lastname: lastName,
-            displayname: displayName,
-            image: image,
-            bio: bio,
-            email: email
-        });
-        setShowProfile(false);
-    };
+
+  const handleProfileSubmit = e => {
+    e.preventDefault();
+    updateUser({
+      ...user,
+      firstname: firstName,
+      lastname: lastName,
+      displayname: displayName,
+      avatar: image,
+      bio: bio,
+      email: email
+    });
+    setShowProfile(false);
+  };
+
+
 
     const handlePasswordSubmit = e => {
         e.preventDefault();
