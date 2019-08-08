@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const path = require('path')
 const PORT = process.env.PORT || 3001;
 const app = express();
 
@@ -26,10 +27,8 @@ app.use("/api/users", require("./routes/users"));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/events", require("./routes/events"));
 
-//Dev Route
-//app.use(devRoutes)
-/// Default route for React
-app.get("PORT", (req, res) => {
+
+app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
