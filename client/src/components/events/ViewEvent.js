@@ -16,6 +16,7 @@ import EventState from "../../context/event/EventState";
 
 import JoinButton from "../buttons/JoinButton";
 import LeaveButton from "../buttons/LeaveButton";
+import DeleteButton from "../buttons/DeleteButton";
 
 const ViewEvent = () => {
     const authContext = useContext(AuthContext);
@@ -217,8 +218,7 @@ const ViewEvent = () => {
                                 {attendingId.length} out of {groupSize} people are going.
               </Card.Subtitle>
                             <Card.Subtitle className="mb-2 text-muted">
-                                People Attending:
-                <br />
+                                People Attending: <br />
                                 {setUsers
                                     ? setUsers.map(userLink => (
                                         <Fragment>
@@ -230,28 +230,22 @@ const ViewEvent = () => {
                                     ))
                                     : null}
                             </Card.Subtitle>
-                            {event.user === user._id && (
-                                <Button
-                                    style={{ float: "right" }}
-                                    className="btn-danger"
-                                    size="sm"
-                                    onClick={() => setShowAlert(true)}
-                                >
-                                    Delete
-                </Button>
-                            )}{" "}
                             {
-                                event.user !== user._id && event.attendingId.includes(user._id) && (
+                                event.user === user._id &&
+                                <DeleteButton setShowAlert={setShowAlert} />
+                            }
+                            {
+                                event.user !== user._id && event.attendingId.includes(user._id) &&
                                 <LeaveButton handleUnjoin={handleUnjoin} />
-                            )}
-                            {event.user !== user._id && !event.attendingId.includes(user._id) && (
+                            }
+                            {event.user !== user._id && !event.attendingId.includes(user._id) &&
                                 <JoinButton handleJoin={handleJoin} />
-                            )}
+                            }
                         </Card.Body>
                         <Card.Footer>
                             <Button size="sm" onClick={goBackSearch}>Search More Events</Button>
                             <Button size="sm" onClick={goBackUser}>Back To Profile</Button>
-                        </Card.Footer>      
+                        </Card.Footer>
                     </Card>
 
 
