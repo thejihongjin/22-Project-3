@@ -42,6 +42,7 @@ const ViewEvent = () => {
   const [event, setEvent] = useState({
     _id: "",
     name: "",
+    user: "",
     location: "",
     addressInfo: "",
     category: "Movie",
@@ -53,20 +54,15 @@ const ViewEvent = () => {
     mapLat: null,
     mapLng: null
   });
+
+  const getEvent = JSON.parse(localStorage.getItem("cacheEvent"));
+  console.log(getEvent);
   useEffect(() => {
     if (current) {
       setEvent(current);
-    } else {
-      console.log("No event yet");
     }
-  }, [eventContext, current, setCurrent]);
-
-  const [didJoin, setDidJoin] = useState([]);
-  const [isOwned, setIsOwned] = useState(false);
-  const [joined, setJoined] = useState(false);
-
-  //console.log("non-effect",authContext)
-  //console.log("non-effect",eventContext)
+  }, [eventContext, current]);
+  console.log(event);
 
   useEffect(() => {
     //console.log("run")
@@ -75,6 +71,10 @@ const ViewEvent = () => {
       authContext.loadUser();
       //console.log(user)
     }
+    if (!current) {
+      setCurrent(getEvent);
+    }
+
     //console.log("currentEvent", current)
     //console.log("Cache", CacheEvent)
     // if (current === null) {
@@ -102,23 +102,21 @@ const ViewEvent = () => {
   //   setEvent(current)
   // },[current,eventContext])
 
-  // useEffect(()=> {
-  //   setDidJoin(event.attendingId.filter(attendId => attendId === user._id))
-  //   setIsOwned(current.user === user._id ? true : false);
-  //   setJoined(didJoin[0] === user._id ? true : false)
-  // },[event])
+  const [didJoin, setDidJoin] = useState([]);
+  const [isJoined, setJoined] = useState(false);
+
+  useEffect(() => {
+    setDidJoin(event.attendingId.filter(attendId => attendId === user._id));
+    //setIsOwned(event.user === user._id ? true : false);
+    setJoined(didJoin[0] === event.user ? true : false);
+    // eslint-disable-next-line
+  }, [event]);
 
   /*useEffect(()=> {
     setDidJoin(event.attendingId.filter(attendId => attendId === user._id))
     setIsOwned(current.user === user._id ? true : false);
     setJoined(didJoin[0] === user._id ? true : false)
   },[current,user,event])*/
-
-  /*const [didJoin] = useState(
-    event.attendingId.filter(attendId => attendId === user._id)
-  );
-  const [isOwned] = useState(current.user === user._id ? true : false);
-  const [joined, setJoined] = useState(didJoin[0] === user._id ? true : false);*/
 
   const {
     name,
@@ -172,9 +170,18 @@ const ViewEvent = () => {
     clearUsers();
     history.push("/user");
   };
-  if (!current) {
+
+  if (!event.user) {
     return <Loading />;
   }
+
+  // if (current.user === user._id) {
+  //   isOwned = true;
+  // }
+
+  // if (current.attendingId[0] === user._id) {
+  //   joined = true;
+  // }
 
   if (showAlert) {
     return (
@@ -193,7 +200,7 @@ const ViewEvent = () => {
 
   return (
     <Fragment>
-      {current ? (
+      {event.user ? (
         <CardGroup>
           <Card style={{ width: "25rem" }}>
             {" "}
@@ -232,7 +239,7 @@ const ViewEvent = () => {
                     ))
                   : null}
               </Card.Subtitle>
-              {isOwned && (
+              {event.user === user._id && (
                 <Button
                   style={{ float: "right" }}
                   className="btn-danger"
@@ -241,10 +248,10 @@ const ViewEvent = () => {
                 >
                   Delete
                 </Button>
-              )}{" "}
-              {joined && (
+              )}
+              {isJoined && event.user === user._id && (
                 <Fragment>
-                  <p>You have already joined this event!</p>
+                  <p>You have joined this event!</p>
 
                   <Button
                     type="submit"
@@ -257,16 +264,18 @@ const ViewEvent = () => {
                   </Button>
                 </Fragment>
               )}{" "}
-              {!isOwned && !joined && (
-                <Button
-                  type="submit"
-                  style={{ float: "right" }}
-                  className="btn-success"
-                  size="sm"
-                  onClick={() => handleJoin()}
-                >
-                  + Join
-                </Button>
+              {!isJoined && event.user !== user._id && (
+                <Fragment>
+                  <Button
+                    type="submit"
+                    style={{ float: "right" }}
+                    className="btn-success"
+                    size="sm"
+                    onClick={() => handleJoin()}
+                  >
+                    + Join
+                  </Button>
+                </Fragment>
               )}
               <Button size="sm" onClick={goBackSearch}>
                 Search More Events

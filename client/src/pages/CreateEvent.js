@@ -265,7 +265,7 @@ export default function CreateEvent() {
                     </Form.Group>
                   </Col>
                   <Col>
-                    <Form.Label>Group Size:</Form.Label>
+                    <Form.Label>How many would you like to join you:</Form.Label>
 
                     <div
                       key={`custom-inline-radio`}
