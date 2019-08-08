@@ -86,7 +86,7 @@ const EventItem = ({ event }) => {
                 }
 
                 {
-                    user._id !== event.user && event.attendingId.includes(user._id) &&
+                    user._id !== event.user && !event.attendingId.includes(user._id) &&
                     <Button style={{ float: "right" }} className="btn-info" size="sm" onClick={() => setShowAlert(true)}>Join</Button>
                 }
             </Card.Footer>
