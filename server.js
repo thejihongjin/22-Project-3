@@ -12,7 +12,8 @@ if (process.env.NODE_ENV === "production") {
 
 //mongoose connection, need to add database name
 mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/lonelyfriendfinderdb",
+  process.env.MONGODB_URI ||
+    "mongodb://user:password1@ds255347.mlab.com:55347/heroku_ms7qng4b",
 
   { useCreateIndex: true, useFindAndModify: false, useNewUrlParser: true }
 );
