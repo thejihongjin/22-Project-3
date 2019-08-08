@@ -100,9 +100,17 @@ const SearchEvent = () => {
           {events === null ? (
             <div>No Events Available</div>
           ) : filtered !== null ? (
-            filtered.map(event => <Col xs={12} sm={9} md={6} lg={4}><EventItem key={event._id} event={event} /></Col>)
+              filtered.map(event =>
+                // <Col xs={12} sm={9} md={6} lg={4}>
+                <EventItem key={event._id} event={event} />
+              // </Col>
+              )
           ) : (
-            events.map(event => <Col xs={12} sm={9} md={6} lg={4}><EventItem key={event._id} event={event} /></Col>)
+                events.map(event =>
+                  // <Col xs={12} sm={9} md={6} lg={4}>
+                    <EventItem key={event._id} event={event} />
+                  // </Col>
+                )
           )}
         </Row>
       </CardDeck>

@@ -14,297 +14,275 @@ import history from "../../utils/history";
 import Map from "../Map";
 import EventState from "../../context/event/EventState";
 
+import JoinButton from "../buttons/JoinButton";
+import LeaveButton from "../buttons/LeaveButton";
+
 const ViewEvent = () => {
-  const authContext = useContext(AuthContext);
-  const eventContext = useContext(EventContext);
-  const {
-    setCurrent,
-    clearCurrent,
-    current,
-    joinEvent,
-    unjoinEvent,
-    deleteEvent,
-    getUsersProfile,
-    setUsers,
-    clearUsers
-  } = eventContext;
-  /*if (current === null) {
-    history.push("/user");
-  }*/
-  // let currentEvent = localStorage.getItem("cacheEvent")
-  // console.log(JSON.stringify(currentEvent))
-  const [showToast, setShowToast] = useState(false);
-  const { user } = authContext;
-  //console.log(user)
-  //const user = '';
-  const [showAlert, setShowAlert] = useState(false);
+    const authContext = useContext(AuthContext);
+    const eventContext = useContext(EventContext);
+    const {
+        setCurrent,
+        clearCurrent,
+        current,
+        joinEvent,
+        unjoinEvent,
+        deleteEvent,
+        getUsersProfile,
+        setUsers,
+        clearUsers
+    } = eventContext;
+    /*if (current === null) {
+      history.push("/user");
+    }*/
+    // let currentEvent = localStorage.getItem("cacheEvent")
+    // console.log(JSON.stringify(currentEvent))
+    const [showToast, setShowToast] = useState(false);
+    const { user } = authContext;
+    //console.log(user)
+    //const user = '';
+    const [showAlert, setShowAlert] = useState(false);
 
-  const [event, setEvent] = useState({
-    _id: "",
-    name: "",
-    location: "",
-    addressInfo: "",
-    category: "Movie",
-    groupSize: "",
-    description: "",
-    attendingId: [],
-    start: null,
-    end: null,
-    mapLat: null,
-    mapLng: null
-  });
-  useEffect(() => {
-    if (current) {
-      setEvent(current);
-    } else {
-      console.log("No event yet");
-    }
-  }, [eventContext, current, setCurrent]);
+    const [event, setEvent] = useState({
+        _id: "",
+        name: "",
+        location: "",
+        addressInfo: "",
+        category: "Movie",
+        groupSize: "",
+        description: "",
+        attendingId: [],
+        start: null,
+        end: null,
+        mapLat: null,
+        mapLng: null
+    });
+    useEffect(() => {
+        if (current) {
+            setEvent(current);
+        } else {
+            console.log("No event yet");
+        }
+    }, [eventContext, current, setCurrent]);
 
-  const [didJoin, setDidJoin] = useState([]);
-  const [isOwned, setIsOwned] = useState(false);
-  const [joined, setJoined] = useState(false);
+    const [didJoin, setDidJoin] = useState([]);
+    const [isOwned, setIsOwned] = useState(false);
+    const [joined, setJoined] = useState(false);
 
-  //console.log("non-effect",authContext)
-  //console.log("non-effect",eventContext)
+    //console.log("non-effect",authContext)
+    //console.log("non-effect",eventContext)
 
-  useEffect(() => {
-    //console.log("run")
-    if (!user) {
-      //console.log("Why ??")
-      authContext.loadUser();
-      //console.log(user)
-    }
-    //console.log("currentEvent", current)
-    //console.log("Cache", CacheEvent)
-    // if (current === null) {
-    //   //console.log("Cache", JSON.parse(CacheEvent));
-    //   current = localStorage.getItem("cacheEvent")
-    //   setCurrent(current);
-    //   console.log(current);
-    // }
+    useEffect(() => {
+        //console.log("run")
+        if (!user) {
+            //console.log("Why ??")
+            authContext.loadUser();
+            //console.log(user)
+        }
+        //console.log("currentEvent", current)
+        //console.log("Cache", CacheEvent)
+        // if (current === null) {
+        //   //console.log("Cache", JSON.parse(CacheEvent));
+        //   current = localStorage.getItem("cacheEvent")
+        //   setCurrent(current);
+        //   console.log(current);
+        // }
 
-    //setEvent(current)
+        //setEvent(current)
 
-    //  if(current && CacheEvent === "null") {
-    //    localStorage.setItem("currentEvent",JSON.stringify(current))
-    //  }
-    //console.log(current.attendingId);
-    //getUsersProfile(current);
+        //  if(current && CacheEvent === "null") {
+        //    localStorage.setItem("currentEvent",JSON.stringify(current))
+        //  }
+        //console.log(current.attendingId);
+        //getUsersProfile(current);
 
-    // console.log("Effect", authContext);
-    // console.log("Effect", eventContext)
+        // console.log("Effect", authContext);
+        // console.log("Effect", eventContext)
 
-    // eslint-disable-next-line
-  });
+        // eslint-disable-next-line
+    });
 
-  // useEffect(()=> {
-  //   setEvent(current)
-  // },[current,eventContext])
+    // useEffect(()=> {
+    //   setEvent(current)
+    // },[current,eventContext])
 
-  // useEffect(()=> {
-  //   setDidJoin(event.attendingId.filter(attendId => attendId === user._id))
-  //   setIsOwned(current.user === user._id ? true : false);
-  //   setJoined(didJoin[0] === user._id ? true : false)
-  // },[event])
+    // useEffect(()=> {
+    //   setDidJoin(event.attendingId.filter(attendId => attendId === user._id))
+    //   setIsOwned(current.user === user._id ? true : false);
+    //   setJoined(didJoin[0] === user._id ? true : false)
+    // },[event])
 
-  /*useEffect(()=> {
-    setDidJoin(event.attendingId.filter(attendId => attendId === user._id))
-    setIsOwned(current.user === user._id ? true : false);
-    setJoined(didJoin[0] === user._id ? true : false)
-  },[current,user,event])*/
+    /*useEffect(()=> {
+      setDidJoin(event.attendingId.filter(attendId => attendId === user._id))
+      setIsOwned(current.user === user._id ? true : false);
+      setJoined(didJoin[0] === user._id ? true : false)
+    },[current,user,event])*/
 
-  /*const [didJoin] = useState(
-    event.attendingId.filter(attendId => attendId === user._id)
-  );
-  const [isOwned] = useState(current.user === user._id ? true : false);
-  const [joined, setJoined] = useState(didJoin[0] === user._id ? true : false);*/
-
-  const {
-    name,
-    location,
-    addressInfo,
-    category,
-    groupSize,
-    description,
-    attendingId,
-    start,
-    end,
-    mapLat,
-    mapLng
-  } = event;
-
-  const handleJoin = () => {
-    if (groupSize !== "Any" && parseInt(groupSize) === attendingId.length) {
-      alert("Sorry, this event is full. 😟");
-    } else {
-      joinEvent(event);
-      setShowToast(true);
-      setJoined(true);
-      setEvent(current);
-      getUsersProfile(current);
-    }
-  };
-
-  const handleUnjoin = () => {
-    unjoinEvent(event);
-    setJoined(false);
-    setEvent(current);
-    getUsersProfile(current);
-  };
-
-  const goBackUser = () => {
-    clearCurrent();
-    clearUsers();
-    history.push("/user");
-  };
-
-  const goBackSearch = () => {
-    clearCurrent();
-    clearUsers();
-    history.push("/search");
-  };
-
-  const handleDelete = () => {
-    setShowAlert(false);
-    deleteEvent(current._id);
-    clearCurrent();
-    clearUsers();
-    history.push("/user");
-  };
-  if (!current) {
-    return <Loading />;
-  }
-
-  if (showAlert) {
-    return (
-      <Card style={{ width: "25rem" }}>
-        <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
-          <Alert.Heading>
-            Are you sure you want to delete this event?
-          </Alert.Heading>
-          <Button className="btn-danger" onClick={handleDelete}>
-            Yes
-          </Button>
-        </Alert>
-      </Card>
+    /*const [didJoin] = useState(
+      event.attendingId.filter(attendId => attendId === user._id)
     );
-  }
+    const [isOwned] = useState(current.user === user._id ? true : false);
+    const [joined, setJoined] = useState(didJoin[0] === user._id ? true : false);*/
 
-  return (
-    <Fragment>
-      {event.user ? (
-        <CardGroup>
-          <Card style={{ width: "25rem" }}>
-            {" "}
-            <Card.Body>
-              <Card.Title>{name.toUpperCase()}</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">
-                {category}
+    const {
+        name,
+        location,
+        addressInfo,
+        category,
+        groupSize,
+        description,
+        attendingId,
+        start,
+        end,
+        mapLat,
+        mapLng
+    } = event;
+
+    const handleJoin = () => {
+        if (groupSize !== "Any" && parseInt(groupSize) === attendingId.length) {
+            alert("Sorry, this event is full. 😟");
+        } else {
+            joinEvent(event);
+            setShowToast(true);
+            setJoined(true);
+            setEvent(current);
+            getUsersProfile(current);
+        }
+    };
+
+    const handleUnjoin = () => {
+        unjoinEvent(event);
+        setJoined(false);
+        setEvent(current);
+        getUsersProfile(current);
+    };
+
+    const goBackUser = () => {
+        clearCurrent();
+        clearUsers();
+        history.push("/user");
+    };
+
+    const goBackSearch = () => {
+        clearCurrent();
+        clearUsers();
+        history.push("/search");
+    };
+
+    const handleDelete = () => {
+        setShowAlert(false);
+        deleteEvent(current._id);
+        clearCurrent();
+        clearUsers();
+        history.push("/user");
+    };
+    if (!current) {
+        return <Loading />;
+    }
+
+    if (showAlert) {
+        return (
+            <Card style={{ width: "25rem" }}>
+                <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
+                    <Alert.Heading>
+                        Are you sure you want to delete this event?
+          </Alert.Heading>
+                    <Button className="btn-danger" onClick={handleDelete}>
+                        Yes
+          </Button>
+                </Alert>
+            </Card>
+        );
+    }
+
+    return (
+        <Fragment>
+            {event.user ? (
+                <CardGroup>
+
+                    <Card style={{ width: "25rem" }}>
+                        <Card.Header style={{ background: "#343a40", color: "white" }}>
+                            <Card.Title>{name.toUpperCase()}</Card.Title>
+                            <Card.Subtitle className="mb-2 text-muted">{category}</Card.Subtitle>
+                        </Card.Header>
+
+                        <Card.Body>
+                            <Card.Text style={{ textTransform: "capitalize" }}>
+                                Location: {location}<br />
+                                Address: {addressInfo}<br />
+                                Start Time: {start}<br />
+                                End Time: {end}
+                            </Card.Text>
+                            <Card.Text>{description}</Card.Text>
+                            <Card.Subtitle className="mb-2 text-muted">
+                                {attendingId.length} out of {groupSize} people are going.
               </Card.Subtitle>
-              <Card.Subtitle className="mb-2 text-muted">
-                Date: {start}
-              </Card.Subtitle>
-              <Card.Subtitle className="mb-2 text-muted">
-                Date: {end}
-              </Card.Subtitle>
-              <Card.Subtitle className="mb-2 text-muted">
-                {location}
-              </Card.Subtitle>
-              <Card.Subtitle className="mb-2 text-muted">
-                {addressInfo}
-              </Card.Subtitle>
-              <Card.Text>{description}</Card.Text>
-              <Card.Subtitle className="mb-2 text-muted">
-                {attendingId.length} out of {groupSize} people are going.
-              </Card.Subtitle>
-              <Card.Subtitle className="mb-2 text-muted">
-                People Attending:
+                            <Card.Subtitle className="mb-2 text-muted">
+                                People Attending:
                 <br />
-                {setUsers
-                  ? setUsers.map(userLink => (
-                      <Fragment>
-                        <Link to="#" key={userLink._id}>
-                          {userLink.username}
-                        </Link>
-                        <br />
-                      </Fragment>
-                    ))
-                  : null}
-              </Card.Subtitle>
-              {event.user === user._id && (
-                <Button
-                  style={{ float: "right" }}
-                  className="btn-danger"
-                  size="sm"
-                  onClick={() => setShowAlert(true)}
-                >
-                  Delete
+                                {setUsers
+                                    ? setUsers.map(userLink => (
+                                        <Fragment>
+                                            <Link to="#" key={userLink._id}>
+                                                {userLink.username}
+                                            </Link>
+                                            <br />
+                                        </Fragment>
+                                    ))
+                                    : null}
+                            </Card.Subtitle>
+                            {event.user === user._id && (
+                                <Button
+                                    style={{ float: "right" }}
+                                    className="btn-danger"
+                                    size="sm"
+                                    onClick={() => setShowAlert(true)}
+                                >
+                                    Delete
                 </Button>
-              )}{" "}
-              {joined && event.user !== user._id && (
-                <Fragment>
-                  <p>You have already joined this event!</p>
+                            )}{" "}
+                            {
+                                event.user !== user._id && event.attendingId.includes(user._id) && (
+                                <LeaveButton handleUnjoin={handleUnjoin} />
+                            )}
+                            {event.user !== user._id && !event.attendingId.includes(user._id) && (
+                                <JoinButton handleJoin={handleJoin} />
+                            )}
+                        </Card.Body>
+                        <Card.Footer>
+                            <Button size="sm" onClick={goBackSearch}>Search More Events</Button>
+                            <Button size="sm" onClick={goBackUser}>Back To Profile</Button>
+                        </Card.Footer>      
+                    </Card>
 
-                  <Button
-                    type="submit"
-                    style={{ float: "right" }}
-                    className="btn-warning"
-                    size="sm"
-                    onClick={() => handleUnjoin()}
-                  >
-                    - Leave Event
-                  </Button>
-                </Fragment>
-              )}{" "}
-              {event.user !== user._id && !joined && (
-                <Button
-                  type="submit"
-                  style={{ float: "right" }}
-                  className="btn-success"
-                  size="sm"
-                  onClick={() => handleJoin()}
-                >
-                  + Join
-                </Button>
-              )}
-              <Button size="sm" onClick={goBackSearch}>
-                Search More Events
-              </Button>
-              <Button size="sm" onClick={goBackUser}>
-                Back To Profile
-              </Button>
-            </Card.Body>
-          </Card>
 
-          <Card>
-            <Map lat={mapLat} lng={mapLng} />
-          </Card>
-        </CardGroup>
-      ) : (
-        <div> Sorry, this event is not available.</div>
-      )}
-      <Row>
-        <Col xs={6}>
-          <Toast
-            onClose={() => setShowToast(false)}
-            show={showToast}
-            delay={3000}
-            autohide
-          >
-            <Toast.Header>
-              <strong className="mr-auto">{name.toUpperCase()}</strong>
-            </Toast.Header>
-            <Toast.Body>Event Joined!</Toast.Body>
-          </Toast>
-        </Col>
-      </Row>
-    </Fragment>
-  );
+                    <Card>
+                        <Map lat={mapLat} lng={mapLng} />
+                    </Card>
+                </CardGroup>
+            ) : (
+                    <div> Sorry, this event is not available.</div>
+                )}
+            <Row>
+                <Col xs={6}>
+                    <Toast
+                        onClose={() => setShowToast(false)}
+                        show={showToast}
+                        delay={3000}
+                        autohide
+                    >
+                        <Toast.Header>
+                            <strong className="mr-auto">{name.toUpperCase()}</strong>
+                        </Toast.Header>
+                        <Toast.Body>Event Joined!</Toast.Body>
+                    </Toast>
+                </Col>
+            </Row>
+        </Fragment>
+    );
 
-  /*return (
-    <h1>Debug in process </h1>
-  )*/
+    /*return (
+      <h1>Debug in process </h1>
+    )*/
 };
 
 export default ViewEvent;
