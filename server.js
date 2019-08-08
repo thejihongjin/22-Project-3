@@ -29,7 +29,7 @@ app.use("/api/events", require("./routes/events"));
 //Dev Route
 //app.use(devRoutes)
 /// Default route for React
-app.get("PORT", (req, res) => {
+app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
