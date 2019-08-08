@@ -67,7 +67,7 @@ const User = props => {
       firstname: firstName,
       lastname: lastName,
       displayname: displayName,
-      image: image,
+      avatar: image,
       bio: bio,
       email: email
     });
