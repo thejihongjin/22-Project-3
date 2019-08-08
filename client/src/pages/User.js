@@ -59,19 +59,19 @@ const User = props => {
     }, [user]);
 
 
-  const handleProfileSubmit = e => {
-    e.preventDefault();
-    updateUser({
-      ...user,
-      firstname: firstName,
-      lastname: lastName,
-      displayname: displayName,
-      image: image,
-      bio: bio,
-      email: email
-    });
-    setShowProfile(false);
-  };
+    const handleProfileSubmit = e => {
+        e.preventDefault();
+        updateUser({
+            ...user,
+            firstname: firstName,
+            lastname: lastName,
+            displayname: displayName,
+            image: image,
+            bio: bio,
+            email: email
+        });
+        setShowProfile(false);
+    };
 
 
 
@@ -114,13 +114,12 @@ const User = props => {
                                     : "Bio: " + (user && user.bio)}
                             </Card.Text>
                         </Card.Body>
-                        <Card.Footer 
-                        
-                style={{
-                    textAlign: "right",
-                    background: "#343a40",
-                    color: "white"
-                  }}>
+                        <Card.Footer
+                            style={{
+                                textAlign: "right",
+                                background: "#343a40",
+                                color: "white"
+                            }}>
                             <Link to="#" onClick={() => setShowProfile(true)}>Edit profile</Link><br />
                             <Link to="#" onClick={() => setShowPassword(true)}>Change password</Link>
                         </Card.Footer>
@@ -128,11 +127,6 @@ const User = props => {
                 </Col>
                 <Col md={6}>
                     <Card>
-                        {/* <Card.Header>
-                                <Card.Subtitle style={{ marginBottom: "10px" }}>
-                                    <Link to="/create" className="card-link">Create New Event</Link>
-                                </Card.Subtitle>
-                            </Card.Header> */}
                         <Card.Body>
                             {events ? <EventList events={events} /> : <Card.Text>No events available.</Card.Text>}
                         </Card.Body>
