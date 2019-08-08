@@ -77,7 +77,7 @@ router.post(
 );
 
 router.put("/:id", async (req, res) => {
-  const { username, firstname, lastname, displayname, email, bio, password, avatar } = req.body;
+  const { username, firstname, lastname, displayname, email, bio, password,image } = req.body;
 
   const userFields = {};
   if (username) userFields.username = username;
@@ -86,7 +86,7 @@ router.put("/:id", async (req, res) => {
   if (displayname) userFields.displayname = displayname;
   if (email) userFields.email = email;
   if (bio) userFields.bio = bio;
-  if (avatar) userFields.avatar = avatar
+  if (image) userFields.image = image;
 
   try {
     let user = await User.findById(req.params.id);
