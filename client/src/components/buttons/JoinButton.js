@@ -13,7 +13,7 @@ const JoinButton = props => {
         //   + Join
         // </Button>
 
-        <Button type="submit" className="btn-success" onClick={() => props.handleJoin()}>+ Join</Button>
+        <Button type="submit" className="btn-success" onClick={() => props.handleJoin()} size="sm" style={{ float: "right" }}>+ Join</Button>
     );
 }
 

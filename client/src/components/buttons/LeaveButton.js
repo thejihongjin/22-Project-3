@@ -13,7 +13,7 @@ const LeaveButton = props => {
         //     - Leave Event
         // </Button>
 
-        <Button type="submit" className="btn-warning" onClick={() => props.handleUnjoin()}>- Leave Event</Button>
+        <Button type="submit" className="btn-warning" onClick={() => props.handleUnjoin()} size="sm" style={{ float: "right" }}>- Leave Event</Button>
     );
 }
 
