@@ -1,6 +1,7 @@
 import React, { Fragment, useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../context/auth/authContext";
+import EventContext from "../context/event/eventContext";
 import history from "../utils/history"
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
@@ -13,6 +14,8 @@ import SignIn from "../pages/SignIn"
 const Navigation = () => {
     const authContext = useContext(AuthContext);
     const { isAuthenticated, logout } = authContext;
+    const eventContext = useContext(EventContext);
+    const { clearCurrent } = eventContext;
 
     const [showRegister, setShowRegister] = useState(false);
     const [showSignIn, setShowSignIn] = useState(false);
@@ -24,7 +27,7 @@ const Navigation = () => {
 
     const authLinks = (
         <Nav className="mr-auto">
-            <Nav.Link href="/create">Create an Event</Nav.Link>
+            <Nav.Link onClick={() => clearCurrent()} href="/create" >Create an Event</Nav.Link>
             <Nav.Link href="/search">Find an Event</Nav.Link>
             <Nav.Link onClick={onLogout}>Logout</Nav.Link>
         </Nav>

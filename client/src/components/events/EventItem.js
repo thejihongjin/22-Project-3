@@ -61,7 +61,7 @@ const EventItem = ({ event }) => {
 
   return (
     <Card>
-      <Card.Header>
+      <Card.Header style={{ background: "#343a40", color: "white" }}>
         <Card.Title>{name.toUpperCase()}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">{category}</Card.Subtitle>
       </Card.Header>
@@ -80,7 +80,7 @@ const EventItem = ({ event }) => {
           People Going: {attendingId.length} / {groupSize}
         </Card.Subtitle>
       </Card.Body>
-      <Card.Footer>
+      <Card.Footer style={{ background: "#343a40", color: "white" }}>
         <Link
           onClick={() => setCurrent(event)}
           to="/view"
