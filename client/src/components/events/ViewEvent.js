@@ -16,6 +16,7 @@ import EventState from "../../context/event/EventState";
 
 import JoinButton from "../buttons/JoinButton";
 import LeaveButton from "../buttons/LeaveButton";
+import DeleteButton from "../buttons/DeleteButton";
 
 const ViewEvent = () => {
     const authContext = useContext(AuthContext);
@@ -78,50 +79,8 @@ const ViewEvent = () => {
             authContext.loadUser();
             //console.log(user)
         }
-        //console.log("currentEvent", current)
-        //console.log("Cache", CacheEvent)
-        // if (current === null) {
-        //   //console.log("Cache", JSON.parse(CacheEvent));
-        //   current = localStorage.getItem("cacheEvent")
-        //   setCurrent(current);
-        //   console.log(current);
-        // }
-
-        //setEvent(current)
-
-        //  if(current && CacheEvent === "null") {
-        //    localStorage.setItem("currentEvent",JSON.stringify(current))
-        //  }
-        //console.log(current.attendingId);
-        //getUsersProfile(current);
-
-        // console.log("Effect", authContext);
-        // console.log("Effect", eventContext)
-
         // eslint-disable-next-line
     });
-
-    // useEffect(()=> {
-    //   setEvent(current)
-    // },[current,eventContext])
-
-    // useEffect(()=> {
-    //   setDidJoin(event.attendingId.filter(attendId => attendId === user._id))
-    //   setIsOwned(current.user === user._id ? true : false);
-    //   setJoined(didJoin[0] === user._id ? true : false)
-    // },[event])
-
-    /*useEffect(()=> {
-      setDidJoin(event.attendingId.filter(attendId => attendId === user._id))
-      setIsOwned(current.user === user._id ? true : false);
-      setJoined(didJoin[0] === user._id ? true : false)
-    },[current,user,event])*/
-
-    /*const [didJoin] = useState(
-      event.attendingId.filter(attendId => attendId === user._id)
-    );
-    const [isOwned] = useState(current.user === user._id ? true : false);
-    const [joined, setJoined] = useState(didJoin[0] === user._id ? true : false);*/
 
     const {
         name,
@@ -156,18 +115,6 @@ const ViewEvent = () => {
         getUsersProfile(current);
     };
 
-    const goBackUser = () => {
-        clearCurrent();
-        clearUsers();
-        history.push("/user");
-    };
-
-    const goBackSearch = () => {
-        clearCurrent();
-        clearUsers();
-        history.push("/search");
-    };
-
     const handleDelete = () => {
         setShowAlert(false);
         deleteEvent(current._id);
@@ -198,7 +145,6 @@ const ViewEvent = () => {
         <Fragment>
             {event.user ? (
                 <CardGroup>
-
                     <Card style={{ width: "25rem" }}>
                         <Card.Header style={{ background: "#343a40", color: "white" }}>
                             <Card.Title>{name.toUpperCase()}</Card.Title>
@@ -217,8 +163,7 @@ const ViewEvent = () => {
                                 {attendingId.length} out of {groupSize} people are going.
               </Card.Subtitle>
                             <Card.Subtitle className="mb-2 text-muted">
-                                People Attending:
-                <br />
+                                People Attending: <br />
                                 {setUsers
                                     ? setUsers.map(userLink => (
                                         <Fragment>
@@ -230,28 +175,21 @@ const ViewEvent = () => {
                                     ))
                                     : null}
                             </Card.Subtitle>
-                            {event.user === user._id && (
-                                <Button
-                                    style={{ float: "right" }}
-                                    className="btn-danger"
-                                    size="sm"
-                                    onClick={() => setShowAlert(true)}
-                                >
-                                    Delete
-                </Button>
-                            )}{" "}
-                            {
-                                event.user !== user._id && event.attendingId.includes(user._id) && (
-                                <LeaveButton handleUnjoin={handleUnjoin} />
-                            )}
-                            {event.user !== user._id && !event.attendingId.includes(user._id) && (
-                                <JoinButton handleJoin={handleJoin} />
-                            )}
                         </Card.Body>
                         <Card.Footer>
-                            <Button size="sm" onClick={goBackSearch}>Search More Events</Button>
-                            <Button size="sm" onClick={goBackUser}>Back To Profile</Button>
-                        </Card.Footer>      
+                            {
+                                event.user === user._id &&
+                                <DeleteButton event={event} setCurrent={setCurrent} setShowAlert={setShowAlert} />
+                            }
+                            {
+                                event.user !== user._id && !event.attendingId.includes(user._id) &&
+                                <JoinButton handleJoin={handleJoin} />
+                            }
+                            {
+                                event.user !== user._id && event.attendingId.includes(user._id) &&
+                                <LeaveButton handleUnjoin={handleUnjoin} />
+                            }
+                        </Card.Footer>
                     </Card>
 
 
@@ -279,10 +217,6 @@ const ViewEvent = () => {
             </Row>
         </Fragment>
     );
-
-    /*return (
-      <h1>Debug in process </h1>
-    )*/
 };
 
 export default ViewEvent;
