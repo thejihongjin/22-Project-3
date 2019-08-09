@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import AuthContext from "../../context/auth/authContext";
 import EventContext from "../../context/event/eventContext";
-// import EventItem from "./EventItem";
 import EventCardPreview from "./EventCardPreview";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
@@ -37,18 +36,13 @@ const EventList = () => { // rename as UserEvents
             <Tab eventKey="home" title="Upcoming Events">
                 <br />
                 {
-                    upcomingEvents.map(event => (
-                        // <EventItem key={event._id} event={event} />
-                        <EventCardPreview key={event._id} user={user} event={event} />
-                    ))
+                    upcomingEvents.map(event => <EventCardPreview key={event._id} user={user} event={event} />)
                 }
             </Tab>
             <Tab eventKey="profile" title="Past Events">
                 <br />
                 {
-                    pastEvents.map(event => (
-                        <EventCardPreview key={event._id} user={user} event={event} />
-                    ))
+                    pastEvents.map(event => <EventCardPreview key={event._id} user={user} event={event} />)
                 }
             </Tab>
         </Tabs>
