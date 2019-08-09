@@ -50,29 +50,29 @@ const EventCardPreview = props => {
     <Fragment>
       {event.attendingId && (
         <Card>
-          <Card.Header style={{ background: "#343a40", color: "white" }}>
-            <Card.Title>preview {event.name.toUpperCase()}</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">
-              {event.category}
-            </Card.Subtitle>
-          </Card.Header>
-          <Card.Body>
-            <Card.Text style={{ textTransform: "capitalize" }}>
-              Location: {event.location}
-              <br />
-              Start: {event.start}
-              <br />
-              End: {event.end}
-            </Card.Text>
-            <Card.Subtitle className="mb-2 text-muted">
-              People Going: {event.attendingId.length} / {event.groupSize}
-            </Card.Subtitle>
-          </Card.Body>
-          <Card.Footer style={{ background: "#343a40", color: "white" }}>
-            {/* <Link onClick={() => props.setCurrent(event)} to="/view" className="card-link">View</Link> */}
-            <Link to="/view" className="card-link">
-              View
-            </Link>
+            <Card.Header style={{ background: "#343a40", color: "white" }}>
+                <Card.Title>preview {event.name.toUpperCase()}</Card.Title>
+                <Card.Subtitle className="mb-2 text-muted">{event.category}</Card.Subtitle>
+            </Card.Header>
+            <Card.Body>
+                <Card.Text style={{ textTransform: "capitalize" }}>
+                    Location: {event.location}<br />
+                    Start: {event.start}<br />
+                    End: {event.end}
+                </Card.Text>
+                <Card.Subtitle className="mb-2 text-muted">
+                    People Going: {event.attendingId.length} / {event.groupSize}
+                </Card.Subtitle>
+            </Card.Body>
+            <Card.Footer style={{ background: "#343a40", color: "white" }}>
+                <Link onClick={() => props.setCurrent(event)} to="/view" className="card-link">View</Link>
+                {/* <Link to="/view" className="card-link">View</Link> */}
+                
+                {
+                    user._id === event.user &&
+                    // {/* <Link className="card-link" to="/create" onClick={() => setCurrent(event)}>Edit</Link>
+                    <DeleteButton setShowAlert={setShowAlert} />
+                }
 
             {user._id === event.user && (
               // {/* <Link className="card-link" to="/create" onClick={() => setCurrent(event)}>Edit</Link>
