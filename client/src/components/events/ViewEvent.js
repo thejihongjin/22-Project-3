@@ -19,204 +19,217 @@ import LeaveButton from "../buttons/LeaveButton";
 import DeleteButton from "../buttons/DeleteButton";
 
 const ViewEvent = () => {
-    const authContext = useContext(AuthContext);
-    const eventContext = useContext(EventContext);
-    const {
-        setCurrent,
-        clearCurrent,
-        current,
-        joinEvent,
-        unjoinEvent,
-        deleteEvent,
-        getUsersProfile,
-        setUsers,
-        clearUsers
-    } = eventContext;
-    /*if (current === null) {
+  const authContext = useContext(AuthContext);
+  const eventContext = useContext(EventContext);
+  const {
+    setCurrent,
+    clearCurrent,
+    current,
+    joinEvent,
+    unjoinEvent,
+    deleteEvent,
+    getUsersProfile,
+    setUsers,
+    clearUsers
+  } = eventContext;
+  /*if (current === null) {
       history.push("/user");
     }*/
-    // let currentEvent = localStorage.getItem("cacheEvent")
-    // console.log(JSON.stringify(currentEvent))
-    const [showToast, setShowToast] = useState(false);
-    const { user } = authContext;
-    //console.log(user)
-    //const user = '';
-    const [showAlert, setShowAlert] = useState(false);
+  // let currentEvent = localStorage.getItem("cacheEvent")
+  // console.log(JSON.stringify(currentEvent))
+  const [showToast, setShowToast] = useState(false);
+  const { user } = authContext;
+  //console.log(user)
+  //const user = '';
+  const [showAlert, setShowAlert] = useState(false);
 
-    const [event, setEvent] = useState({
-        _id: "",
-        name: "",
-        location: "",
-        addressInfo: "",
-        category: "Movie",
-        groupSize: "",
-        description: "",
-        attendingId: [],
-        start: null,
-        end: null,
-        mapLat: null,
-        mapLng: null
-    });
-    useEffect(() => {
-        if (current) {
-            setEvent(current);
-        } else {
-            console.log("No event yet");
-        }
-    }, [eventContext, current, setCurrent]);
+  const [event, setEvent] = useState({
+    _id: "",
+    user: "",
+    name: "",
+    location: "",
+    addressInfo: "",
+    category: "Movie",
+    groupSize: "",
+    description: "",
+    attendingId: [],
+    start: null,
+    end: null,
+    mapLat: null,
+    mapLng: null
+  });
+  useEffect(() => {
+    if (current) {
+      setEvent(current);
+    } else {
+      console.log("No event yet");
+    }
+  }, [eventContext, current, setCurrent]);
 
-    const [didJoin, setDidJoin] = useState([]);
-    const [isOwned, setIsOwned] = useState(false);
-    const [joined, setJoined] = useState(false);
+  const [didJoin, setDidJoin] = useState([]);
+  const [isOwned, setIsOwned] = useState(false);
+  const [joined, setJoined] = useState(false);
 
-    //console.log("non-effect",authContext)
-    //console.log("non-effect",eventContext)
+  //console.log("non-effect",authContext)
+  //console.log("non-effect",eventContext)
 
-    useEffect(() => {
-        //console.log("run")
-        if (!user) {
-            //console.log("Why ??")
-            authContext.loadUser();
-            //console.log(user)
-        }
-        // eslint-disable-next-line
-    });
-
-    const {
-        name,
-        location,
-        addressInfo,
-        category,
-        groupSize,
-        description,
-        attendingId,
-        start,
-        end,
-        mapLat,
-        mapLng
-    } = event;
-
-    const handleJoin = () => {
-        if (groupSize !== "Any" && parseInt(groupSize) === attendingId.length) {
-            alert("Sorry, this event is full. 😟");
-        } else {
-            joinEvent(event);
-            setShowToast(true);
-            setJoined(true);
-            setEvent(current);
-            getUsersProfile(current);
-        }
-    };
-
-    const handleUnjoin = () => {
-        unjoinEvent(event);
-        setJoined(false);
-        setEvent(current);
-        getUsersProfile(current);
-    };
-
-    const handleDelete = () => {
-        setShowAlert(false);
-        deleteEvent(current._id);
-        clearCurrent();
-        clearUsers();
-        history.push("/user");
-    };
+  useEffect(() => {
+    //console.log("run")
+    if (!user) {
+      //console.log("Why ??")
+      authContext.loadUser();
+      //console.log(user)
+    }
     if (!current) {
-        return <Loading />;
+      console.log("no event stored");
+    } else {
+      console.log("yessss")
     }
+    // eslint-disable-next-line
+  });
 
-    if (showAlert) {
-        return (
-            <Card style={{ width: "25rem" }}>
-                <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
-                    <Alert.Heading>
-                        Are you sure you want to delete this event?
-          </Alert.Heading>
-                    <Button className="btn-danger" onClick={handleDelete}>
-                        Yes
-          </Button>
-                </Alert>
-            </Card>
-        );
+  const {
+    name,
+    location,
+    addressInfo,
+    category,
+    groupSize,
+    description,
+    attendingId,
+    start,
+    end,
+    mapLat,
+    mapLng
+  } = event;
+
+  const handleJoin = () => {
+    if (groupSize !== "Any" && parseInt(groupSize) === attendingId.length) {
+      alert("Sorry, this event is full. 😟");
+    } else {
+      joinEvent(event);
+      setShowToast(true);
+      setJoined(true);
+      setEvent(current);
+      getUsersProfile(current);
     }
+  };
 
+  const handleUnjoin = () => {
+    unjoinEvent(event);
+    setJoined(false);
+    setEvent(current);
+    getUsersProfile(current);
+  };
+
+  const handleDelete = () => {
+    setShowAlert(false);
+    deleteEvent(current._id);
+    clearCurrent();
+    clearUsers();
+    history.push("/user");
+  };
+  if (!current) {
+    return <Loading />;
+  }
+
+  if (showAlert) {
     return (
-        <Fragment>
-            {event.user ? (
-                <CardGroup>
-                    <Card style={{ width: "25rem" }}>
-                        <Card.Header style={{ background: "#343a40", color: "white" }}>
-                            <Card.Title>{name.toUpperCase()}</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted">{category}</Card.Subtitle>
-                        </Card.Header>
+      <Card style={{ width: "25rem" }}>
+        <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
+          <Alert.Heading>
+            Are you sure you want to delete this event?
+          </Alert.Heading>
+          <Button className="btn-danger" onClick={handleDelete}>
+            Yes
+          </Button>
+        </Alert>
+      </Card>
+    );
+  }
 
-                        <Card.Body>
-                            <Card.Text style={{ textTransform: "capitalize" }}>
-                                Location: {location}<br />
-                                Address: {addressInfo}<br />
-                                Start Time: {start}<br />
-                                End Time: {end}
-                            </Card.Text>
-                            <Card.Text>{description}</Card.Text>
-                            <Card.Subtitle className="mb-2 text-muted">
-                                {attendingId.length} out of {groupSize} people are going.
+  return (
+    <Fragment>
+      {event.user ? (
+        <CardGroup>
+          <Card style={{ width: "25rem" }}>
+            <Card.Header style={{ background: "#343a40", color: "white" }}>
+              <Card.Title>{name.toUpperCase()}</Card.Title>
+              <Card.Subtitle className="mb-2 text-muted">
+                {category}
               </Card.Subtitle>
-                            <Card.Subtitle className="mb-2 text-muted">
-                                People Attending: <br />
-                                {setUsers
-                                    ? setUsers.map(userLink => (
-                                        <Fragment>
-                                            <Link to="#" key={userLink._id}>
-                                                {userLink.username}
-                                            </Link>
-                                            <br />
-                                        </Fragment>
-                                    ))
-                                    : null}
-                            </Card.Subtitle>
-                        </Card.Body>
-                        <Card.Footer>
-                            {
-                                event.user === user._id &&
-                                <DeleteButton event={event} setCurrent={setCurrent} setShowAlert={setShowAlert} />
-                            }
-                            {
-                                event.user !== user._id && !event.attendingId.includes(user._id) &&
-                                <JoinButton handleJoin={handleJoin} />
-                            }
-                            {
-                                event.user !== user._id && event.attendingId.includes(user._id) &&
-                                <LeaveButton handleUnjoin={handleUnjoin} />
-                            }
-                        </Card.Footer>
-                    </Card>
+            </Card.Header>
 
+            <Card.Body>
+              <Card.Text style={{ textTransform: "capitalize" }}>
+                Location: {location}
+                <br />
+                Address: {addressInfo}
+                <br />
+                Start Time: {start}
+                <br />
+                End Time: {end}
+              </Card.Text>
+              <Card.Text>{description}</Card.Text>
+              <Card.Subtitle className="mb-2 text-muted">
+                {attendingId.length} out of {groupSize} people are going.
+              </Card.Subtitle>
+              <Card.Subtitle className="mb-2 text-muted">
+                People Attending: <br />
+                {setUsers
+                  ? setUsers.map(userLink => (
+                      <Fragment>
+                        <Link to="#" key={userLink._id}>
+                          {userLink.username}
+                        </Link>
+                        <br />
+                      </Fragment>
+                    ))
+                  : null}
+              </Card.Subtitle>
+            </Card.Body>
+            <Card.Footer>
+              {event.user === user._id && (
+                <DeleteButton
+                  event={event}
+                  setCurrent={setCurrent}
+                  setShowAlert={setShowAlert}
+                />
+              )}
+              {event.user !== user._id &&
+                !event.attendingId.includes(user._id) && (
+                  <JoinButton handleJoin={handleJoin} />
+                )}
+              {event.user !== user._id &&
+                event.attendingId.includes(user._id) && (
+                  <LeaveButton handleUnjoin={handleUnjoin} />
+                )}
+            </Card.Footer>
+          </Card>
 
-                    {/* <Card>
+          {/* <Card>
                         <Map lat={mapLat} lng={mapLng} />
                     </Card> */}
-                </CardGroup>
-            ) : (
-                    <div> Sorry, this event is not available.</div>
-                )}
-            <Row>
-                <Col xs={6}>
-                    <Toast
-                        onClose={() => setShowToast(false)}
-                        show={showToast}
-                        delay={3000}
-                        autohide
-                    >
-                        <Toast.Header>
-                            <strong className="mr-auto">{name.toUpperCase()}</strong>
-                        </Toast.Header>
-                        <Toast.Body>Event Joined!</Toast.Body>
-                    </Toast>
-                </Col>
-            </Row>
-        </Fragment>
-    );
+        </CardGroup>
+      ) : (
+        <div> Sorry, this event is not available.</div>
+      )}
+      <Row>
+        <Col xs={6}>
+          <Toast
+            onClose={() => setShowToast(false)}
+            show={showToast}
+            delay={3000}
+            autohide
+          >
+            <Toast.Header>
+              <strong className="mr-auto">{name.toUpperCase()}</strong>
+            </Toast.Header>
+            <Toast.Body>Event Joined!</Toast.Body>
+          </Toast>
+        </Col>
+      </Row>
+    </Fragment>
+  );
 };
 
 export default ViewEvent;

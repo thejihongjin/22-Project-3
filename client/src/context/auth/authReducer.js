@@ -9,7 +9,7 @@ import {
   LOGOUT,
   CLEAR_ERRORS,
   VIEW_USER
-} from '../types';
+} from "../types";
 
 export default (state, action) => {
   switch (action.type) {
@@ -22,30 +22,31 @@ export default (state, action) => {
       };
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
-      localStorage.setItem('token', action.payload.token);
+     
+      localStorage.setItem("token", action.payload.token);
+       
       return {
         ...state,
         ...action.payload,
-        isAuthenticated: true,
+        isAuthenticated: true
       };
-      case UPDATE_USER:
+    case UPDATE_USER:
       console.log(action.payload);
       return {
         ...state,
-        user: action.payload,
+        user: action.payload
       };
-      case VIEW_USER:
+    case VIEW_USER:
       return {
         ...state,
         setUsers: action.payload
       };
-     
-   
+
     case REGISTER_FAIL:
     case AUTH_ERROR:
     case LOGIN_FAIL:
     case LOGOUT:
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
       return {
         ...state,
         token: null,
