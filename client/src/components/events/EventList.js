@@ -9,14 +9,14 @@ const EventList = props => { // rename as UserEvents
     const events = props.events
     const user = props.user
 
+    const eventContext = useContext(EventContext);
+    const { setCurrent } = eventContext;
+
 
     let upcomingEvents;
     let pastEvents;
-
-
-
-        upcomingEvents = events.filter(event => new Date(event.end) > new Date());
-        pastEvents = events.filter(event => new Date(event.end) < new Date());
+    upcomingEvents = events.filter(event => new Date(event.end) > new Date());
+    pastEvents = events.filter(event => new Date(event.end) < new Date());
     
 
 
@@ -25,13 +25,13 @@ const EventList = props => { // rename as UserEvents
             <Tab eventKey="home" title="Upcoming Events">
                 <br />
                 {
-                    upcomingEvents.map(event => <EventCardPreview key={event._id} user={user} event={event} />)
+                    upcomingEvents.map(event => <EventCardPreview key={event._id} user={user} event={event} setCurrent={setCurrent} />)
                 }
             </Tab>
             <Tab eventKey="profile" title="Past Events">
                 <br />
                 {
-                    pastEvents.map(event => <EventCardPreview key={event._id} user={user} event={event} />)
+                    pastEvents.map(event => <EventCardPreview key={event._id} user={user} event={event} setCurrent={setCurrent} />)
                 }
             </Tab>
         </Tabs>

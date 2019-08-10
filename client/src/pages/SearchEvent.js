@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, Fragment } from "react";
+import React, { useContext, useEffect, useRef, useState, Fragment } from "react";
 import AuthContext from "../context/auth/authContext";
 import EventContext from "../context/event/eventContext";
 import Card from "react-bootstrap/Card";
@@ -21,6 +21,7 @@ const SearchEvent = () => {
   const text = useRef("");
   const eventContext = useContext(EventContext);
   const {
+    setCurrent,
     getEvents,
     clearUsers,
     clearEvents,
@@ -46,6 +47,11 @@ const SearchEvent = () => {
       clearFilter();
     }
   };
+
+
+  const [showAddress, setShowAddress] = useState("hide"); // 
+  const [showViewLink, setShowViewLink] = useState("show");
+
   return (
     <Fragment>
       {/* search bar - event name, category, time frame, distance (google api) */}
@@ -82,11 +88,11 @@ const SearchEvent = () => {
               <div>No Events Available</div>
             ) : filtered !== null ? (
               filtered.map(event => (
-                <EventCardPreview key={event._id} event={event} user={user} />
+                <EventCardPreview key={event._id} event={event} user={user} setCurrent={setCurrent} showAddress={showAddress} showViewLink={showViewLink} />
               ))
             ) : (
               events.map(event => (
-                <EventCardPreview key={event._id} event={event} user={user} />
+                <EventCardPreview key={event._id} event={event} user={user} setCurrent={setCurrent} showAddress={showAddress} showViewLink={showViewLink} />
               ))
             )}
           </CardColumns>
