@@ -1,18 +1,18 @@
 import React, { useState, useContext, useEffect, Fragment } from "react";
 // import { Link } from "react-router-dom";
-import Loading from "../Loading";
+import Loading from "../components/Loading";
 // import Card from "react-bootstrap/Card";
 import CardGroup from "react-bootstrap/CardGroup";
 // import Button from "react-bootstrap/Button";
 // import Alert from "react-bootstrap/Alert";
 // import Toast from "react-bootstrap/Toast";
-import EventContext from "../../context/event/eventContext";
-import AuthContext from "../../context/auth/authContext";
+import EventContext from "../context/event/eventContext";
+import AuthContext from "../context/auth/authContext";
 // import history from "../../utils/history";
 // import Map from "../Map";
 // import EventState from "../../context/event/EventState";
 // import Toast from "../Toast";
-import EventCardPreview from "./EventCardPreview";
+import EventCard from "../components/events/EventCard";
 
 const ViewEvent = props => {
     useEffect(() => {
@@ -130,7 +130,7 @@ const ViewEvent = props => {
         </h1>
             ) : (
                     <CardGroup>
-                        <EventCardPreview key={events._id} event={events} user={user} setCurrent={setCurrent} showAddress={showAddress} showViewLink={showViewLink} />
+                        <EventCard key={events._id} event={events} user={user} setCurrent={setCurrent} showAddress={showAddress} showViewLink={showViewLink} />
                         {/* <Card><Map lat={mapLat} lng={mapLng} /></Card> */}
                     </CardGroup>
                 )

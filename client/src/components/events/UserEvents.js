@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
 // import AuthContext from "../../context/auth/authContext";
 import EventContext from "../../context/event/eventContext";
-import EventCardPreview from "./EventCardPreview";
+import EventCard from "./EventCard";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 
-const EventList = props => { // rename as UserEvents
+const UserEvents = props => {
     const events = props.events
     const user = props.user
 
@@ -24,17 +24,17 @@ const EventList = props => { // rename as UserEvents
             <Tab eventKey="home" title="Upcoming Events">
                 <br />
                 {
-                    upcomingEvents.map(event => <EventCardPreview key={event._id} user={user} event={event} setCurrent={setCurrent} showAddress={showAddress} showViewLink={showViewLink} />)
+                    upcomingEvents.map(event => <EventCard key={event._id} user={user} event={event} setCurrent={setCurrent} showAddress={showAddress} showViewLink={showViewLink} />)
                 }
             </Tab>
             <Tab eventKey="profile" title="Past Events">
                 <br />
                 {
-                    pastEvents.map(event => <EventCardPreview key={event._id} user={user} event={event} setCurrent={setCurrent} showAddress={showAddress} showViewLink={showViewLink} />)
+                    pastEvents.map(event => <EventCard key={event._id} user={user} event={event} setCurrent={setCurrent} showAddress={showAddress} showViewLink={showViewLink} />)
                 }
             </Tab>
         </Tabs>
     );
 };
 
-export default EventList;
+export default UserEvents;

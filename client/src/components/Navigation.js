@@ -6,8 +6,8 @@ import history from "../utils/history"
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Modal from "react-bootstrap/Modal";
-import Register from "../pages/Register"
-import SignIn from "../pages/SignIn"
+import Register from "../components/Register";
+import SignIn from "../components/SignIn";
 
 
 

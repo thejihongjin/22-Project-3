@@ -8,10 +8,10 @@ import setAuthToken from "./utils/setAuthToken";
 import history from "./utils/history";
 import Navigation from "./components/Navigation";
 import Home from "./pages/Home";
-import User from "./pages/User";
+import UserProfile from "./pages/UserProfile";
 import CreateEvent from "./pages/CreateEvent";
 import SearchEvent from "./pages/SearchEvent";
-import ViewEvent from "./components/events/ViewEvent";
+import ViewEvent from "./pages/ViewEvent";
 // import UserReview from "./pages/UserReview";
 
 if (localStorage.token) {
@@ -28,7 +28,7 @@ function App() {
             <React.Suspense fallback={<Loading />}>
               <Switch>
                 <Route exact path="/" component={Home} />
-                <PrivateRoute exact path="/user" component={User} />
+                <PrivateRoute exact path="/user" component={UserProfile} />
                 <PrivateRoute exact path="/create" component={CreateEvent} />
                 <Route exact path="/search" component={SearchEvent} />
                 <PrivateRoute exact path="/view/:id" component={ViewEvent} />

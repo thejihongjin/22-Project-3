@@ -7,7 +7,7 @@ import DeleteButton from "../buttons/DeleteButton";
 import JoinButton from "../buttons/JoinButton";
 import LeaveButton from "../buttons/LeaveButton";
 
-const EventCardPreview = props => {
+const EventCard = props => {
     const user = props.user;
     const event = props.event;
     const showAddress = props.showAddress;
@@ -100,4 +100,4 @@ const EventCardPreview = props => {
     );
 };
 
-export default EventCardPreview;
+export default EventCard;

@@ -8,7 +8,7 @@ import Button from "react-bootstrap/Button";
 // import Loading from "../components/Loading";
 // import history from "../utils/history";
 
-import EventCardPreview from "../components/events/EventCardPreview";
+import EventCard from "../components/events/EventCard";
 
 const SearchEvent = () => {
   useEffect(() => {
@@ -92,11 +92,11 @@ const SearchEvent = () => {
               <div>No Events Available</div>
             ) : filtered !== null ? (
               filtered.map(event => (
-                <EventCardPreview key={event._id} event={event} user={user} setCurrent={setCurrent} showAddress={showAddress} showViewLink={showViewLink} />
+                <EventCard key={event._id} event={event} user={user} setCurrent={setCurrent} showAddress={showAddress} showViewLink={showViewLink} />
               ))
             ) : (
               events.map(event => (
-                <EventCardPreview key={event._id} event={event} user={user} setCurrent={setCurrent} showAddress={showAddress} showViewLink={showViewLink} />
+                <EventCard key={event._id} event={event} user={user} setCurrent={setCurrent} showAddress={showAddress} showViewLink={showViewLink} />
               ))
             )}
           </CardColumns>
