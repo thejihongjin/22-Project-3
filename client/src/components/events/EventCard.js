@@ -24,24 +24,27 @@ const EventCard = props => {
         // clearUsers();
         // history.push("/user");
     };
-    const handleJoin = () => {
-        console.log("join from event card preview");
-    };
-    const handleUnjoin = () => {
-        console.log("unjoin from event card preview");
-    };
 
     // <DeleteButton setCurrent={setCurrent} setShowAlert={setShowAlert} />
 
-    if (showAlert) {
+    // if (showAlert) {
+    //     return (
+    //         // <Card style={{ width: "25rem" }}>
+    //         // <Card>
+    //         <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible style={{ marginBottom: 0 }}>
+    //             <Alert.Heading>Are you sure you want to delete this event?</Alert.Heading>
+    //             <Button className="btn-danger" onClick={handleDelete}>Yes</Button>
+    //         </Alert>
+    //         // </Card>
+    //     );
+    // }
+
+    const DeleteAlert = () => {
         return (
-            // <Card style={{ width: "25rem" }}>
-            // <Card>
-            <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
+            <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible style={{ marginBottom: 0 }}>
                 <Alert.Heading>Are you sure you want to delete this event?</Alert.Heading>
                 <Button className="btn-danger" onClick={handleDelete}>Yes</Button>
             </Alert>
-            // </Card>
         );
     }
 
@@ -61,41 +64,45 @@ const EventCard = props => {
 
     return (
         <Fragment>
-            {event.name && (
+            {event.name &&
                 <Card>
-                    <Card.Header style={{ background: "#343a40", color: "white" }}>
-                        <Card.Title>preview {event.name.toUpperCase()}</Card.Title>
-                        <Card.Subtitle className="mb-2 text-muted">
-                            {event.category}
-                        </Card.Subtitle>
-                    </Card.Header>
-                    <Card.Body>
-                        <Card.Text style={{ textTransform: "capitalize" }}>
-                            Location: {event.location}<br />
-                            {eventAddress}
-                            Start: {event.start}<br />
-                            End: {event.end}
-                        </Card.Text>
-                        <Card.Subtitle className="mb-2 text-muted">
-                            People Going: {event.attendingId.length} / {event.groupSize}
-                        </Card.Subtitle>
-                    </Card.Body>
-                    <Card.Footer style={{ background: "#343a40", color: "white" }}>
-                        { viewLink }
-                        {user._id === event.user && (
-                            <Fragment>
-                                {/* <Link className="card-link" to="/create" onClick={() => props.setCurrent(event._id)}>Edit</Link> */}
-                                <DeleteButton
-                                    // setCurrent={setCurrent}
-                                    setShowAlert={setShowAlert} />
-                            </Fragment>
-                        )}
+                    {showAlert
+                        ? <DeleteAlert />
+                        : <Fragment>
+                            <Card.Header style={{ background: "#343a40", color: "white" }}>
+                                <Card.Title>preview {event.name.toUpperCase()}</Card.Title>
+                                <Card.Subtitle className="mb-2 text-muted">
+                                    {event.category}
+                                </Card.Subtitle>
+                            </Card.Header>
+                            <Card.Body>
+                                <Card.Text style={{ textTransform: "capitalize" }}>
+                                    Location: {event.location}<br />
+                                    {eventAddress}
+                                    Start: {event.start}<br />
+                                    End: {event.end}
+                                </Card.Text>
+                                <Card.Subtitle className="mb-2 text-muted">
+                                    People Going: {event.attendingId.length} / {event.groupSize}
+                                </Card.Subtitle>
+                            </Card.Body>
+                            <Card.Footer style={{ background: "#343a40", color: "white" }}>
+                                {viewLink}
+                                {user._id === event.user && (
+                                    <Fragment>
+                                        <DeleteButton
+                                            // setCurrent={setCurrent}
+                                            setShowAlert={setShowAlert} />
+                                    </Fragment>
+                                )}
 
-                        {user._id !== event.user && !event.attendingId.includes(user._id) && <JoinButton handleJoin={handleJoin} />}
-                        {event.user !== user._id && event.attendingId.includes(user._id) && <LeaveButton handleUnjoin={handleUnjoin} />}
-                    </Card.Footer>
+                                {user._id !== event.user && !event.attendingId.includes(user._id) && <JoinButton user={user} event={event} />}
+                                {event.user !== user._id && event.attendingId.includes(user._id) && <LeaveButton user={user} event={event} />}
+                            </Card.Footer>
+                        </Fragment>
+                    }
                 </Card>
-            )}
+            }
         </Fragment>
     );
 };

@@ -91,25 +91,6 @@ const ViewEvent = props => {
     //     mapLng
     //   } = event;
 
-    //   const handleJoin = () => {
-    //     if (groupSize !== "Any" && parseInt(groupSize) === attendingId.length) {
-    //       alert("Sorry, this event is full. 😟");
-    //     } else {
-    //       joinEvent(event);
-    //       setShowToast(true);
-    //       setJoined(true);
-    //       setEvent(urlId);
-    //       getUsersProfile(urlId);
-    //     }
-    //   };
-
-    //   const handleUnjoin = () => {
-    //     unjoinEvent(event);
-    //     setJoined(false);
-    //     setEvent(urlId);
-    //     getUsersProfile(urlId);
-    //   };
-
     // const handleDelete = () => {
     //     setShowAlert(false);
     //     deleteEvent(urlId);
