@@ -49,8 +49,10 @@ const SearchEvent = () => {
   };
 
 
-  const [showAddress, setShowAddress] = useState("hide"); // 
-  const [showViewLink, setShowViewLink] = useState("show");
+  // const [showAddress, setShowAddress] = useState("hide");
+  // const [showViewLink, setShowViewLink] = useState("show");
+  const [showAddress] = useState("hide");
+  const [showViewLink] = useState("show");
 
   return (
     <Fragment>

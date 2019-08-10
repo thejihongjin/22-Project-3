@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "../../context/auth/authContext";
 import EventContext from "../../context/event/eventContext";
 import EventCardPreview from "./EventCardPreview";
@@ -13,11 +13,11 @@ const EventList = props => { // rename as UserEvents
     const { setCurrent } = eventContext;
 
 
-    let upcomingEvents;
-    let pastEvents;
-    upcomingEvents = events.filter(event => new Date(event.end) > new Date());
-    pastEvents = events.filter(event => new Date(event.end) < new Date());
-    
+    let upcomingEvents = events.filter(event => new Date(event.end) > new Date());
+    let pastEvents = events.filter(event => new Date(event.end) < new Date());
+
+    const [showAddress] = useState("hide");
+    const [showViewLink] = useState("show");
 
 
     return (
@@ -25,13 +25,13 @@ const EventList = props => { // rename as UserEvents
             <Tab eventKey="home" title="Upcoming Events">
                 <br />
                 {
-                    upcomingEvents.map(event => <EventCardPreview key={event._id} user={user} event={event} setCurrent={setCurrent} />)
+                    upcomingEvents.map(event => <EventCardPreview key={event._id} user={user} event={event} setCurrent={setCurrent} showAddress={showAddress} showViewLink={showViewLink} />)
                 }
             </Tab>
             <Tab eventKey="profile" title="Past Events">
                 <br />
                 {
-                    pastEvents.map(event => <EventCardPreview key={event._id} user={user} event={event} setCurrent={setCurrent} />)
+                    pastEvents.map(event => <EventCardPreview key={event._id} user={user} event={event} setCurrent={setCurrent} showAddress={showAddress} showViewLink={showViewLink} />)
                 }
             </Tab>
         </Tabs>

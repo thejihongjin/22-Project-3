@@ -52,8 +52,8 @@ const ViewEvent = props => {
     //console.log(user)
     //const user = '';
     const [showAlert, setShowAlert] = useState(false);
-    const [showAddress, setShowAddress] = useState("show"); // 
-    const [showViewLink, setShowViewLink] = useState("hide");
+    const [showAddress] = useState("show");
+    const [showViewLink] = useState("hide");
 
     //   const [event, setEvent] = useState({
     //     _id: "",

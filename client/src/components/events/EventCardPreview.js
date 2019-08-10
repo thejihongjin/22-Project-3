@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, useRef, Fragment } from "react";
 import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Alert from "react-bootstrap/Alert";
@@ -10,7 +10,13 @@ import LeaveButton from "../buttons/LeaveButton";
 const EventCardPreview = props => {
     const user = props.user;
     const event = props.event;
-    // const [isPreview, setIsPreview] = useState(true);
+    const showAddress = props.showAddress;
+    const showViewLink = props.showViewLink;
+    let eventAddress;
+    let viewLink;
+
+    console.log("showViewLink", showViewLink);
+
     const [showAlert, setShowAlert] = useState(false);
     const handleDelete = () => {
         console.log("delete from event card preview");
@@ -41,8 +47,19 @@ const EventCardPreview = props => {
         );
     }
 
-    console.log("showAddress", props.showAddress);
-    console.log("address: ", event.addressInfo)
+    if (showAddress === "show") {
+        eventAddress = event.addressInfo
+            ? <Fragment>{"Address: " + event.addressInfo}<br /></Fragment>
+            : <Fragment>{"Address: N/A"}<br /></Fragment>;
+    } else if (showAddress === "hide") {
+        eventAddress = <Fragment />;
+    }
+
+    if (showViewLink === "show") {
+        viewLink = <Link to={`/view/${event._id}`} className="card-link">View</Link>;
+    } else if (showViewLink === "hide") {
+        viewLink = <Fragment />;
+    }
 
     return (
         <Fragment>
@@ -57,13 +74,7 @@ const EventCardPreview = props => {
                     <Card.Body>
                         <Card.Text style={{ textTransform: "capitalize" }}>
                             Location: {event.location}<br />
-                            {
-                                (props.showLocation === "show")
-                                    // && "Address: "
-                                    && event.addressInfo
-                                        ? "Address: " + event.addressInfo + "\n"
-                                        : "Address: N/A\n" 
-                            }
+                            {eventAddress}
                             Start: {event.start}<br />
                             End: {event.end}
                         </Card.Text>
@@ -73,15 +84,16 @@ const EventCardPreview = props => {
                     </Card.Body>
                     <Card.Footer style={{ background: "#343a40", color: "white" }}>
                         {
-                            (props.showViewLink === "show") &&
-                            <Link to={`/view/${event._id}`} className="card-link">View</Link>
+                            // (props.showViewLink === "show") &&
+                            // <Link to={`/view/${event._id}`} className="card-link">View</Link>
+                            viewLink
                         }
                         {/* <Link to="/view" className="card-link">View</Link> */}
 
 
                         {user._id === event.user && (
                             <Fragment>
-                                <Link className="card-link" to="/create" onClick={() => props.setCurrent(event._id)}>Edit</Link>
+                                {/* <Link className="card-link" to="/create" onClick={() => props.setCurrent(event._id)}>Edit</Link> */}
                                 <DeleteButton setShowAlert={setShowAlert} />
                             </Fragment>
                         )}
