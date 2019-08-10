@@ -11,7 +11,7 @@ const UserEvents = props => {
 
     const eventContext = useContext(EventContext);
     const { setCurrent } = eventContext;
-
+    console.log(events)
     let upcomingEvents = events.filter(event => new Date(event.end) > new Date());
     let pastEvents = events.filter(event => new Date(event.end) < new Date());
 
