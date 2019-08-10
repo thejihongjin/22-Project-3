@@ -24,7 +24,6 @@ const AuthState = props => {
     user: null,
     error: null
   };
-
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   // Load User
@@ -105,7 +104,7 @@ const AuthState = props => {
 
     try {
       const res = await axios.put(`/api/users/${user._id}`, user, config);
-      
+
       dispatch({
         type: UPDATE_USER,
         payload: res.data
@@ -117,13 +116,10 @@ const AuthState = props => {
     }
   };
 
- 
-
   // Set User To View
   const viewUser = user => {
     dispatch({ type: VIEW_USER, payload: user });
   };
-
 
   // Logout
   const logout = () => dispatch({ type: LOGOUT });

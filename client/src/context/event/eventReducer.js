@@ -20,6 +20,7 @@ export default (state, action) => {
   switch (action.type) {
     case GET_EVENTS:
     case GET_USER_EVENTS:
+    case SET_CURRENT:
       return {
         ...state,
         events: action.payload,
@@ -66,17 +67,11 @@ export default (state, action) => {
         error: null,
         current: null
       };
-    case SET_CURRENT:
-      localStorage.setItem("cacheEvent", JSON.stringify(action.payload));
-      return {
-        ...state,
-        current: action.payload
-      };
+
     case CLEAR_CURRENT:
-      localStorage.removeItem("cacheEvent");
       return {
         ...state,
-        current: null
+        event: null
       };
     case FILTER_EVENTS:
       return {

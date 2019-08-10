@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
-router.get("/set/:id", async (req, res) => {
+router.get("/view/:id", async (req, res) => {
   try {
     const event = await Event.findById(req.params.id);
     res.json(event);

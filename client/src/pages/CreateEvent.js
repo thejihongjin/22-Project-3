@@ -12,7 +12,7 @@ import {
   KeyboardTimePicker,
   KeyboardDatePicker
 } from "@material-ui/pickers";
-import Container from "react-bootstrap/Container";
+// import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
@@ -200,16 +200,17 @@ export default function CreateEvent() {
   });
 
   return (
-    <Container>
-      {/* <Navigation /> */}
-      <br />
-      <Row>
-        <Col>
+    // <Container>
+    //   {/* <Navigation /> */}
+    //   <br />
+    //   <Row>
+    //     <Col>
           <Card>
-            <Card.Title style={{ textAlign: "center" }}>
+            <Card.Body>
+            {/* <Card.Title style={{ textAlign: "center" }}> */}
+            <Card.Title>
               {current ? "Edit Event" : "Create Event"}
             </Card.Title>
-            <Card.Body>
               <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="exampleForm.ControlInput1">
                   <InputGroup className="mb-3">
@@ -248,7 +249,6 @@ export default function CreateEvent() {
                 </Form.Group>
 
                 <Row>
-                  {" "}
                   <Col>
                     <Form.Group controlId="exampleForm.ControlSelect1">
                       <Form.Label>Categories</Form.Label>
@@ -434,16 +434,16 @@ export default function CreateEvent() {
               </Form>
             </Card.Body>
           </Card>
-        </Col>
-      </Row>
-      {/* 
-      <Row>
-        <Col>
-          <div style={{ margin: "10px" }}>
-            <Map />
-            </div>
-        </Col>
-        </Row> */}
-    </Container>
+    //     {/* </Col>
+    //   </Row> */}
+    //   {/* 
+    //   <Row>
+    //     <Col>
+    //       <div style={{ margin: "10px" }}>
+    //         <Map />
+    //         </div>
+    //     </Col>
+    //     </Row> */}
+    // {/* </Container> */}
   );
 }

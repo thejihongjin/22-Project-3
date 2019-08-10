@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const path = require('path');
+const path = require("path");
 const PORT = process.env.PORT || 3001;
 const app = express();
 
@@ -13,8 +13,7 @@ if (process.env.NODE_ENV === "production") {
 
 //mongoose connection, need to add database name
 mongoose.connect(
-  process.env.MONGODB_URI ||
-    "mongodb://user:password1@ds255347.mlab.com:55347/heroku_ms7qng4b",
+  process.env.MONGODB_URI || "mongodb://localhost/eventfinderdb", //"mongodb://user:password1@ds255347.mlab.com:55347/heroku_ms7qng4b"
 
   { useCreateIndex: true, useFindAndModify: false, useNewUrlParser: true }
 );
@@ -27,9 +26,6 @@ app.use("/api/users", require("./routes/users"));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/events", require("./routes/events"));
 
-//Dev Route
-//app.use(devRoutes)
-/// Default route for React
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
