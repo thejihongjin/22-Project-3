@@ -22,10 +22,10 @@ import {
 
 const EventState = props => {
   const initialState = {
-    events: [],
-    filtered: [],
-    setUsers: [],
-    error: ""
+    events: null,
+    filtered: null,
+    setUsers: null,
+    error: null
   };
 
   const [state, dispatch] = useReducer(eventReducer, initialState);
@@ -59,7 +59,7 @@ const EventState = props => {
     } catch (err) {
       dispatch({
         type: EVENT_ERROR,
-        payload: err.response.msg
+        payload: err
       });
     }
   };
