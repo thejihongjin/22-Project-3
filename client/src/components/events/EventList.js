@@ -5,30 +5,19 @@ import EventCardPreview from "./EventCardPreview";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 
-const EventList = () => { // rename as UserEvents
-    const eventContext = useContext(EventContext);
-    const authContext = useContext(AuthContext);
-    const { user } = authContext;
-    const { events, getUserEvents } = eventContext;
+const EventList = props => { // rename as UserEvents
+    const events = props.events
+    const user = props.user
+
 
     let upcomingEvents;
     let pastEvents;
 
-    useEffect(() => {
-        getUserEvents();
-        // eslint-disable-next-line
-    }, []);
 
-    if (events === null) {
-        return (
-            <div>
-                <br /> <h4>Welcome! Try adding an event</h4>
-            </div>
-        );
-    } else {
+
         upcomingEvents = events.filter(event => new Date(event.end) > new Date());
         pastEvents = events.filter(event => new Date(event.end) < new Date());
-    }
+    
 
 
     return (
