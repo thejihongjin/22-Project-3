@@ -4,7 +4,7 @@ import AuthContext from "../context/auth/authContext";
 import EventContext from "../context/event/eventContext";
 import Loading from "../components/Loading";
 
-import EventList from "../components/events/EventList";
+import UserEvents from "../components/events/UserEvents";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -26,7 +26,9 @@ const User = props => {
   const authContext = useContext(AuthContext);
   const { user, updateUser } = authContext;
   const eventContext = useContext(EventContext);
-  const { clearEvents, clearUsers, events, getUserEvents } = eventContext;
+    const { clearEvents,
+        // clearUsers,
+        events, getUserEvents } = eventContext;
 
   useEffect(() => {
     if (!user) {
@@ -131,7 +133,7 @@ const User = props => {
               {events === null ? (
                 <Card.Text>No events available.</Card.Text>
               ) : (
-                <EventList key={events._id} events={events} user={user} />
+                <UserEvents key={events._id} events={events} user={user} />
               )}
             </Card.Body>
           </Card>

@@ -5,10 +5,10 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import CardColumns from "react-bootstrap/CardColumns";
 import Button from "react-bootstrap/Button";
-import Loading from "../components/Loading";
+// import Loading from "../components/Loading";
 // import history from "../utils/history";
 
-import EventCardPreview from "../components/events/EventCardPreview";
+import EventCard from "../components/events/EventCard";
 
 const SearchEvent = () => {
   useEffect(() => {
@@ -17,13 +17,15 @@ const SearchEvent = () => {
     }
   });
   const authContext = useContext(AuthContext);
-  const { user, isAuthenticated } = authContext;
+  const { user
+    // , isAuthenticated 
+  } = authContext;
   const text = useRef("");
   const eventContext = useContext(EventContext);
   const {
     setCurrent,
     getEvents,
-    clearUsers,
+    // clearUsers,
     clearEvents,
     filterEvents,
     clearFilter,
@@ -49,8 +51,10 @@ const SearchEvent = () => {
   };
 
 
-  const [showAddress, setShowAddress] = useState("hide"); // 
-  const [showViewLink, setShowViewLink] = useState("show");
+  // const [showAddress, setShowAddress] = useState("hide");
+  // const [showViewLink, setShowViewLink] = useState("show");
+  const [showAddress] = useState("hide");
+  const [showViewLink] = useState("show");
 
   return (
     <Fragment>
@@ -88,11 +92,11 @@ const SearchEvent = () => {
               <div>No Events Available</div>
             ) : filtered !== null ? (
               filtered.map(event => (
-                <EventCardPreview key={event._id} event={event} user={user} setCurrent={setCurrent} showAddress={showAddress} showViewLink={showViewLink} />
+                <EventCard key={event._id} event={event} user={user} setCurrent={setCurrent} showAddress={showAddress} showViewLink={showViewLink} />
               ))
             ) : (
               events.map(event => (
-                <EventCardPreview key={event._id} event={event} user={user} setCurrent={setCurrent} showAddress={showAddress} showViewLink={showViewLink} />
+                <EventCard key={event._id} event={event} user={user} setCurrent={setCurrent} showAddress={showAddress} showViewLink={showViewLink} />
               ))
             )}
           </CardColumns>
