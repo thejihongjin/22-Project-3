@@ -22,10 +22,10 @@ import {
 
 const EventState = props => {
   const initialState = {
-    events: null,
-    filtered: null,
-    setUsers: null,
-    error: null
+    events: [],
+    filtered: [],
+    setUsers: [],
+    error: ""
   };
 
   const [state, dispatch] = useReducer(eventReducer, initialState);
