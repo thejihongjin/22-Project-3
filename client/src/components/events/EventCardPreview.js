@@ -1,4 +1,4 @@
-import React, { useState, useRef, Fragment } from "react";
+import React, { useState, Fragment } from "react";
 import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Alert from "react-bootstrap/Alert";
@@ -14,8 +14,6 @@ const EventCardPreview = props => {
     const showViewLink = props.showViewLink;
     let eventAddress;
     let viewLink;
-
-    console.log("showViewLink", showViewLink);
 
     const [showAlert, setShowAlert] = useState(false);
     const handleDelete = () => {
@@ -56,7 +54,7 @@ const EventCardPreview = props => {
     }
 
     if (showViewLink === "show") {
-        viewLink = <Link to={`/view/${event._id}`} className="card-link">View</Link>;
+        viewLink = <Link to={`/view/${event._id}`} className="card-link">View</Link>; // change to event/:id
     } else if (showViewLink === "hide") {
         viewLink = <Fragment />;
     }
@@ -83,18 +81,13 @@ const EventCardPreview = props => {
                         </Card.Subtitle>
                     </Card.Body>
                     <Card.Footer style={{ background: "#343a40", color: "white" }}>
-                        {
-                            // (props.showViewLink === "show") &&
-                            // <Link to={`/view/${event._id}`} className="card-link">View</Link>
-                            viewLink
-                        }
-                        {/* <Link to="/view" className="card-link">View</Link> */}
-
-
+                        { viewLink }
                         {user._id === event.user && (
                             <Fragment>
                                 {/* <Link className="card-link" to="/create" onClick={() => props.setCurrent(event._id)}>Edit</Link> */}
-                                <DeleteButton setShowAlert={setShowAlert} />
+                                <DeleteButton
+                                    // setCurrent={setCurrent}
+                                    setShowAlert={setShowAlert} />
                             </Fragment>
                         )}
 

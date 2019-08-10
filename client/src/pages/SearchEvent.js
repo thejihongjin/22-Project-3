@@ -5,7 +5,7 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import CardColumns from "react-bootstrap/CardColumns";
 import Button from "react-bootstrap/Button";
-import Loading from "../components/Loading";
+// import Loading from "../components/Loading";
 // import history from "../utils/history";
 
 import EventCardPreview from "../components/events/EventCardPreview";
@@ -17,13 +17,15 @@ const SearchEvent = () => {
     }
   });
   const authContext = useContext(AuthContext);
-  const { user, isAuthenticated } = authContext;
+  const { user
+    // , isAuthenticated 
+  } = authContext;
   const text = useRef("");
   const eventContext = useContext(EventContext);
   const {
     setCurrent,
     getEvents,
-    clearUsers,
+    // clearUsers,
     clearEvents,
     filterEvents,
     clearFilter,

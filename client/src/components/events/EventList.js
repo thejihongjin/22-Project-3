@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import AuthContext from "../../context/auth/authContext";
+import React, { useContext, useState } from "react";
+// import AuthContext from "../../context/auth/authContext";
 import EventContext from "../../context/event/eventContext";
 import EventCardPreview from "./EventCardPreview";
 import Tabs from "react-bootstrap/Tabs";
@@ -11,7 +11,6 @@ const EventList = props => { // rename as UserEvents
 
     const eventContext = useContext(EventContext);
     const { setCurrent } = eventContext;
-
 
     let upcomingEvents = events.filter(event => new Date(event.end) > new Date());
     let pastEvents = events.filter(event => new Date(event.end) < new Date());

@@ -1,27 +1,23 @@
 import React, { useState, useContext, useEffect, Fragment } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import Loading from "../Loading";
-import Card from "react-bootstrap/Card";
+// import Card from "react-bootstrap/Card";
 import CardGroup from "react-bootstrap/CardGroup";
-import Button from "react-bootstrap/Button";
-import Alert from "react-bootstrap/Alert";
+// import Button from "react-bootstrap/Button";
+// import Alert from "react-bootstrap/Alert";
 // import Toast from "react-bootstrap/Toast";
 import EventContext from "../../context/event/eventContext";
 import AuthContext from "../../context/auth/authContext";
-import history from "../../utils/history";
+// import history from "../../utils/history";
 // import Map from "../Map";
-import EventState from "../../context/event/EventState";
-
-import Toast from "../Toast";
+// import EventState from "../../context/event/EventState";
+// import Toast from "../Toast";
 import EventCardPreview from "./EventCardPreview";
 
 const ViewEvent = props => {
     useEffect(() => {
-        //console.log("run")
         if (!user) {
-            //console.log("Why ??")
             authContext.loadUser();
-            //console.log(user)
         }
         // eslint-disable-next-line
     });
@@ -33,25 +29,25 @@ const ViewEvent = props => {
     const {
         setCurrent,
         clearEvents,
-        current,
-        joinEvent,
+        // current,
+        // joinEvent,
         events,
-        unjoinEvent,
-        deleteEvent,
-        getUsersProfile,
-        setUsers,
-        clearUsers
+        // unjoinEvent,
+        // deleteEvent,
+        // getUsersProfile,
+        // setUsers,
+        // clearUsers
     } = eventContext;
     /*if (current === null) {
           history.push("/user");
         }*/
     // let currentEvent = localStorage.getItem("cacheEvent")
     // console.log(JSON.stringify(currentEvent))
-    const [showToast, setShowToast] = useState(false);
+    // const [showToast, setShowToast] = useState(false);
 
     //console.log(user)
     //const user = '';
-    const [showAlert, setShowAlert] = useState(false);
+    // const [showAlert, setShowAlert] = useState(false);
     const [showAddress] = useState("show");
     const [showViewLink] = useState("hide");
 
@@ -77,10 +73,6 @@ const ViewEvent = props => {
         setCurrent(urlId);
         // eslint-disable-next-line
     }, []);
-
-    const [didJoin, setDidJoin] = useState([]);
-    const [isOwned, setIsOwned] = useState(false);
-    const [joined, setJoined] = useState(false);
 
     //console.log("non-effect",authContext)
     //console.log("non-effect",eventContext)
@@ -118,17 +110,17 @@ const ViewEvent = props => {
     //     getUsersProfile(urlId);
     //   };
 
-    const handleDelete = () => {
-        setShowAlert(false);
-        deleteEvent(urlId);
-        clearEvents();
-        clearUsers();
-        history.push("/user");
-    };
+    // const handleDelete = () => {
+    //     setShowAlert(false);
+    //     deleteEvent(urlId);
+    //     clearEvents();
+    //     clearUsers();
+    //     history.push("/user");
+    // };
+
     if (!user) {
         return <Loading />;
     }
-
 
     return (
         <Fragment>
