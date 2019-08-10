@@ -6,17 +6,17 @@ import CardGroup from "react-bootstrap/CardGroup";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 // import Toast from "react-bootstrap/Toast";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
+// import Col from "react-bootstrap/Col";
+// import Row from "react-bootstrap/Row";
 import EventContext from "../../context/event/eventContext";
 import AuthContext from "../../context/auth/authContext";
 import history from "../../utils/history";
-import Map from "../Map";
+// import Map from "../Map";
 import EventState from "../../context/event/EventState";
 
-import JoinButton from "../buttons/JoinButton";
-import LeaveButton from "../buttons/LeaveButton";
-import DeleteButton from "../buttons/DeleteButton";
+// import JoinButton from "../buttons/JoinButton";
+// import LeaveButton from "../buttons/LeaveButton";
+// import DeleteButton from "../buttons/DeleteButton";
 import Toast from "../Toast";
 import EventCardPreview from "./EventCardPreview";
 
