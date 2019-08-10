@@ -74,10 +74,6 @@ const EventCardPreview = props => {
             </Link>
             {/* <Link to="/view" className="card-link">View</Link> */}
 
-            {user._id === event.user && (
-              // {/* <Link className="card-link" to="/create" onClick={() => setCurrent(event)}>Edit</Link>
-              <DeleteButton setShowAlert={setShowAlert} />
-            )}
 
             {user._id === event.user && (
               // {/* <Link className="card-link" to="/create" onClick={() => setCurrent(event)}>Edit</Link>

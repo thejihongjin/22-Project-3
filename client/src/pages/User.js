@@ -131,7 +131,7 @@ const User = props => {
               {events === null ? (
                 <Card.Text>No events available.</Card.Text>
               ) : (
-                <EventList events={events} user={user} />
+                <EventList key={events._id} events={events} user={user} />
               )}
             </Card.Body>
           </Card>
