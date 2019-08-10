@@ -59,7 +59,8 @@ const EventState = props => {
     } catch (err) {
       dispatch({
         type: EVENT_ERROR,
-        payload: err.response.msg
+        // payload: err.response.msg
+        payload: err
       });
     }
   };
