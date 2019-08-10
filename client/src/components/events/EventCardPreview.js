@@ -10,7 +10,7 @@ import LeaveButton from "../buttons/LeaveButton";
 const EventCardPreview = props => {
   const user = props.user;
   const event = props.event;
-  console.log(event);
+  console.log(props);
   console.log(user);
   const [showAlert, setShowAlert] = useState(false);
   const handleDelete = () => {
@@ -48,31 +48,36 @@ const EventCardPreview = props => {
 
   return (
     <Fragment>
-      {event.attendingId && (
+    {event.name && (
         <Card>
-            <Card.Header style={{ background: "#343a40", color: "white" }}>
-                <Card.Title>preview {event.name.toUpperCase()}</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">{event.category}</Card.Subtitle>
-            </Card.Header>
-            <Card.Body>
-                <Card.Text style={{ textTransform: "capitalize" }}>
-                    Location: {event.location}<br />
-                    Start: {event.start}<br />
-                    End: {event.end}
-                </Card.Text>
-                <Card.Subtitle className="mb-2 text-muted">
-                    People Going: {event.attendingId.length} / {event.groupSize}
-                </Card.Subtitle>
-            </Card.Body>
-            <Card.Footer style={{ background: "#343a40", color: "white" }}>
-                <Link onClick={() => props.setCurrent(event)} to="/view" className="card-link">View</Link>
-                {/* <Link to="/view" className="card-link">View</Link> */}
-                
-                {
-                    user._id === event.user &&
-                    // {/* <Link className="card-link" to="/create" onClick={() => setCurrent(event)}>Edit</Link>
-                    <DeleteButton setShowAlert={setShowAlert} />
-                }
+          <Card.Header style={{ background: "#343a40", color: "white" }}>
+            <Card.Title>preview {event.name.toUpperCase()}</Card.Title>
+            <Card.Subtitle className="mb-2 text-muted">
+              {event.category}
+            </Card.Subtitle>
+          </Card.Header>
+          <Card.Body>
+            <Card.Text style={{ textTransform: "capitalize" }}>
+              Location: {event.location}
+              <br />
+              Start: {event.start}
+              <br />
+              End: {event.end}
+            </Card.Text>
+            <Card.Subtitle className="mb-2 text-muted">
+              People Going: {event.attendingId.length} / {event.groupSize}
+            </Card.Subtitle>
+          </Card.Body>
+          <Card.Footer style={{ background: "#343a40", color: "white" }}>
+            <Link to={`/view/${event._id}`} className="card-link">
+              View
+            </Link>
+            {/* <Link to="/view" className="card-link">View</Link> */}
+
+            {user._id === event.user && (
+              // {/* <Link className="card-link" to="/create" onClick={() => setCurrent(event)}>Edit</Link>
+              <DeleteButton setShowAlert={setShowAlert} />
+            )}
 
             {user._id === event.user && (
               // {/* <Link className="card-link" to="/create" onClick={() => setCurrent(event)}>Edit</Link>
@@ -89,7 +94,7 @@ const EventCardPreview = props => {
               )}
           </Card.Footer>
         </Card>
-      )}
+     )}
     </Fragment>
   );
 };

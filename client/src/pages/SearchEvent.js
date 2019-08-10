@@ -23,7 +23,7 @@ const SearchEvent = () => {
   const {
     getEvents,
     clearUsers,
-    clearCurrent,
+    clearEvents,
     filterEvents,
     clearFilter,
     events,
@@ -32,9 +32,10 @@ const SearchEvent = () => {
   console.log(events);
 
   useEffect(() => {
+    clearEvents();
     getEvents();
-    clearUsers();
-    clearCurrent();
+    // clearUsers();
+
     // eslint-disable-next-line
   }, []);
 
@@ -44,18 +45,19 @@ const SearchEvent = () => {
     } else {
       clearFilter();
     }
-    return (
-      <Fragment>
-        {/* search bar - event name, category, time frame, distance (google api) */}
-        <Card>
-          <Card.Body>
-            <Card.Title>Event Search</Card.Title>
-            <Form>
-              <Form.Group controlId="exampleForm.ControlInput1">
-                <Form.Label>Name</Form.Label>
-                <Form.Control ref={text} onChange={handleChange} />
-              </Form.Group>
-              {/*<Form.Group controlId="exampleForm.ControlSelect2">
+  };
+  return (
+    <Fragment>
+      {/* search bar - event name, category, time frame, distance (google api) */}
+      <Card>
+        <Card.Body>
+          <Card.Title>Event Search</Card.Title>
+          <Form>
+            <Form.Group controlId="exampleForm.ControlInput1">
+              <Form.Label>Name</Form.Label>
+              <Form.Control ref={text} onChange={handleChange} />
+            </Form.Group>
+            {/*<Form.Group controlId="exampleForm.ControlSelect2">
               <Form.Label>Category</Form.Label>
               <Form.Control as="select" multiple>
                 {eventCategories.map((category, i) => (
@@ -68,30 +70,30 @@ const SearchEvent = () => {
               <Form.Control type="text" />
             </Form.Group>
             /* ADD TIME RANGE */}
-              <Button className="float-right">Search</Button>
-            </Form>
-          </Card.Body>
-        </Card>
-        <Card>
-          <Card.Body>
-            <Card.Title>Results</Card.Title>
-            <CardColumns>
-              {events === null ? (
-                <div>No Events Available</div>
-              ) : filtered !== null ? (
-                filtered.map(event => (
-                  <EventCardPreview key={event._id} event={event} user={user} />
-                ))
-              ) : (
-                events.map(event => (
-                  <EventCardPreview key={event._id} event={event} user={user} />
-                ))
-              )}
-            </CardColumns>
-          </Card.Body>
-        </Card>
-      </Fragment>
-    );
-  };
+            <Button className="float-right">Search</Button>
+          </Form>
+        </Card.Body>
+      </Card>
+      <Card>
+        <Card.Body>
+          <Card.Title>Results</Card.Title>
+          <CardColumns>
+            {events === null ? (
+              <div>No Events Available</div>
+            ) : filtered !== null ? (
+              filtered.map(event => (
+                <EventCardPreview key={event._id} event={event} user={user} />
+              ))
+            ) : (
+              events.map(event => (
+                <EventCardPreview key={event._id} event={event} user={user} />
+              ))
+            )}
+          </CardColumns>
+        </Card.Body>
+      </Card>
+    </Fragment>
+  );
 };
+
 export default SearchEvent;
