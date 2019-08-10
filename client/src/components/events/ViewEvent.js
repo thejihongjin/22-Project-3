@@ -21,10 +21,19 @@ import Toast from "../Toast";
 import EventCardPreview from "./EventCardPreview";
 
 const ViewEvent = props => {
+  useEffect(() => {
+    //console.log("run")
+    if (!user) {
+      //console.log("Why ??")
+      authContext.loadUser();
+      //console.log(user)
+    }
+    // eslint-disable-next-line
+  });
   console.log(props.match.params.id);
   const urlId = props.match.params.id;
   const authContext = useContext(AuthContext);
-   const { user } = authContext;
+  const { user } = authContext;
   const eventContext = useContext(EventContext);
   const {
     setCurrent,
@@ -44,7 +53,7 @@ const ViewEvent = props => {
   // let currentEvent = localStorage.getItem("cacheEvent")
   // console.log(JSON.stringify(currentEvent))
   const [showToast, setShowToast] = useState(false);
- 
+
   //console.log(user)
   //const user = '';
   const [showAlert, setShowAlert] = useState(false);
@@ -66,17 +75,6 @@ const ViewEvent = props => {
   //   });
 
   useEffect(() => {
-    //console.log("run")
-    if (!user) {
-      //console.log("Why ??")
-      authContext.loadUser();
-      //console.log(user)
-    }
-    // eslint-disable-next-line
-  });
-
-
-  useEffect(() => {
     clearEvents();
     // clearUsers();
     setCurrent(urlId);
@@ -89,7 +87,6 @@ const ViewEvent = props => {
 
   //console.log("non-effect",authContext)
   //console.log("non-effect",eventContext)
-
 
   //   const {
   //     name,
@@ -131,7 +128,7 @@ const ViewEvent = props => {
     clearUsers();
     history.push("/user");
   };
-  if (!events) {
+  if (!user) {
     return <Loading />;
   }
 
@@ -150,105 +147,15 @@ const ViewEvent = props => {
     );
   }
 
-  // return (
-  //     <Fragment>
-  //         {/* {event.user ? ( */}
-  //         {event && (
-  //             <CardGroup>
-  //                 {/* <Card style={{ width: "25rem" }}> */}
-  //                 <Card>
-  //                     <Card.Header style={{ background: "#343a40", color: "white" }}>
-  //                         <Card.Title>viewevent {name.toUpperCase()}</Card.Title>
-  //                         <Card.Subtitle className="mb-2 text-muted">{category}</Card.Subtitle>
-  //                     </Card.Header>
-  //                     <Card.Body>
-  //                         <Card.Text style={{ textTransform: "capitalize" }}>
-  //                             Location: {location}<br />
-  //                             Address: {addressInfo}<br />
-  //                             Start: {start}<br />
-  //                             End: {end}
-  //                         </Card.Text>
-  //                         <Card.Text>{description}</Card.Text>
-  //                         <Card.Subtitle className="mb-2 text-muted">
-  //                             {attendingId.length} out of {groupSize} people are going.
-  //                         </Card.Subtitle>
-  //                         <Card.Subtitle className="mb-2 text-muted">
-  //                             People Attending: <br />
-  //                             {setUsers
-  //                                 ? setUsers.map(userLink => (
-  //                                     <Fragment>
-  //                                         <Link to="#" key={userLink._id}>{userLink.username}</Link><br />
-  //                                     </Fragment>
-  //                                 ))
-  //                                 : null}
-  //                         </Card.Subtitle>
-  //                     </Card.Body>
-  //                     <Card.Footer>
-  //                         { event.user === user._id && <DeleteButton event={event} setCurrent={setCurrent} setShowAlert={setShowAlert} /> }
-  //                         { event.user !== user._id && !event.attendingId.includes(user._id) && <JoinButton handleJoin={handleJoin} /> }
-  //                         { event.user !== user._id && event.attendingId.includes(user._id) && <LeaveButton handleUnjoin={handleUnjoin} /> }
-  //                     </Card.Footer>
-  //                 </Card>
-
-  //                 {/* <Card><Map lat={mapLat} lng={mapLng} /></Card> */}
-  //             </CardGroup>
-  //         )
-  //             // : (
-  //             //     <div> Sorry, this event is not available.</div>
-  //             //   )
-  //         }
-  //         <Row>
-  //             <Col xs={6}>
-  //                 {/* <Toast onClose={() => setShowToast(false)} show={showToast} delay={3000} autohide>
-  //                     <Toast.Header>
-  //                         <strong className="mr-auto">{name.toUpperCase()}</strong>
-  //                     </Toast.Header>
-  //                     <Toast.Body>Event Joined!</Toast.Body>
-  //                 </Toast> */}
-  //                 <Toast event={event} showToast={showToast} setShowToast={setShowToast} />
-  //             </Col>
-  //         </Row>
-  //     </Fragment>
-  // );
-
   return (
     <Fragment>
-      {events && (
+      {events === null ? (
+        <h1>
+          Sorry an error occurred. This event is unavailable at this time.
+        </h1>
+      ) : (
         <CardGroup>
-          <EventCardPreview eventId={events._id} event={events} user={user} />
-          {/* <Card>
-                        <Card.Header style={{ background: "#343a40", color: "white" }}>
-                            <Card.Title>viewevent {name.toUpperCase()}</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted">{category}</Card.Subtitle>
-                        </Card.Header>
-                        <Card.Body>
-                            <Card.Text style={{ textTransform: "capitalize" }}>
-                                Location: {location}<br />
-                                Address: {addressInfo}<br />
-                                Start: {start}<br />
-                                End: {end}
-                            </Card.Text>
-                            <Card.Text>{description}</Card.Text>
-                            <Card.Subtitle className="mb-2 text-muted">
-                                {attendingId.length} out of {groupSize} people are going.
-                            </Card.Subtitle>
-                            <Card.Subtitle className="mb-2 text-muted">
-                                People Attending: <br />
-                                {setUsers
-                                    ? setUsers.map(userLink => (
-                                        <Fragment>
-                                            <Link to="#" key={userLink._id}>{userLink.username}</Link><br />
-                                        </Fragment>
-                                    ))
-                                    : null}
-                            </Card.Subtitle>
-                        </Card.Body>
-                        <Card.Footer>
-                            { event.user === user._id && <DeleteButton event={event} setCurrent={setCurrent} setShowAlert={setShowAlert} /> }
-                            { event.user !== user._id && !event.attendingId.includes(user._id) && <JoinButton handleJoin={handleJoin} /> }
-                            { event.user !== user._id && event.attendingId.includes(user._id) && <LeaveButton handleUnjoin={handleUnjoin} /> }
-                        </Card.Footer>
-                    </Card> */}
+          <EventCardPreview key={events._id} event={events} user={user} />
 
           {/* <Card><Map lat={mapLat} lng={mapLng} /></Card> */}
         </CardGroup>
