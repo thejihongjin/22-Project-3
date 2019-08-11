@@ -30,8 +30,9 @@ function App() {
                 <Route exact path="/" component={Home} />
                 <PrivateRoute exact path="/user" component={UserProfile} />
                 <PrivateRoute exact path="/create" component={CreateEvent} />
+                <PrivateRoute exact path="/event/:id/edit" component={CreateEvent} />
                 <Route exact path="/search" component={SearchEvent} />
-                <PrivateRoute exact path="/view/:id" component={ViewEvent} />
+                <PrivateRoute exact path="/event/:id" component={ViewEvent} />
                 {/* <PrivateRoute exact path="/review" component={UserReview} /> */}
                 <Route render={() => <h1>404 Page not found.</h1>} />
               </Switch>

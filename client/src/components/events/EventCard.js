@@ -47,7 +47,7 @@ const EventCard = props => {
     }
 
     if (showViewLink === "show") {
-        viewLink = <Link to={`/view/${event._id}`} className="card-link">View</Link>; // change to event/:id
+        viewLink = <Link to={`/event/${event._id}`} className="card-link">View</Link>; // change to event/:id
     } else if (showViewLink === "hide") {
         viewLink = <Fragment />;
     }
@@ -80,9 +80,10 @@ const EventCard = props => {
                                 {viewLink}
                                 {user._id === event.user && (
                                     <Fragment>
-                                        <DeleteButton
-                                            // setCurrent={setCurrent}
-                                            setShowAlert={setShowAlert} />
+                                    <DeleteButton
+                                        // setCurrent={setCurrent}
+                                        setShowAlert={setShowAlert}
+                                        event={event} />
                                     </Fragment>
                                 )}
 
