@@ -3,6 +3,7 @@ import React, { useState, useContext, useEffect, Fragment } from "react";
 import Loading from "../components/Loading";
 // import Card from "react-bootstrap/Card";
 import CardGroup from "react-bootstrap/CardGroup";
+import EventAPI from '../utils/EventAPI'
 // import Button from "react-bootstrap/Button";
 // import Alert from "react-bootstrap/Alert";
 // import Toast from "react-bootstrap/Toast";
@@ -28,7 +29,7 @@ const ViewEvent = props => {
     const eventContext = useContext(EventContext);
     const {
         setCurrent,
-        clearEvents,
+        //clearEvents,
         // current,
         // joinEvent,
         events,
@@ -66,11 +67,14 @@ const ViewEvent = props => {
     //     mapLat: null,
     //     mapLng: null
     //   });
+    const [currentEvent, setCurrentEvent] = useState()
 
     useEffect(() => {
-        clearEvents();
+        //clearEvents();
         // clearUsers();
-        setCurrent(urlId);
+       EventAPI.getEventById(urlId)
+       .then(res => setCurrentEvent({ currentEvent: res.data }))
+      .catch(err => console.log(err));
         // eslint-disable-next-line
     }, []);
 

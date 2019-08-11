@@ -23,7 +23,7 @@ const API = {
         return axios.get(`api/events`)
     },
     getEventById: (eventId) => {
-        return axios.get(`api/events/view`)
+        return axios.get(`api/event/${eventId}`)
     },
     deleteEvent: (eventId) => {
         return axios.delete(`api/events/${eventId}`)
