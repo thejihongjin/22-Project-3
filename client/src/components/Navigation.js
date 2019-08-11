@@ -44,7 +44,7 @@ const Navigation = () => {
         <Fragment>
             <Navbar sticky="top" bg="dark" variant="dark" expand="md">
                 <Navbar.Brand>
-                    <Link to="/" className="nav-link">Lonely Friend Finder</Link>
+                    <Link to="/" className="nav-link" style={{fontFamily: "Lobster, cursive , sans-serif", fontWeight: "bold", fontSize: "4vh"}}>Lonely Friend Finder</Link>
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">

@@ -12,6 +12,7 @@ import UserProfile from "./pages/UserProfile";
 import CreateEvent from "./pages/CreateEvent";
 import SearchEvent from "./pages/SearchEvent";
 import ViewEvent from "./pages/ViewEvent";
+import About from "./pages/About";
 // import UserReview from "./pages/UserReview";
 
 if (localStorage.token) {
@@ -31,6 +32,7 @@ function App() {
                 <PrivateRoute exact path="/user" component={UserProfile} />
                 <PrivateRoute exact path="/create" component={CreateEvent} />
                 <Route exact path="/search" component={SearchEvent} />
+                <Route exact path="/about" component={About} />
                 <PrivateRoute exact path="/view/:id" component={ViewEvent} />
                 {/* <PrivateRoute exact path="/review" component={UserReview} /> */}
                 <Route render={() => <h1>404 Page not found.</h1>} />
