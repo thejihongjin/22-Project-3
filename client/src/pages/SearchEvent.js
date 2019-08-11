@@ -9,6 +9,7 @@ import Button from "react-bootstrap/Button";
 // import history from "../utils/history";
 
 import EventCard from "../components/events/EventCard";
+import Toast from "../components/Toast";
 
 const SearchEvent = () => {
   useEffect(() => {
@@ -50,12 +51,10 @@ const SearchEvent = () => {
     }
   };
 
-
-  // const [showAddress, setShowAddress] = useState("hide");
-  // const [showViewLink, setShowViewLink] = useState("show");
   const [showAddress] = useState("hide");
   const [showViewLink] = useState("show");
-  // const locationReload = window.location.reload();
+
+  const [showToast, setShowToast] = useState(false);
 
   return (
     <Fragment>
@@ -71,9 +70,7 @@ const SearchEvent = () => {
             {/*<Form.Group controlId="exampleForm.ControlSelect2">
               <Form.Label>Category</Form.Label>
               <Form.Control as="select" multiple>
-                {eventCategories.map((category, i) => (
-                  <option key={i}>{category}</option>
-                ))}
+                {eventCategories.map((category, i) => <option key={i}>{category}</option>)}
               </Form.Control>
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlTextarea1">
@@ -93,16 +90,17 @@ const SearchEvent = () => {
               <div>No Events Available</div>
             ) : filtered !== null ? (
               filtered.map(event => (
-                <EventCard key={event._id} event={event} user={user} showAddress={showAddress} showViewLink={showViewLink} />
+                <EventCard key={event._id} event={event} user={user} showAddress={showAddress} showViewLink={showViewLink} setShowToast={setShowToast} />
               ))
             ) : (
               events.map(event => (
-                <EventCard key={event._id} event={event} user={user} showAddress={showAddress} showViewLink={showViewLink} />
+                <EventCard key={event._id} event={event} user={user} showAddress={showAddress} showViewLink={showViewLink} setShowToast={setShowToast} />
               ))
             )}
           </CardColumns>
         </Card.Body>
       </Card>
+      <Toast showToast={showToast} setShowToast={setShowToast} />
     </Fragment>
   );
 };
