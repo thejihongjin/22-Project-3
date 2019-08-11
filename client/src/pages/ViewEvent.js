@@ -12,8 +12,9 @@ import AuthContext from "../context/auth/authContext";
 // import history from "../../utils/history";
 // import Map from "../Map";
 // import EventState from "../../context/event/EventState";
-// import Toast from "../Toast";
+
 import EventCard from "../components/events/EventCard";
+import Toast from "../components/Toast";
 
 const ViewEvent = props => {
     useEffect(() => {
@@ -51,6 +52,8 @@ const ViewEvent = props => {
     // const [showAlert, setShowAlert] = useState(false);
     const [showAddress] = useState("show");
     const [showViewLink] = useState("hide");
+
+    const [showToast, setShowToast] = useState(true);
 
     //   const [event, setEvent] = useState({
     //     _id: "",
@@ -114,10 +117,14 @@ const ViewEvent = props => {
                     Sorry an error occurred. This event is unavailable at this time.
         </h1>
             ) : (
-                    <CardGroup>
-                        <EventCard key={events._id} event={events} user={user} setCurrent={setCurrent} showAddress={showAddress} showViewLink={showViewLink} />
-                        {/* <Card><Map lat={mapLat} lng={mapLng} /></Card> */}
-                    </CardGroup>
+                    <Fragment>
+                        <CardGroup>
+                            <EventCard key={events._id} event={events} user={user} setCurrent={setCurrent} showAddress={showAddress} showViewLink={showViewLink} />
+                            {/* <Card><Map lat={mapLat} lng={mapLng} /></Card> */}
+                        </CardGroup>
+                        <Toast showToast={showToast} setShowToast={setShowToast} />
+                    </Fragment>
+
                 )
                 // )
                 // : (

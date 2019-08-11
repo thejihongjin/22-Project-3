@@ -17,6 +17,7 @@ const EventCard = props => {
     let viewLink;
 
     const [showAlert, setShowAlert] = useState(false);
+
     const handleDelete = eventId => {
         console.log("eventId", eventId);
         setShowAlert(false);
@@ -57,7 +58,7 @@ const EventCard = props => {
             {event.name &&
                 <Card>
                     {showAlert
-                    ? <DeleteAlert />
+                        ? <DeleteAlert />
                         : <Fragment>
                             <Card.Header style={{ background: "#343a40", color: "white" }}>
                                 <Card.Title>preview {event.name.toUpperCase()}</Card.Title>
@@ -80,14 +81,14 @@ const EventCard = props => {
                                 {viewLink}
                                 {user._id === event.user && (
                                     <Fragment>
-                                    <DeleteButton
-                                        // setCurrent={setCurrent}
-                                        setShowAlert={setShowAlert}
-                                        event={event} />
+                                        <DeleteButton
+                                            // setCurrent={setCurrent}
+                                            setShowAlert={setShowAlert}
+                                            event={event} />
                                     </Fragment>
                                 )}
 
-                                {user._id !== event.user && !event.attendingId.includes(user._id) && <JoinButton user={user} event={event} />}
+                            {user._id !== event.user && !event.attendingId.includes(user._id) && <JoinButton user={user} event={event} setShowToast={props.setShowToast} />}
                                 {event.user !== user._id && event.attendingId.includes(user._id) && <LeaveButton user={user} event={event} />}
                             </Card.Footer>
                         </Fragment>
