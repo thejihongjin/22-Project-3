@@ -100,8 +100,7 @@ const SearchEvent = () => {
           </CardColumns>
         </Card.Body>
       </Card>
-      <Toast showToast={showToast} setShowToast={setShowToast}
-      />
+      <Toast showToast={showToast} setShowToast={setShowToast} />
     </Fragment>
   );
 };
