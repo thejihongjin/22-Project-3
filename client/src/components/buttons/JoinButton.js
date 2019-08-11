@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
+// import Toast from "react-bootstrap/Toast";
 import EventAPI from "../../utils/EventAPI";
 
 const JoinButton = props => {
@@ -17,6 +18,11 @@ const JoinButton = props => {
             // console.log("join from event card preview event id", eventInfo);
         }
     };
+
+    // const JoinToast = () => {
+    //     return ()
+    // }
+
 
     return (
         <Button type="submit" className="btn-success" onClick={() => handleJoin(event)} size="sm" style={{ float: "right" }}>+ Join</Button>

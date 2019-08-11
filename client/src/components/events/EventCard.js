@@ -17,8 +17,9 @@ const EventCard = props => {
 
     const [showAlert, setShowAlert] = useState(false);
     const handleDelete = () => {
-        console.log("delete from event card preview");
+        // console.log("delete from event card preview");
         setShowAlert(false);
+        
         // deleteEvent(current._id);
         // clearCurrent();
         // clearUsers();
@@ -26,18 +27,6 @@ const EventCard = props => {
     };
 
     // <DeleteButton setCurrent={setCurrent} setShowAlert={setShowAlert} />
-
-    // if (showAlert) {
-    //     return (
-    //         // <Card style={{ width: "25rem" }}>
-    //         // <Card>
-    //         <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible style={{ marginBottom: 0 }}>
-    //             <Alert.Heading>Are you sure you want to delete this event?</Alert.Heading>
-    //             <Button className="btn-danger" onClick={handleDelete}>Yes</Button>
-    //         </Alert>
-    //         // </Card>
-    //     );
-    // }
 
     const DeleteAlert = () => {
         return (
