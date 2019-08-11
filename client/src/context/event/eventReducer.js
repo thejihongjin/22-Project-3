@@ -23,7 +23,6 @@ export default (state, action) => {
     case SET_CURRENT:
       return {
         ...state,
-        // events: [action.payload, ...state.events],
         events: action.payload,
         loading: false
       };
