@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
-import API from "../../utils/API";
+import EventAPI from "../../utils/EventAPI";
 
 const JoinButton = props => {
     const user = props.user;
@@ -10,12 +10,11 @@ const JoinButton = props => {
         if (eventInfo.groupSize !== "Any" && parseInt(eventInfo.groupSize) === eventInfo.attendingId.length) {
             alert("Sorry, this event is full. 😟");
         } else {
-            // API.joinEvent(eventInfo._id);
-            //       joinEvent(event);
+            EventAPI.joinEvent(eventInfo._id);
             //       setShowToast(true);
             //       setEvent(urlId);
             //       getUsersProfile(urlId);
-            console.log("join from event card preview event id", eventInfo);
+            // console.log("join from event card preview event id", eventInfo);
         }
     };
 

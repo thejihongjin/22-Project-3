@@ -55,6 +55,7 @@ const SearchEvent = () => {
   // const [showViewLink, setShowViewLink] = useState("show");
   const [showAddress] = useState("hide");
   const [showViewLink] = useState("show");
+  // const locationReload = window.location.reload();
 
   return (
     <Fragment>
@@ -92,11 +93,11 @@ const SearchEvent = () => {
               <div>No Events Available</div>
             ) : filtered !== null ? (
               filtered.map(event => (
-                <EventCard key={event._id} event={event} user={user} setCurrent={setCurrent} showAddress={showAddress} showViewLink={showViewLink} />
+                <EventCard key={event._id} event={event} user={user} showAddress={showAddress} showViewLink={showViewLink} />
               ))
             ) : (
               events.map(event => (
-                <EventCard key={event._id} event={event} user={user} setCurrent={setCurrent} showAddress={showAddress} showViewLink={showViewLink} />
+                <EventCard key={event._id} event={event} user={user} showAddress={showAddress} showViewLink={showViewLink} />
               ))
             )}
           </CardColumns>
