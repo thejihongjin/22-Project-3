@@ -1,19 +1,31 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
+// import Toast from "react-bootstrap/Toast";
+import EventAPI from "../../utils/EventAPI";
 
 const JoinButton = props => {
-    return (
-        // <Button
-        //   type="submit"
-        //   style={{ float: "right" }}
-        //   className="btn-success"
-        //   size="sm"
-        //   onClick={() => props.handleJoin()}
-        // >
-        //   + Join
-        // </Button>
+    const user = props.user;
+    const event = props.event;
 
-        <Button type="submit" className="btn-success" onClick={() => props.handleJoin()} size="sm" style={{ float: "right" }}>+ Join</Button>
+    const handleJoin = eventInfo => {
+        if (eventInfo.groupSize !== "Any" && parseInt(eventInfo.groupSize) === eventInfo.attendingId.length) {
+            alert("Sorry, this event is full. 😟");
+        } else {
+            EventAPI.joinEvent(eventInfo._id);
+            //       setShowToast(true);
+            //       setEvent(urlId);
+            //       getUsersProfile(urlId);
+            // console.log("join from event card preview event id", eventInfo);
+        }
+    };
+
+    // const JoinToast = () => {
+    //     return ()
+    // }
+
+
+    return (
+        <Button type="submit" className="btn-success" onClick={() => handleJoin(event)} size="sm" style={{ float: "right" }}>+ Join</Button>
     );
 }
 
