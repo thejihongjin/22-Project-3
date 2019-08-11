@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import DeleteButton from "../buttons/DeleteButton";
 import JoinButton from "../buttons/JoinButton";
 import LeaveButton from "../buttons/LeaveButton";
+import EventAPI from "../../utils/EventAPI";
 
 const EventCard = props => {
     const user = props.user;
@@ -16,10 +17,10 @@ const EventCard = props => {
     let viewLink;
 
     const [showAlert, setShowAlert] = useState(false);
-    const handleDelete = () => {
-        // console.log("delete from event card preview");
+    const handleDelete = eventId => {
+        console.log("eventId", eventId);
         setShowAlert(false);
-        
+        EventAPI.deleteEvent(eventId);
         // deleteEvent(current._id);
         // clearCurrent();
         // clearUsers();
@@ -32,7 +33,7 @@ const EventCard = props => {
         return (
             <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible style={{ marginBottom: 0 }}>
                 <Alert.Heading>Are you sure you want to delete this event?</Alert.Heading>
-                <Button className="btn-danger" onClick={handleDelete}>Yes</Button>
+                <Button className="btn-danger" onClick={() => handleDelete(event._id)}>Yes</Button>
             </Alert>
         );
     }
@@ -56,7 +57,7 @@ const EventCard = props => {
             {event.name &&
                 <Card>
                     {showAlert
-                        ? <DeleteAlert />
+                    ? <DeleteAlert />
                         : <Fragment>
                             <Card.Header style={{ background: "#343a40", color: "white" }}>
                                 <Card.Title>preview {event.name.toUpperCase()}</Card.Title>
