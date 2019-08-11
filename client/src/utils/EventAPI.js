@@ -16,14 +16,17 @@ const API = {
     createEvent: (eventObject) => {
         return axios.post(`api/events`,eventObject,config)
     },
-    updateEvent: (eventObject) => {
-        return axios.put(`api/events/`,eventObject,config)
+    updateEvent: (eventObject,eventId) => {
+        return axios.put(`api/events/${eventId}`,eventObject,config)
     },
     getEvents: () => {
         return axios.get(`api/events`)
     },
     getEventById: (eventId) => {
         return axios.get(`api/events/view`)
+    },
+    deleteEvent: (eventId) => {
+        return axios.delete(`api/events/${eventId}`)
     }
 }
 
