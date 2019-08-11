@@ -9,15 +9,13 @@ const LeaveButton = props => {
     const handleUnjoin = eventInfo => {
         EventAPI.leaveEvent(eventInfo._id)
             .then(() => window.location.reload());
-                // () => EventAPI.getEvents().then(() => console.log("second then")));
-    //     unjoinEvent(event);
-    //     setJoined(false);
-    //     setEvent(urlId);
-    //     getUsersProfile(urlId);
-        // console.log("unjoin from leave button", eventInfo);
+        // () => EventAPI.getEvents().then(() => console.log("second then")));
+        //     unjoinEvent(event);
+        //     setEvent(urlId);
+        //     getUsersProfile(urlId);
     };
 
-    
+
     return (
         <Button type="submit" className="btn-warning" onClick={() => handleUnjoin(event)} size="sm" style={{ float: "right" }}>- Leave Event</Button>
     );
