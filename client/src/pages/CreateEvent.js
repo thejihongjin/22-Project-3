@@ -1,4 +1,7 @@
+// @import react
 import React, { useState, useContext, useEffect } from "react";
+
+// @import font-end components 
 import { Link } from "react-router-dom";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
@@ -16,14 +19,21 @@ import {
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+
+//import Geocode from "react-geocode";
+// @import context
 import AuthContext from "../context/auth/authContext";
 // import { BrowserRouter as Router, Route } from 'react-router-dom';
 //import MapCont from "../components/Map";
 import EventContext from "../context/event/eventContext";
-import Geocode from "react-geocode";
 
-Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY);
+// @import API
+import API from "../"
 
+
+//Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY);
+
+// page style
 const useStyles = {
     grid: {
         width: "30%"
@@ -45,57 +55,110 @@ const useStyles = {
     fontSize: {}
 };
 
-export default function CreateEvent() {
+export default function CreateEvent(props) {
 
+  //const eventContext = useContext(EventContext);
+  
+  //const { addEvent, updateEvent, clearCurrent, current } = eventContext;
+  
 
-    const eventContext = useContext(EventContext);
-    const authContext = useContext(AuthContext);
-    const { addEvent, updateEvent, clearCurrent, current } = eventContext;
-    const { user } = authContext;
-    //const [date, setDate] = useState(new Date());
-    const [startTime, setStartTime] = useState(new Date());
-    const [endTime, setEndTime] = useState(new Date());
-    const [timeMessage, setTimeMessage] = useState("");
-    const [event, setEvent] = useState({
-        name: "",
-        location: "",
-        category: "Movie",
-        groupSize: "",
-        description: "",
-        attendId: "",
-        addressInfo: "",
-        start: null,
-        end: null,
-        mapLat: null,
-        mapLng: null
-    });
-    useEffect(() => {
-        if (!user) {
-            authContext.loadUser();
-            // console.log("missing user")
-        }
-    });
-    useEffect(() => {
-        setTimeMessage(null)
-        if (endTime <= startTime) {
-            setTimeMessage("The end time should be later than the start time")
-        }
-    }, [startTime, endTime])
+  //@ getting user data
+  const authContext = useContext(AuthContext);
+  const { user } = authContext;
 
-    const handleStartTime = time => {
+  //@ initial state for components
+  const [startTime, setStartTime] = useState(new Date()); // can change
+  const [endTime, setEndTime] = useState(new Date()); // can change
+  const [timeMessage,setTimeMessage] = useState("");
+  const [event, setEvent] = useState({
+    name: "",
+    location: "",
+    category: "Movie",
+    groupSize: "",
+    description: "",
+    attendId: "",
+    addressInfo: "",
+    start: null,
+    end: null,
+    mapLat: null,
+    mapLng: null
+  });
+
+  /// @useEffect area
+
+  //useEffect for when page first loaded
+  useEffect(() => {
+    // check if user is null if is load user info
+    if (!user) {
+        authContext.loadUser();
+    }
+    
+    //check if event id is present, if is load event info from database
+    const id = props.params.match.id;
+    if(id) {
+      API.getEvent(id)
+         .then((dbEvent) => {
+          setEvent(dbEvent)
+          setStartTime(event.start)
+          setEndTime(event.end)
+         })
+         .catch(err => {
+           console.log(err)
+         })
+    }
+  },[]);
+
+  //useEffect to check for startTime and endTime whether they are acceptable or not
+  useEffect(()=>{
+    setTimeMessage(null)
+    if(endTime <= startTime) {
+      setTimeMessage("The end time should be later than the start time")
+    } 
+  },[startTime,endTime])
+  
+
+  // @handle functions
+  const handleStartTime = time => {
+
+    setStartTime(time);
+
+    const saveState = event;
+    saveState.start = time;
+    setEvent(saveState);
+  };
+
+  const handleEndTime = time => {
+    setEndTime(time);
+    const saveState = event;
+    saveState.end = time;
+    setEvent(saveState);
+  };
+
+  /*useEffect(() => {
+    if (current) {
+      setEvent(current);
+      setStartTime(current.start);
+      setEndTime(current.end);
+    }
+  }, [eventContext, current]);*/
 
         setStartTime(time);
 
-        const saveState = event;
-        saveState.start = time;
-        setEvent(saveState);
-        //setEvent({...event, [start]: date})
-    };
+  const goBack = () => {
+    //clearCurrent();
+    history.push("/user");
+  };
 
-    const handleEndTime = time => {
+  //const handleEndTime = time => {
 
-        setEndTime(time);
-        console.log("Hello,why you don't work")
+  /*const handleSubmit = e => {
+    e.preventDefault();
+    let userInput = event.location;
+    let address;
+    let placeId;
+    let mapLatData;
+    let mapLngData;
+    console.log(userInput);
 
         const saveState = event;
         saveState.end = time;
@@ -129,13 +192,11 @@ export default function CreateEvent() {
     const goBack = () => {
         clearCurrent();
         history.push("/user");
-    };
+        //console.log(e)
+      });
+  };*/
 
-    const handleChange = e => {
-        setEvent({ ...event, [e.target.name]: e.target.value });
-    };
-
-    const handleSubmit = e => {
+    /*const handleSubmit = e => {
         e.preventDefault();
         let userInput = event.location;
         let address;
@@ -178,9 +239,10 @@ export default function CreateEvent() {
             });
     };
 
-    // const clearAll = () => {
-    //   clearCurrent();
-    // };
+  /*const [locationInput, setLocation] = useState({
+    mapLat: 32.712043,
+    mapLng: -117.142254
+  });*/
 
     const eventCategories = [
         "Movie",
