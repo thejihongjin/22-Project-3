@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect, Fragment } from "react";
 import { Link } from "react-router-dom";
+import EventAPI from "../utils/EventAPI";
 import AuthContext from "../context/auth/authContext";
 import EventContext from "../context/event/eventContext";
 import Loading from "../components/Loading";
@@ -26,23 +27,34 @@ const User = props => {
   const authContext = useContext(AuthContext);
   const { user, updateUser } = authContext;
   const eventContext = useContext(EventContext);
-    const { clearEvents,
-        // clearUsers,
-        events, getUserEvents } = eventContext;
+  const {
+    clearEvents
+    // clearUsers,
+    //events,
+    // getUserEvents
+  } = eventContext;
+  const [events, setUserEvents] = useState();
 
   useEffect(() => {
     if (!user) {
       authContext.loadUser();
+
       // console.log("missing user")
     }
   });
 
   useEffect(() => {
     // clearUsers();
-    clearEvents();
-    getUserEvents();
+    //clearEvents();
+    //getUserEvents();
+    if (user) {
+      EventAPI.getUserEvents(user._id)
+        .then(res => setUserEvents(res.data))
+        .catch(err => console.log(err));
+    }
+
     // eslint-disable-next-line
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     if (user) {
@@ -130,7 +142,7 @@ const User = props => {
         <Col md={6}>
           <Card>
             <Card.Body>
-              {events === null ? (
+              {!events ? (
                 <Card.Text>No events available.</Card.Text>
               ) : (
                 <UserEvents key={events._id} events={events} user={user} />

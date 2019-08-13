@@ -18,8 +18,9 @@ router.get("/", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
-router.get("/view/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
+    console.log(req.params.id);
     const event = await Event.findById(req.params.id);
     res.json(event);
   } catch (err) {
@@ -28,10 +29,10 @@ router.get("/view/:id", async (req, res) => {
   }
 });
 
-router.get("/user", auth, async (req, res) => {
+router.get("/user/:id", async (req, res) => {
   try {
     const events = await Event.find({
-      attendingId: { $all: [req.user.id] }
+      attendingId: { $all: [req.params.id] }
     }).sort({
       date: -1
     });
